@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -84,7 +86,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
      *
      * @param ctx oggetto Context (tipicamente {@code this} se chiamato da dentro una Activity)
      * @return ritorna il fattore della soglia di zoom attuale.
-     * @see MapsActivity#setHereButtonVisibility()
      */
     public static float getZoomThreshold(Context ctx) {
         return getZoomThreshold(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
@@ -120,14 +121,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("SettingActivity", "Setting content View");
         //setContentView(R.layout.activity_settings);
-        Log.i("SettingActivity", "Ok!");
         addPreferencesFromResource(R.xml.preferences);
         updateAllSummaries();
         AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-        delegate.getSupportActionBar();
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        delegate.setSupportActionBar(toolbar);
     }
 
     /**

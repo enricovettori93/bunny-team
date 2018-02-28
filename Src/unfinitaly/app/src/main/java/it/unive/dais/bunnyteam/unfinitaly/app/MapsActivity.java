@@ -365,7 +365,7 @@ public class MapsActivity extends BaseActivity
             findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
         }else{
             if (!firstMapTouch) {
-                Toast.makeText(getApplicationContext(), "Tieni premuto sulla mappa per aprire le impostazioni", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.maps_onmapclick, Toast.LENGTH_SHORT).show();
                 firstMapTouch = true;
             }
         }
@@ -380,7 +380,7 @@ public class MapsActivity extends BaseActivity
      */
     @Override
     public void onMapLongClick(LatLng latLng) {
-        Toast.makeText(getApplicationContext(),"Apertura impostazioni...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),R.string.maps_onmaplongclick,Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -447,14 +447,12 @@ public class MapsActivity extends BaseActivity
         }
 
         gMap.setOnMapClickListener(this);
-        //gMap.setOnCameraIdleListener(this);
         gMap.setOnMapLongClickListener(this);
         gMap.setOnCameraMoveStartedListener(this);
         gMap.setOnMarkerClickListener(mClusterManager);
         gMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener(){
             @Override
             public void onCameraMove() {
-                //Toast.makeText(getApplicationContext(),"aaa",Toast.LENGTH_SHORT).show();
                 Log.d("zoom",""+gMap.getCameraPosition().zoom);
                 if(findViewById(R.id.marker_window).getVisibility() == View.VISIBLE && gMap.getCameraPosition().zoom < 8.2){
                     findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
@@ -570,6 +568,7 @@ public class MapsActivity extends BaseActivity
         i.putExtra("MapMarker", mapMarker);
         startActivity(i);
     }
+
     public void onBackPressed(){
         if(drawer.isDrawerOpen())
             drawer.closeDrawer();
@@ -585,7 +584,7 @@ public class MapsActivity extends BaseActivity
             }
             else{
                 onBackPressed=true;
-                Toast.makeText(this, "Premi ancora per uscire", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -595,9 +594,11 @@ public class MapsActivity extends BaseActivity
             }
         }
     }
+
     public CustomClusterManager getClusterManager(){
         return mClusterManager;
     }
+
     public GoogleMap getMap(){
         return gMap;
     }

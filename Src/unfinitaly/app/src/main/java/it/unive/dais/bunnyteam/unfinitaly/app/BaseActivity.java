@@ -116,7 +116,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            //Associazione listener alle varie voci
             regione.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -149,7 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     else{
                         ((MapsActivity)thisActivity).getClusterManager().unsetPercentageRender();
                     }
-                    //drawer.closeDrawer();
                     drawer.setSelection(-1);
                 }
             });
@@ -274,8 +272,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                             }
                         }
                     })
-                    .setPositiveButton("OK",null)
-                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.msg_ok,null)
+                    .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
@@ -286,7 +284,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if(selectedRegionsItems.size()==0)
-                        Toast.makeText(getApplicationContext(),"Selezionare almeno un elemento nella lista.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.selezionelista,Toast.LENGTH_SHORT).show();
                     else{
                         //DISABILITO I FILTRI COMBINATI
                         selectedCategoriesItems = new ArrayList<>();
@@ -329,8 +327,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                             }
                         }
                     })
-                    .setPositiveButton("OK",null)
-                    .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.msg_ok,null)
+                    .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
@@ -342,7 +340,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if(selectedCategoriesItems.size()==0)
-                        Toast.makeText(getApplicationContext(),"Selezionare almeno un elemento nella lista.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.selezionelista,Toast.LENGTH_SHORT).show();
                     else{
                         //DISABILITO I FILTRI COMBINATI
                         selectedRegionsItems = new ArrayList<>();

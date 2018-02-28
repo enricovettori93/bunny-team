@@ -43,27 +43,10 @@ public class LoadingActivity extends AppIntro {
     CustomSliderLoading csl;
     Fragment curFragment;
     private View v;
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-
     int status = 0;
     private FloatingActionButton fab;
     private View loadingView;
     private boolean ready = false;
-    @Override
-    public void onBackPressed() {
-        /*if(webview.getVisibility()==View.VISIBLE)
-            unshowWebView();
-        else*/
-            super.onBackPressed();
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +59,7 @@ public class LoadingActivity extends AppIntro {
         csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
 
         addSlide(csl);
-        ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText("CARICAMENTO..");
+        ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.msg_loading);
         if(getSlides().get(0) instanceof CustomSliderLoading)
             Log.d("CIAO", "È un customsliderloading!!!");
         addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
@@ -88,7 +71,7 @@ public class LoadingActivity extends AppIntro {
         curFragment = fragments.get(0);
         setProgressButtonEnabled(true);
         showSkipButton(false);
-        setZoomAnimation();
+        setFadeAnimation();
     }
     public void showWebView(){
         webview.setVisibility(View.VISIBLE);
@@ -106,9 +89,6 @@ public class LoadingActivity extends AppIntro {
         //if(status == 1)
             //startMapsActivity();
     }
-    public void startMapsActivity() {
-        startActivity(new Intent(this, MapsActivity.class));
-    }
 
     public void setStatus(int status) {
         this.status = status;
@@ -117,6 +97,10 @@ public class LoadingActivity extends AppIntro {
         return webview;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
@@ -129,7 +113,7 @@ public class LoadingActivity extends AppIntro {
         if(isReady())
             startMapsActivity();
         else {
-            Snackbar snack = Snackbar.make(currentFragment.getView(), "Mappa non ancora pronta. Attendi!", Snackbar.LENGTH_SHORT);
+            Snackbar snack = Snackbar.make(currentFragment.getView(), R.string.loading_snackbarnotready, Snackbar.LENGTH_SHORT);
             View view = snack.getView();
             view.setBackgroundColor(getResources().getColor(R.color.md_red_900));
             snack.show();
@@ -149,20 +133,32 @@ public class LoadingActivity extends AppIntro {
 
 
     public void showFinishSnackbar() {
-        ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText("CONTINUA");
+        ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.loading_snackbarcontinue);
         if(curFragment.getView() != null){
-            Snackbar snack = Snackbar.make(curFragment.getView(), "Mappa disponibile!", Snackbar.LENGTH_SHORT);
+            Snackbar snack = Snackbar.make(curFragment.getView(), R.string.loading_snackbarready, Snackbar.LENGTH_SHORT);
             View view = snack.getView();
             view.setBackgroundColor(getResources().getColor(R.color.md_green_700));
             snack.show();
             snack.setActionTextColor(getResources().getColor(R.color.md_white_1000));
-            snack.setAction("CONTINUA", new View.OnClickListener(){
+            snack.setAction(R.string.loading_snackbarcontinue, new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     startMapsActivity();
                 }
             });
         }
+    }
+
+    public void startMapsActivity() {
+        startActivity(new Intent(this, MapsActivity.class));
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 }
 

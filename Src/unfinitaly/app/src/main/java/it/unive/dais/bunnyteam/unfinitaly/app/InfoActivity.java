@@ -36,21 +36,7 @@ public class InfoActivity extends BaseActivity {
     TextView mail;
     TextView site;
     TextView credits;
-    /**
-     * Produce la stringa completa coi crediti.
-     *
-     * @param ctx oggetto Context, tipicamente {@code this} se chiamato da un'altra Activity.
-     * @return ritorna la stringa completa.
-     */
-    public static String credits(Context ctx) {
-        return "Email\nunfinitaly.app@gmail.com\n\nSito web:\nunfinitaly.@altervista.org";
-    }
 
-    /**
-     * Metodo di creazione dell'activity che imposta il layout e la text view con la stringa con i crediti.
-     *
-     * @param saveInstanceState
-     */
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -63,14 +49,14 @@ public class InfoActivity extends BaseActivity {
         site = (TextView)findViewById(R.id.textViewsite);
         credits = (TextView)findViewById(R.id.textView9);
         try {
-            credits.setText("Questa applicazione è stata sviluppata usando il toolkit Datadroid.\n\nVersione app: "+getApplicationContext().getPackageManager()
+            credits.setText(R.string.creditsdatadroid+getApplicationContext().getPackageManager()
                     .getPackageInfo(getApplicationContext().getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
-            credits.setText("Questa applicazione è stata sviluppata usando il toolkit Datadroid.");
+            credits.setText(R.string.creditsdatadroiderror);
             Log.e("Version","Error injecting versione");
         };
-        mail.setText("Email\nunfinitaly.app@gmail.com\n");
-        site.setText("Sito web:\nunfinitaly.@altervista.org\n");
+        mail.setText(R.string.email);
+        site.setText(R.string.website);
         imV = (ImageView) findViewById(R.id.bunnyLogo);
         fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +97,6 @@ public class InfoActivity extends BaseActivity {
 
     public void showWebView() {
         webview.setVisibility(View.VISIBLE);
-        //invisible tutti gli altri, toolbar rimane sempre visibile
         imV.setVisibility(View.INVISIBLE);
         mail.setVisibility(View.INVISIBLE);
         site.setVisibility(View.INVISIBLE);

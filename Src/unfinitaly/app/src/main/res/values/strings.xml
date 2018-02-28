@@ -1,15 +1,13 @@
 <resources>
     <!-- Customize your app's name here. -->
-    <string name="app_name">UnfinItaly</string>
-    <string name="title_activity_maps">UnfinItaly</string>
+    <string name="app_name">UnfinItaly - Tesi</string>
+    <string name="title_activity_maps">UnfinItaly - Tesi</string>
     <!-- -->
 
     <string name="gps_disabled">GPS disattivato</string>
     <string name="gps_enabled">GPS attivato</string>
     <string name="conn_failed">Connessione fallita</string>
     <string name="conn_suspended">Connessione sospesa</string>
-
-    <string name="benvenuto">Benvenuto su UnfinItaly! \nStiamo caricando per te i dati da rappresentare nella mappa. Tra poco inizierà il tuo viaggio tra le opere incompiute italiane!\nQuesta schermata di caricamento verrà visualizzata solo al primo avvio.</string>
 
     <string name="menu_mapStyle_title">Stile Mappa</string>
     <string name="menu_mapStyle_summary">Scegli il tipo di mappa di Google Maps</string>
@@ -26,17 +24,69 @@
     <string name="menu_mapStyle_terrain">Terreno</string>
     <string name="menu_mapStyle_hybrid">Ibrido</string>
 
-    <string name="credits_year">2017</string>
-    <string name="credits_project">CEVID</string>
+    <!--Crediti -->
+    <string name="credits_year">2018</string>
+    <string name="credits_project">UnfinItaly</string>
     <string name="credits_company">Università Ca\' Foscari Venezia</string>
-    <string name="credits_authors">Alvise Spanò</string>
+    <string name="credits_authors">Enrico Vettori</string>
+    <!-- -->
 
     <string name="action_info">Info</string>
     <string name="action_impostazioni">Impostazioni</string>
 
+    <!--Generali -->
     <string name="msg_loading">Caricamento...</string>
+    <string name="msg_ok">Ok</string>
+    <string name="msg_back">Indietro</string>
+    <!-- -->
+
+    <!--Loading Activity -->
+    <string name="loading_snackbarcontinue">CONTINUA</string>
+    <string name="loading_snackbarwait"></string>
+    <string name="loading_snackbarready">Mappa disponibile!</string>
+    <string name="loading_snackbarnotready">Mappa non ancora pronta. Attendi!</string>
+    <!-- -->
+
+    <!-- Maps Activity -->
+    <string name="maps_onmapclick">Tieni premuto sulla mappa per aprire le impostazioni.</string>
+    <string name="maps_onmaplongclick">Apertura impostazioni...</string>
+    <string name="maps_onmapbackpress">Premi ancora per uscire</string>
     <string name="msg_button_car">Pulsante premuto</string>
     <string name="msg_permissions_not_granted">I permessi appena negati dall\'utente sono necessari per alcune funzionalità dell\'app. Il supporto delle funzionalità sarà ridotto.</string>
     <string name="marker_title">You are HERE</string>
+    <!-- -->
 
+    <!--Base Activity -->
+    <string name="selezionelista">Selezionare almeno un elemento nella lista.</string>
+    <!-- -->
+
+    <!--Info Activity -->
+    <string name="creditsdatadroid">Questa applicazione è stata sviluppata usando il toolkit Datadroid.\n\nVersione app: </string>
+    <string name="creditsdatadroiderror">Questa applicazione è stata sviluppata usando il toolkit Datadroid.</string>
+    <string name="email">Email\nunfinitaly.app@gmail.com</string>
+    <string name="website">Sito web\nunfintaly.altervista.org</string>
+    <!-- -->
+
+    <!--FragmentInfo 1 -->
+    <string name="fi1_description">Benvenuto su UnfinItaly! \nStiamo caricando per te i dati da rappresentare nella mappa. Tra poco inizierà il tuo viaggio tra le opere incompiute italiane!\nQuesta schermata di caricamento verrà visualizzata solo al primo avvio.</string>
+    <string name="fi1_bottom">Prima di iniziare, vogliamo spiegarti in breve il funzionamento di UnfinItaly</string>
+    <string name="f1_menu">Caricamento</string>
+    <!-- -->
+
+    <!--FragmentInfo 2 -->
+    <string name="fi2_menu">Accesso al menù</string>
+    <string name="fi2_description">Effettua uno swipe dal lato sinistro verso il centro per accedere al menù! Dal menù puoi attivare i filtri e accedere alle informazioni.</string>
+    <!-- -->
+
+    <!--FragmentInfo 3 -->
+
+    <!-- -->
+
+    <!--FragmentInfo 4 -->
+
+    <!-- -->
+
+    <!--FragmentInfo 5 -->
+
+    <!-- -->
 </resources>

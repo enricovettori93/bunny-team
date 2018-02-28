@@ -38,6 +38,7 @@
     <string name="msg_loading">Caricamento...</string>
     <string name="msg_ok">Ok</string>
     <string name="msg_back">Indietro</string>
+    <string name="msg_error_gps">Errore durante la ricezione della posizione. Riprova tra poco.</string>
     <!-- -->
 
     <!--Loading Activity -->
@@ -79,14 +80,17 @@
     <!-- -->
 
     <!--FragmentInfo 3 -->
-
+    <string name="fi3_menu">Accesso al menù</string>
+    <string name="fi3_description">Effettua uno swipe dal lato sinistro verso il centro per accedere al menù! Dal menù puoi attivare i filtri e accedere alle informazioni.</string>
     <!-- -->
 
     <!--FragmentInfo 4 -->
-
+    <string name="fi4_menu">Rintracciare l\'opera</string>
+    <string name="fi4_description">Puoi usare i pulsanti a destra e a sinistra del titolo dell\'opera rispettivamente per trovare l'opera sulla mappa e per impostare il navigatore.</string>
     <!-- -->
 
     <!--FragmentInfo 5 -->
-
+    <string name="fi5_menu">Aiuto? Suggerimenti?</string>
+    <string name="fi5_description">Puoi contattarci dalla sezione informazioni!</string>
     <!-- -->
 </resources>

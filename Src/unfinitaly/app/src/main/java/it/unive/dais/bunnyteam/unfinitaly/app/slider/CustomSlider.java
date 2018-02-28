@@ -16,12 +16,9 @@ public class CustomSlider extends Fragment {
     private View view;
     public static CustomSlider newInstance(int layoutResId) {
         CustomSlider sampleSlide = new CustomSlider();
-
         Bundle args = new Bundle();
         args.putInt(ARG_LAYOUT_RES_ID, layoutResId);
         sampleSlide.setArguments(args);
-
-
         return sampleSlide;
     }
 

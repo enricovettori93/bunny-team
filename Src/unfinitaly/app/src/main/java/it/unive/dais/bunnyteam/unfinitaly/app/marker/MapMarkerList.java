@@ -1,8 +1,6 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.marker;
 
 import android.content.Context;
-import android.os.Build;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,7 +12,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
-import it.unive.dais.bunnyteam.unfinitaly.app.memory.MapsItemIO;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 
 /**

@@ -38,6 +38,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     private GoogleMap map;
     private boolean flagregione = false;
     private boolean flagtipo = false;
+
     public CustomClusterManager(final Context context, GoogleMap map) {
         super(context, map);
         this.context=context;
@@ -62,6 +63,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                         ((TextView)((Activity)context).findViewById(R.id.titleMarker)).setText(title);
                         ((TextView)((Activity)context).findViewById(R.id.snippetMarker)).setText(snippet);
                         ((Activity)context).findViewById(R.id.marker_window).setVisibility(View.VISIBLE);
+
                     }
 
                     @Override
@@ -98,7 +100,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                                 if (app != null)
                                     ((MapsActivity)context).navigate(app,mapMarker.getPosition());
                                 else
-                                    Toast.makeText(context, "Errore durante la ricezione della posizione. Riprova tra poco.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.msg_error_gps, Toast.LENGTH_SHORT).show();
                             }
                         });
                 ((Activity)context).findViewById(R.id.position).setOnClickListener(new View.OnClickListener() {
@@ -178,6 +180,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 addItem(mM);
         cluster();
     }
+
     public OnClusterClickListener<MapMarker> getDefaultOnClusterClickListener(){
         return new ClusterManager.OnClusterClickListener<MapMarker>() {
             @Override
@@ -197,7 +200,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                                 if(context instanceof MapsActivity)
                                     ((MapsActivity)context).showMarkerInfo((MapMarker)clusterlist.toArray()[id]);
                             }
-                        }).setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

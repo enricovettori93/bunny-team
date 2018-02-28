@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
-import it.unive.dais.bunnyteam.unfinitaly.app.memory.MapsItemIO;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 /**
  *
@@ -65,7 +65,6 @@ public class CustomSliderLoading extends CustomSlider {
                 /*non ci sono markers*/
                 try {
                     if (MapsItemIO.isCached(loadAct)) {
-
                         Log.i("loading", "is on cache!");
                         if (!(MapMarkerList.getInstance().loadFromCache(loadAct)))
                             MapMarkerList.getInstance().loadFromCsv(loadAct, tv_status, tvCountLoad, progressBar,loadinggif);

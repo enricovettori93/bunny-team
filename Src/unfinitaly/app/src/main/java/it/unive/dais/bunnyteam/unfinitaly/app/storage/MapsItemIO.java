@@ -1,8 +1,7 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.memory;
+package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ public class MapsItemIO {
     }
 
     public void loadFromCsv(LoadingActivity loadingActivity, TextView tv_status, TextView tvCountLoad, ProgressBar progressBar, AVLoadingIndicatorView loadinggif){
-        new CSVReader(loadingActivity, tv_status, tvCountLoad, progressBar,loadinggif).execute();
+        new CSVReader(loadingActivity, tv_status, tvCountLoad, progressBar, loadinggif).execute();
     }
     public static boolean readFromCache(Context context) throws IOException, ClassNotFoundException {
         File cacheDir = new File(context.getCacheDir(), "files");

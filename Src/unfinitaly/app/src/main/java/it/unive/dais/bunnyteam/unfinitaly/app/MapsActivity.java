@@ -78,46 +78,29 @@ public class MapsActivity extends BaseActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnCameraIdleListener{
+        GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnCameraMoveStartedListener{
 
+    //DICHIARAZIONE VARIABILI
     protected static final int REQUEST_CHECK_SETTINGS = 500;
     protected static final int PERMISSIONS_REQUEST_ACCESS_BOTH_LOCATION = 501;
-    // alcune costanti
     private static final String TAG = "MapsActivity";
-    private LatLng posItaly;
+    private LatLng posItaly = new LatLng(41.87, 12.56);;
     private boolean onBackPressed = false;
     protected boolean firstMapTouch = false;
-    /**
-     * Questo oggetto è la mappa di Google Maps. Viene inizializzato asincronamente dal metodo {@code onMapsReady}.
-     */
     protected GoogleMap gMap;
-    /**
-     * Pulsanti in sovraimpressione gestiti da questa app. Da non confondere con i pulsanti che GoogleMaps mette in sovraimpressione e che non
-     * fanno parte degli oggetti gestiti manualmente dal codice.
-     */
-    protected ImageButton button_here, button_car;
-    /**
-     * API per i servizi di localizzazione.
-     */
-    protected FusedLocationProviderClient fusedLocationClient;
-    /**
-     * Posizione corrente. Potrebbe essere null prima di essere calcolata la prima volta.
-     */
     @Nullable
     protected LatLng currentPosition = null;
-    /**
-     * Il marker che viene creato premendo il pulsante button_here (cioè quello dell'app, non quello di Google Maps).
-     * E' utile avere un campo d'istanza che tiene il puntatore a questo marker perché così è possibile rimuoverlo se necessario.
-     * E' null quando non è stato creato il marker, cioè prima che venga premuto il pulsante HERE la prima volta.
-     */
     @Nullable
     protected Marker hereMarker = null;
     private CustomClusterManager<MapMarker> mClusterManager;
     private MapMarkerList mapMarkers = null;
     private View info;
     /**
-     * Questo metodo viene invocato quando viene inizializzata questa activity.
-     * Si tratta di una sorta di "main" dell'intera activity.
+     * API per i servizi di localizzazione.
+     */
+    protected FusedLocationProviderClient fusedLocationClient;
+
+    /**
      * Inizializza i campi d'istanza, imposta alcuni listener e svolge gran parte delle operazioni "globali" dell'activity.
      *
      * @param savedInstanceState bundle con lo stato dell'activity.
@@ -130,11 +113,6 @@ public class MapsActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         buildDrawer(toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        //Inizializzo la posizione dell'italia
-        posItaly = new LatLng(41.87, 12.56);
-        // trova gli oggetti che rappresentano i bottoni e li salva come campi d'istanza
-        //button_here = (ImageButton) findViewById(R.id.button_here);
-        button_car = (ImageButton) findViewById(R.id.button_car);
         // API per i servizi di localizzazione
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // inizializza la mappa asincronamente
@@ -152,10 +130,8 @@ public class MapsActivity extends BaseActivity
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
-        Log.i("Maps", "On Stop");
     }
 
     /**
@@ -164,7 +140,6 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("Maps", "on resume");
         Log.i("Maps", "size of markers: "+mapMarkers.getMapMarkers().size());
         if(mapMarkers.getMapMarkers().size()==0)
             try {
@@ -245,48 +220,12 @@ public class MapsActivity extends BaseActivity
         }
     }
 
-    /**
-     * Invocato quando viene creato il menu delle impostazioni.
-     *
-     * @param menu l'oggetto menu.
-     * @return ritornare true per visualizzare il menu.
-     * @see Activity#onCreateOptionsMenu(Menu)
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.maps_with_options, menu);
-        return true;
-    }
-
-    /**
-     * Invocato quando viene cliccata una voce nel menu delle impostazioni.
-     *
-     * @param item la voce di menu cliccata.
-     * @return ritorna true per continuare a chiamare altre callback; false altrimenti.
-     * @see Activity#onOptionsItemSelected(MenuItem)
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /*switch (item.getItemId()) {
-            case R.id.MENU_SETTINGS:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-            case R.id.MENU_INFO:
-                startActivity(new Intent(this, InfoActivity.class));
-                break;
-        }*/
-        return false;
-    }
-
     // onConnection callbacks
     //
     //
 
     /**
      * Viene chiamata quando i servizi di localizzazione sono attivi.
-     * Aggiungere qui eventuale codice da eseguire in tal caso.
-     *
      * @param bundle il bundle passato da Android.
      * @see com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks#onConnected(Bundle)
      */
@@ -297,8 +236,6 @@ public class MapsActivity extends BaseActivity
 
     /**
      * Viene chiamata quando i servizi di localizzazione sono sospesi.
-     * Aggiungere qui eventuale codice da eseguire in tal caso.
-     *
      * @param i un intero che rappresenta il codice della causa della sospenzione.
      * @see com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks#onConnectionSuspended(int)
      */
@@ -310,7 +247,6 @@ public class MapsActivity extends BaseActivity
 
     /**
      * Viene chiamata quando la connessione ai servizi di localizzazione viene persa.
-     * Aggiungere qui eventuale codice da eseguire in tal caso.
      *
      * @param connectionResult oggetto che rappresenta il risultato della connessione, con le cause della disconnessione ed altre informazioni.
      * @see com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener#onConnectionFailed(ConnectionResult)
@@ -323,8 +259,8 @@ public class MapsActivity extends BaseActivity
 
     /**
      * Chiamare questo metodo per aggiornare la posizione corrente del GPS.
-     * Si tratta di un metodo proprietario, che non ridefinisce alcun metodo della superclasse né implementa alcuna interfaccia: un metodo
-     * di utilità per aggiornare asincronamente in modo robusto e sicuro la posizione corrente del dispositivo mobile.
+     * Si tratta di un metodo proprietario, che non ridefinisce alcun metodo della superclasse né implementa alcuna interfaccia:
+     * aggiorna asincronamente la posizione corrente del dispositivo mobile.
      */
     public void updateCurrentPosition() {
         if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -346,7 +282,7 @@ public class MapsActivity extends BaseActivity
     }
 
     public LatLng getCurrentPosition(){
-        if(currentPosition==null) {
+        if(currentPosition == null) {
             return null;
         }
         else
@@ -354,8 +290,7 @@ public class MapsActivity extends BaseActivity
     }
 
     /**
-     * Viene chiamato quando si clicca sulla mappa.
-     * Aggiungere qui codice che si vuole eseguire quando l'utente clicca sulla mappa.
+     * Viene chiamato quando si clicca sulla mappa
      *
      * @param latLng la posizione del click.
      */
@@ -374,7 +309,6 @@ public class MapsActivity extends BaseActivity
 
     /**
      * Viene chiamato quando si clicca a lungo sulla mappa (long click).
-     * Aggiungere qui codice che si vuole eseguire quando l'utente clicca a lungo sulla mappa.
      *
      * @param latLng la posizione del click.
      */
@@ -398,23 +332,6 @@ public class MapsActivity extends BaseActivity
     @Override
     public void onCameraMoveStarted(int reason) {}
 
-    /**
-     * Metodo che viene chiamato a fine del movimento della camera secondo le API di google.
-     * Ma non so perchè non viene chiamato
-     * https://developers.google.com/android/reference/com/google/android/gms/maps/GoogleMap.OnCameraIdleListener
-     */
-    @Override
-    public void onCameraIdle() {
-        Log.d("Positione",""+gMap.getCameraPosition());
-        float[] result;
-        result = checkDistanceCamera(gMap.getCameraPosition());
-        Log.d("Distanza dall'italia",""+result[0]);
-        if (result[0] > 1000000){
-            animateOnItaly();
-            //Toast.makeText(getApplicationContext(),"Posizionamento telecamera sopra l'Italia.",Toast.LENGTH_SHORT).show();
-        }
-    }
-
     /*
      * Metodo per controllare la distanza tra la camera e l'italia
      */
@@ -428,17 +345,13 @@ public class MapsActivity extends BaseActivity
      * Questo metodo è molto importante: esso viene invocato dal sistema quando la mappa è pronta.
      * Il parametro è l'oggetto di tipo GoogleMap pronto all'uso, che viene immediatamente assegnato ad un campo interno della
      * classe.
-     * La natura asincrona di questo metodo, e quindi dell'inizializzazione del campo gMap, implica che tutte le
-     * operazioni che coinvolgono la mappa e che vanno eseguite appena essa diventa disponibile, vanno messe in questo metodo.
-     * Ciò non significa che tutte le operazioni che coinvolgono la mappa vanno eseguite qui: è naturale aver bisogno di accedere al campo
-     * gMap in altri metodi, per eseguire operazioni sulla mappa in vari momenti, ma è necessario tenere a mente che tale campo potrebbe
-     * essere ancora non inizializzato e va pertanto verificata la nullness.
      *
      * @param googleMap oggetto di tipo GoogleMap.
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        mClusterManager = new CustomClusterManager<>(this, googleMap);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_BOTH_LOCATION);
@@ -459,34 +372,32 @@ public class MapsActivity extends BaseActivity
                 }
             }
         });
-        UiSettings uis = gMap.getUiSettings();
-        uis.setZoomGesturesEnabled(true);
-        uis.setMyLocationButtonEnabled(true);
         gMap.setOnMyLocationButtonClickListener(
-                new GoogleMap.OnMyLocationButtonClickListener() {
-                    @Override
-                    public boolean onMyLocationButtonClick() {
-                        gpsCheck();
-                        return false;
-                    }
-                });
-        uis.setCompassEnabled(true);
-        uis.setZoomControlsEnabled(true);
-        uis.setMapToolbarEnabled(true);
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    gpsCheck();
+                    return false;
+                }
+            });
+        gMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
+        gMap.getUiSettings().setMapToolbarEnabled(false);
+        gMap.getUiSettings().setZoomGesturesEnabled(true);
+        gMap.getUiSettings().setMyLocationButtonEnabled(true);
+        gMap.getUiSettings().setCompassEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(true);
+        gMap.getUiSettings().setMapToolbarEnabled(true);
 
-        applyMapSettings();
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
-        //sposto la telecamera sopra l'italia
-        animateOnItaly();
         /*prepare the cluster*/
-        mClusterManager = new CustomClusterManager<>(this, googleMap);
         googleMap.setOnCameraIdleListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
         googleMap.setOnInfoWindowClickListener(mClusterManager);
         mClusterManager.setMapMarkerList(mapMarkers);
         mClusterManager.cluster();
-        gMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
-        gMap.getUiSettings().setMapToolbarEnabled(false);
+
+        applyMapSettings();
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
+        animateOnItaly();
         updateCurrentPosition();
     }
 
@@ -495,14 +406,11 @@ public class MapsActivity extends BaseActivity
      */
     protected void applyMapSettings() {
         if (gMap != null) {
-            Log.d(TAG, "applying map settings");
             gMap.setMapType(SettingsActivity.getMapStyle(this));
         }
-        //setHereButtonVisibility();
     }
 
     public void animateOnItaly(){
-        Log.d("Animazione camera","ITALY");
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
     }
 
@@ -576,7 +484,7 @@ public class MapsActivity extends BaseActivity
             if(findViewById(R.id.marker_window).getVisibility()==View.VISIBLE)
                 findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
             else if(onBackPressed){
-            /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
+                /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
                 Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);

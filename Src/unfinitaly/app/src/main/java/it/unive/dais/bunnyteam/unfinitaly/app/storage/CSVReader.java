@@ -1,7 +1,6 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.memory;
+package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -58,7 +57,6 @@ public class CSVReader extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void... voids) {
         CsvRowParser p = new CsvRowParser(new InputStreamReader(is), true, ";");
         try {
-                /*troviamo le rows*/
             rows = p.getAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -85,10 +83,9 @@ public class CSVReader extends AsyncTask<Void, Integer, Void> {
     }
     @Override
     protected void onPostExecute(Void v) {
-            /*terminiamo la LoadingActivity*/
-            /*aggiorniamo i marker e salviamoli in cache -> va fatto qui perchè devono essere salvati quando ho finito di leggerli*/
+        /*terminiamo la LoadingActivity*/
+        /*aggiorniamo i marker e salviamoli in cache -> va fatto qui perchè devono essere salvati quando ho finito di leggerli*/
         MapMarkerList.getInstance().setMapMarkers(items);
-        //progressBar.setProgress(100);
         Log.d("CIAO", "DONE!");
         try {
             MapsItemIO.saveToCache(MapMarkerList.getInstance(), loadingAct);

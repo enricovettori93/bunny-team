@@ -8,26 +8,14 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.paolorotolo.appintro.AppIntro;
-import com.wang.avi.AVLoadingIndicatorView;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
-import it.unive.dais.bunnyteam.unfinitaly.app.memory.MapsItemIO;
 import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSlider;
 import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSliderLoading;
 

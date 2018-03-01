@@ -190,10 +190,10 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 final Collection<MapMarker> clusterlist = cluster.getItems();
                 Log.d("Grandezza",""+cluster.getSize());
                 for(int i=0;i<clusterlist.size();i++){
-                    stringclusterlista[i]= (String)"Categoria: "+((MapMarker)clusterlist.toArray()[i]).getCategoria()+"\n"+((MapMarker)clusterlist.toArray()[i]).getTipologia_cup();
+                    stringclusterlista[i]= R.string.clustercategoria + ": " +((MapMarker)clusterlist.toArray()[i]).getCategoria()+"\n"+((MapMarker)clusterlist.toArray()[i]).getTipologia_cup();
                 }
                 AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setTitle("Elementi presenti")
+                        .setTitle(R.string.clustertitle)
                         .setSingleChoiceItems(stringclusterlista, 0, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {

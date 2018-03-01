@@ -44,8 +44,8 @@
     <!--Loading Activity -->
     <string name="loading_snackbarcontinue">CONTINUA</string>
     <string name="loading_snackbarwait"></string>
-    <string name="loading_snackbarready">Mappa disponibile!</string>
-    <string name="loading_snackbarnotready">Mappa non ancora pronta. Attendi!</string>
+    <string name="loading_snackbarready">Caricamento completato!</string>
+    <string name="loading_snackbarnotready">Caricamento non ancora finito. Attendi!</string>
     <!-- -->
 
     <!-- Maps Activity -->
@@ -92,5 +92,16 @@
     <!--FragmentInfo 5 -->
     <string name="fi5_menu">Aiuto? Suggerimenti?</string>
     <string name="fi5_description">Puoi contattarci dalla sezione informazioni!</string>
+    <!-- -->
+
+    <!-- Custom Cluster Manager -->
+    <string name="clustertitle">Elementi presenti</string>
+    <string name="clustercategoria">Categoria</string>
+    <!-- -->
+
+    <!-- Login Activity -->
+    <string name="login_text">Accedi con il tuo account Google\nper commentare le opere.</string>
+    <string name="login_button">Accedi</string>
+    <string name="login_skip">Salta il login</string>
     <!-- -->
 </resources>

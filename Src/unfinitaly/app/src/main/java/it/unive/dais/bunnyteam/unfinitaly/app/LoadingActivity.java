@@ -99,7 +99,7 @@ public class LoadingActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         if(isReady())
-            startMapsActivity();
+            startLoginActivity();
         else {
             Snackbar snack = Snackbar.make(currentFragment.getView(), R.string.loading_snackbarnotready, Snackbar.LENGTH_SHORT);
             View view = snack.getView();
@@ -131,7 +131,7 @@ public class LoadingActivity extends AppIntro {
             snack.setAction(R.string.loading_snackbarcontinue, new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    startMapsActivity();
+                    startLoginActivity();
                 }
             });
         }
@@ -139,6 +139,10 @@ public class LoadingActivity extends AppIntro {
 
     public void startMapsActivity() {
         startActivity(new Intent(this, MapsActivity.class));
+    }
+
+    public void startLoginActivity(){
+        startActivity(new Intent(this,LoginActivity.class));
     }
 
     public boolean isReady() {

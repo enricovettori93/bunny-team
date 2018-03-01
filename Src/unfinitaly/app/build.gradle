@@ -34,6 +34,7 @@ dependencies {
     implementation("com.mikepenz:materialdrawer:6.0.2@aar") {
         transitive = true
     }
+    compile 'com.google.firebase:firebase-core:11.8.0'
     compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:support-v4:25.4.0'
     compile 'com.google.android.gms:play-services-maps:11.8.0'
@@ -53,3 +54,4 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+apply plugin: 'com.google.gms.google-services'

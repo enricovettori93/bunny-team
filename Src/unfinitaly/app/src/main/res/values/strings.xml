@@ -104,4 +104,11 @@
     <string name="login_button">Accedi</string>
     <string name="login_skip">Salta il login</string>
     <!-- -->
+
+    <!-- Account Activity -->
+    <string name="account_name">Il tuo profilo</string>
+    <string name="account_email">La tua email</string>
+    <string name="account_logout">Logout</string>
+    <string name="account_toolbar">Il tuo account</string>
+    <!-- -->
 </resources>

@@ -46,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-
     protected void buildDrawer(Toolbar toolbar) {
         thisActivity = this;
         resetfilter = false;
@@ -69,8 +68,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                 })
                 .build();
         //Creazione voci di menu
+        PrimaryDrawerItem user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
         PrimaryDrawerItem informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);
         PrimaryDrawerItem impostazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Impostazioni").withIcon(R.drawable.settings);
+        user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                startAccountActivity();
+                drawer.setSelection(-1);
+                return false;
+            }
+        });
         informazioni.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -132,13 +140,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            /*percentuale.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(getApplicationContext(), "Pulsante %", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            });*/
             percentuale.withOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
@@ -169,20 +170,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawer.setSelection(-1);
                 }
             });
-            /*distribuzione.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                    drawer.setSelection(-1);
-                    return false;
-                }
-            });*/
             drawer = new com.mikepenz.materialdrawer.DrawerBuilder()
                     .withActivity(this)
                     .withAccountHeader(headerResult)
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                           tutte, regione, categoria, percentuale, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
+                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
                     )
                     /*.addStickyDrawerItems(
                             informazioni, impostazioni
@@ -205,7 +199,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                            mappa, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
+                            user,new DividerDrawerItem(),mappa, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
                     )
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -245,6 +239,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             startActivity(maps_info);
         }
     }
+
+    public void startAccountActivity(){
+        Intent account = new Intent(this,AccountActivity.class);
+        startActivity(account);
+    }
+
     private void showAlertDialogRegions() {
         if (thisActivity instanceof MapsActivity) {
             final String[] allRegions = getResources().getStringArray(R.array.regions);

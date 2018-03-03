@@ -15,9 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.paolorotolo.appintro.AppIntro;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSlider;
 import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSliderLoading;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 /**
  *
@@ -35,6 +39,8 @@ public class LoadingActivity extends AppIntro {
     private FloatingActionButton fab;
     private View loadingView;
     private boolean ready = false;
+    private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +63,26 @@ public class LoadingActivity extends AppIntro {
         setProgressButtonEnabled(true);
         showSkipButton(false);
         setFadeAnimation();
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth != null){
+            user = firebaseAuth.getCurrentUser();
+            if (user != null){
+                User.getIstance().setName(user.getDisplayName().toString());
+                User.getIstance().setEmail(user.getEmail().toString());
+            }
+        }
     }
     public void showWebView(){
         webview.setVisibility(View.VISIBLE);
         tv_status.setVisibility(View.INVISIBLE);
         tvCountLoad.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-        //fab.setVisibility(View.INVISIBLE);
     }
     public void unshowWebView(){
         webview.setVisibility(View.INVISIBLE);
         tv_status.setVisibility(View.VISIBLE);
         tvCountLoad.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-        //fab.setVisibility(View.VISIBLE);
-        //if(status == 1)
-            //startMapsActivity();
     }
 
     public void setStatus(int status) {

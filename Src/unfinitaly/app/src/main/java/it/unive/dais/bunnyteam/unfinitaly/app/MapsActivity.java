@@ -412,6 +412,8 @@ public class MapsActivity extends BaseActivity
                 stringmarkers = new String[activemarkers.size()];
                 for(int i=0;i<activemarkers.size();i++)
                     stringmarkers[i]=R.string.clustercategoria + ": " +((MapMarker)activemarkers.toArray()[i]).getCategoria()+"\n"+((MapMarker)activemarkers.toArray()[i]).getTipologia_cup();
+                Log.d("BUTTON LIST","CLICKED");
+                Log.d("SIZE LIST",""+activemarkers.size());
                 final AlertDialog alert = new AlertDialog.Builder(thisActivity)
                         .setTitle("Elementi attivi")
                         .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
@@ -427,6 +429,7 @@ public class MapsActivity extends BaseActivity
                             }
                         })
                         .create();
+                alert.show();
             }
         });
 

@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView skip;
     private com.google.android.gms.common.SignInButton login;
     public static final String TAG = "LoginActivity";
-    public static final int RequestSignInCode = 7;
+    public static final int RequestSignInCode = 0;
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener firebaseAuthListener;
     public GoogleApiClient googleApiClient;
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         skip = (TextView)findViewById(R.id.textViewSkip);
-        firebaseAuth = FirebaseAuth.getInstance();
+        login = (com.google.android.gms.common.SignInButton)findViewById(R.id.buttonLogin);
 
         //Creazione e configurazione Sign In con Google
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -71,7 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        login = (com.google.android.gms.common.SignInButton)findViewById(R.id.buttonLogin);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,12 +102,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == resultCode){
+        Log.d("RESULT ACTIVITY","MESSAGGIO E DATI DI RITORNO, REQUEST CODE: " + requestCode + " RESULT CODE: "+ resultCode);
+        if(requestCode == RequestSignInCode){
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(googleSignInResult.isSuccess()){
+                Log.d("LOGIN","SUCCESSO");
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
                 FirebaseUserAuth(googleSignInAccount);
             }
+            else
+                Log.d("LOGIN","INSUCCESSO");
         }
     }
     public void FirebaseUserAuth(GoogleSignInAccount googleSignInAccount) {
@@ -129,22 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-        /*firebaseAuth.signInWithCredential(authCredential)
-                .addOnCompleteListener(this, new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task AuthResultTask) {
-                        if (AuthResultTask.isSuccessful()){
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            User.getIstance().setName(firebaseUser.getDisplayName().toString());
-                            Log.d("NOME FIREBASE",firebaseUser.getDisplayName().toString());
-                            User.getIstance().setEmail(firebaseUser.getEmail().toString());
-                            Log.d("EMAIL FIREBASE",firebaseUser.getEmail().toString());
-                            startMapsActivity();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Something Went Wrong",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });*/
     }
     public void startMapsActivity(){
         Intent i = new Intent(this,MapsActivity.class);
@@ -152,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
+    public void onResume(){
+        super.onResume();
         firebaseAuth.addAuthStateListener(firebaseAuthListener);
     }
 

@@ -29,6 +29,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
+
 /**
  *
  * @author BunnyTeam, Università Ca' Foscari
@@ -50,23 +53,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         thisActivity = this;
         resetfilter = false;
         setSupportActionBar(toolbar);
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withSelectionListEnabledForSingleProfile(false)
-                .withHeaderBackground(R.drawable.background)
-                .withProfileImagesVisible(false)
-                .withCompactStyle(true)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("UnfinItaly").withEmail("unfinitaly.app@gmail.com")
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        startInfoActivity();
-                        return false;
-                    }
-                })
-                .build();
+        AccountHeader headerResult;
+        if(User.getIstance().getEmail().equals("")){
+            //Utente non loggato
+            headerResult = new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .withHeaderBackground(R.drawable.background)
+                    .withProfileImagesVisible(false)
+                    .addProfiles(
+                            new ProfileDrawerItem().withName("UnfinItaly").withEmail("unfinitaly.app@gmail.com")
+                    )
+                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        @Override
+                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                            startInfoActivity();
+                            return false;
+                        }
+                    })
+                    .build();
+        }
+        else{
+            //Utente loggato
+           headerResult = new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .withHeaderBackground(R.drawable.background)
+                    .withProfileImagesVisible(false)
+                    .addProfiles(
+                            new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail())
+                    )
+                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        @Override
+                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                            startInfoActivity();
+                            return false;
+                        }
+                    })
+                    .build();
+        }
+
         //Creazione voci di menu
         PrimaryDrawerItem user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
         PrimaryDrawerItem informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);

@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 
 public class AccountActivity extends BaseActivity {
     Toolbar toolbar;
     TextView nome, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

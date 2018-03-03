@@ -9,7 +9,7 @@ public class User {
     private String email;
     private static User me = new User();
 
-    public User(){
+    private User(){
         name = "";
         email = "";
     }

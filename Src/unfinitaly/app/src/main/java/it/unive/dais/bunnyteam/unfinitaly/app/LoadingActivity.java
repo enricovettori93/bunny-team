@@ -45,11 +45,8 @@ public class LoadingActivity extends AppIntro {
             System.exit(0);
         }
         csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
-
         addSlide(csl);
         ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.msg_loading);
-        if(getSlides().get(0) instanceof CustomSliderLoading)
-            Log.d("CIAO", "È un customsliderloading!!!");
         addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
         addSlide(CustomSlider.newInstance(R.layout.fragmentinfo3));
         addSlide(CustomSlider.newInstance(R.layout.fragmentinfo4));
@@ -111,7 +108,6 @@ public class LoadingActivity extends AppIntro {
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
-        Log.d("Change fragment", "set new Fragment");
         curFragment = newFragment;
     }
 

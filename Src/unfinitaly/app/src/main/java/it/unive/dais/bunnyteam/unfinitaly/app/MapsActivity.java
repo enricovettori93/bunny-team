@@ -7,15 +7,19 @@ package it.unive.dais.bunnyteam.unfinitaly.app;
 import android.Manifest;
 import android.app.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.Image;
 import android.net.Uri;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -29,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -57,6 +62,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
@@ -95,6 +101,7 @@ public class MapsActivity extends BaseActivity
     private CustomClusterManager<MapMarker> mClusterManager;
     private MapMarkerList mapMarkers = null;
     private View info;
+    private ImageView list;
     /**
      * API per i servizi di localizzazione.
      */
@@ -395,6 +402,34 @@ public class MapsActivity extends BaseActivity
         mClusterManager.setMapMarkerList(mapMarkers);
         mClusterManager.cluster();
 
+        list = (ImageView)findViewById(R.id.button_list);
+        list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ArrayList<MapMarker> activemarkers;
+                String[] stringmarkers;
+                activemarkers = mClusterManager.getActiveMarkers();
+                stringmarkers = new String[activemarkers.size()];
+                for(int i=0;i<activemarkers.size();i++)
+                    stringmarkers[i]=R.string.clustercategoria + ": " +((MapMarker)activemarkers.toArray()[i]).getCategoria()+"\n"+((MapMarker)activemarkers.toArray()[i]).getTipologia_cup();
+                final AlertDialog alert = new AlertDialog.Builder(thisActivity)
+                        .setTitle("Elementi attivi")
+                        .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int id) {
+                                showMarkerInfo((MapMarker)activemarkers.toArray()[id]);
+                            }
+                        })
+                        .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .create();
+            }
+        });
+
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         animateOnItaly();
@@ -509,6 +544,14 @@ public class MapsActivity extends BaseActivity
 
     public GoogleMap getMap(){
         return gMap;
+    }
+
+    public void setIconListVisibility(boolean visibility){
+        ImageView icon = (ImageView)findViewById(R.id.button_list);
+        if(visibility == true)
+            icon.setVisibility(View.VISIBLE);
+        else
+            icon.setVisibility(View.INVISIBLE);
     }
 }
 

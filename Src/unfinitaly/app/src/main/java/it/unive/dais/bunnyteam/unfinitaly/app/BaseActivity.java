@@ -120,6 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                     resetfilter = true;
                     ((MapsActivity)thisActivity).getClusterManager().resetFlags();
+                    ((MapsActivity)thisActivity).setIconListVisibility(false);
                     drawer.setSelection(-1);
                     return false;
                 }
@@ -293,6 +294,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         ((MapsActivity) thisActivity).getClusterManager().showRegions(selectedRegions);
                         ((MapsActivity)thisActivity).getClusterManager().setFlagRegion(true);
                         ((MapsActivity)thisActivity).animateOnItaly();
+                        ((MapsActivity)thisActivity).setIconListVisibility(true);
                         dialog.dismiss();
                     }
                 }
@@ -349,6 +351,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         ((MapsActivity)thisActivity).getClusterManager().showCategory(selectedCategory);
                         ((MapsActivity)thisActivity).getClusterManager().setFlagTipo(true);
                         ((MapsActivity)thisActivity).animateOnItaly();
+                        ((MapsActivity)thisActivity).setIconListVisibility(true);
                         dialog.dismiss();
                     }
                 }

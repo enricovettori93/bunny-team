@@ -16,6 +16,7 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +35,9 @@ import it.unive.dais.bunnyteam.unfinitaly.app.R;
 public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<MapMarker> implements GoogleMap.OnCameraIdleListener{
 
     private MapMarkerList mapMarkers = null;
+    private ArrayList<MapMarker> mapMarkersRegion = null;
+    private ArrayList<MapMarker> mapMarkersCategory = null;
+    private ArrayList<MapMarker> mapMarkersActive = null;
     private Context context;
     private GoogleMap map;
     private boolean flagregione = false;
@@ -41,7 +45,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     public CustomClusterManager(final Context context, GoogleMap map) {
         super(context, map);
-        this.context=context;
+        this.context = context;
         this.map = map;
         setOnClusterClickListener(getDefaultOnClusterClickListener());
         setOnClusterItemClickListener(new OnClusterItemClickListener<MapMarker>() {
@@ -140,22 +144,6 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         flagtipo = status;
     }
 
-    public void showRegions(ArrayList<String> regions) {
-        /*qui devo far vedere le regioni.*/
-        clearItems();
-        for(MapMarker mM: mapMarkers.getMapMarkers())
-            if(regions.contains(mM.getRegione()))
-                addItem(mM);
-        flagregione = true;
-        cluster();
-    }
-    public int countMarkerByRegion(String region){
-        int i=0;
-        for(MapMarker mM: mapMarkers.getMapMarkers())
-            if(mM.getRegione().equals(region))
-                i++;
-        return i;
-    }
     public ArrayList<String> getAllMarkerCategory(){
         ArrayList<String> allCategory = new ArrayList<>();
         for(MapMarker mM: mapMarkers.getMapMarkers())
@@ -172,12 +160,34 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         return i;
     }
 
-    public void showCategory(ArrayList<String> selectedCategory) {
-       /*qui devo far vedere le categorie.*/
-        clearItems();
+    public int countMarkerByRegion(String region){
+        int i=0;
         for(MapMarker mM: mapMarkers.getMapMarkers())
-            if(selectedCategory.contains(mM.getCategoria()))
+            if(mM.getRegione().equals(region))
+                i++;
+        return i;
+    }
+
+    public void showRegions(ArrayList<String> regions) {
+        clearItems();
+        mapMarkersActive = new ArrayList<>();
+        for(MapMarker mM: mapMarkers.getMapMarkers())
+            if(regions.contains(mM.getRegione())){
                 addItem(mM);
+                mapMarkersActive.add(mM);
+            }
+        flagregione = true;
+        cluster();
+    }
+
+    public void showCategory(ArrayList<String> selectedCategory) {
+        clearItems();
+        mapMarkersActive = new ArrayList<>();
+        for(MapMarker mM: mapMarkers.getMapMarkers())
+            if(selectedCategory.contains(mM.getCategoria())) {
+                addItem(mM);
+                mapMarkersActive.add(mM);
+            }
         cluster();
     }
 
@@ -256,5 +266,8 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         for(MapMarker mM: mapMarkers.getMapMarkers())
             lL.add(mM.getPosition());
         return lL;
+    }
+    public ArrayList<MapMarker> getActiveMarkers(){
+        return mapMarkersActive;
     }
 }

@@ -59,6 +59,4 @@ public class MapMarkerList extends MapMarkerListVersioningHelper implements Seri
     public static void setInstance(MapMarkerList instance){
         MapMarkerList.instance = instance;
     }
-    
-
 }

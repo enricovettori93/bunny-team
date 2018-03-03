@@ -15,41 +15,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:context="it.unive.dais.bunnyteam.template.MapsActivity">
-
-        <LinearLayout
-            android:layout_width="@dimen/linear_layout_width"
-            android:layout_height="@dimen/linear_layout_height"
-            android:layout_gravity="start|bottom"
-            android:layout_marginBottom="@dimen/linear_layout_margin_bottom"
-            android:layout_marginLeft="@dimen/linear_layout_margin_left"
-            android:gravity="start"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-            <ImageButton
-                android:id="@+id/button_car"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/button_margin"
-                android:layout_weight="1"
-                android:background="@color/trans"
-                android:scaleType="fitStart"
-                android:src="@drawable/button_car"
-                android:visibility="invisible" />
-
-            <ImageButton
-                android:id="@+id/button_here"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/button_margin"
-                android:layout_weight="1"
-                android:background="@color/trans"
-                android:scaleType="fitStart"
-                android:src="@drawable/button_here"
-                android:visibility="invisible" />
-        </LinearLayout>
     </fragment>
 
+    <ImageButton
+        android:id="@+id/button_list"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@color/trans"
+        android:scaleType="fitStart"
+        android:src="@drawable/list"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/marker_window"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.952" />
     <include
         android:id="@+id/toolbar"
         layout="@xml/toolbar"

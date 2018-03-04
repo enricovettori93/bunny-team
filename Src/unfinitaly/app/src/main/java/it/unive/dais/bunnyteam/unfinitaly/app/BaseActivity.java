@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,6 +47,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     boolean resetfilter;
     TileOverlay mOverlay;
     HeatmapTileProvider mProvider;
+    PrimaryDrawerItem user;
+    PrimaryDrawerItem informazioni;
+    PrimaryDrawerItem impostazioni;
+    PrimaryDrawerItem tutte;
+    PrimaryDrawerItem regione;
+    PrimaryDrawerItem categoria;
+    SwitchDrawerItem percentuale;
+    SwitchDrawerItem distribuzione;
+    PrimaryDrawerItem mappa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +87,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         else{
             //Utente loggato
-           headerResult = new AccountHeaderBuilder()
+            Uri imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
+            headerResult = new AccountHeaderBuilder()
                     .withActivity(this)
                     .withSelectionListEnabledForSingleProfile(false)
                     .withHeaderBackground(R.drawable.background)
-                    .withProfileImagesVisible(false)
                     .addProfiles(
-                            new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail())
+                            new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
                     )
                     .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                         @Override
                         public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                            startInfoActivity();
+                            startAccountActivity();
                             return false;
                         }
                     })
@@ -96,9 +106,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         //Creazione voci di menu
-        PrimaryDrawerItem user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
-        PrimaryDrawerItem informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);
-        PrimaryDrawerItem impostazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Impostazioni").withIcon(R.drawable.settings);
+        user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
+        informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);
+        impostazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Impostazioni").withIcon(R.drawable.settings);
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -132,12 +142,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
         if (this instanceof MapsActivity) {
             //CREO I PULSANTI
-            PrimaryDrawerItem tutte = new PrimaryDrawerItem().withIdentifier(1).withName("Reset filtri").withIcon(R.drawable.unset);
-            PrimaryDrawerItem regione = new PrimaryDrawerItem().withIdentifier(2).withName("Filtro per regione").withIcon(R.drawable.regione);
-            PrimaryDrawerItem categoria = new PrimaryDrawerItem().withIdentifier(3).withName("Filtro per categoria").withIcon(R.drawable.categoria);
-            //PrimaryDrawerItem percentuale = new PrimaryDrawerItem().withIdentifier(1).withName("Filtro per percentuale").withIcon(R.drawable.percentage);
-            final SwitchDrawerItem percentuale = new SwitchDrawerItem().withIdentifier(4).withName("Filtro per percentuale").withIcon(R.drawable.percentage);
-            final SwitchDrawerItem distribuzione = new SwitchDrawerItem().withIdentifier(5).withName("Distribuzione").withIcon(R.drawable.distribuzione);
+            tutte = new PrimaryDrawerItem().withIdentifier(1).withName("Reset filtri").withIcon(R.drawable.unset);
+            regione = new PrimaryDrawerItem().withIdentifier(2).withName("Filtro per regione").withIcon(R.drawable.regione);
+            categoria = new PrimaryDrawerItem().withIdentifier(3).withName("Filtro per categoria").withIcon(R.drawable.categoria);
+            percentuale = new SwitchDrawerItem().withIdentifier(4).withName("Filtro per percentuale").withIcon(R.drawable.percentage);
+            distribuzione = new SwitchDrawerItem().withIdentifier(5).withName("Distribuzione").withIcon(R.drawable.distribuzione);
             //Associazione listener alle varie voci
             tutte.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
@@ -193,16 +202,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
                     createOverlay();
                     if(isChecked){
-                        Log.d("overlay","1");
                         mOverlay.setVisible(true);
                     }
                     else{
-
-                        Log.d("overlay","0");
                         mOverlay.setVisible(false);
-
                     }
-                    //drawer.closeDrawer();
                     drawer.setSelection(-1);
                 }
             });
@@ -214,14 +218,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .addDrawerItems(
                            user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
                     )
-                    /*.addStickyDrawerItems(
-                            informazioni, impostazioni
-                    )*/
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         } else {
-            PrimaryDrawerItem mappa = new PrimaryDrawerItem().withIdentifier(1).withName("Mappa").withIcon(R.drawable.maps);
+            mappa = new PrimaryDrawerItem().withIdentifier(1).withName("Mappa").withIcon(R.drawable.maps);
             mappa.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -284,6 +285,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void startAccountActivity(){
         Intent account = new Intent(this,AccountActivity.class);
         startActivity(account);
+    }
+
+    protected void activateHeatmap(){
+        //ABILITO L'OVERLAY PER LA HEATMAP
+        mOverlay.setVisible(true);
+        distribuzione.withChecked(true);
     }
 
     private void showAlertDialogRegions() {

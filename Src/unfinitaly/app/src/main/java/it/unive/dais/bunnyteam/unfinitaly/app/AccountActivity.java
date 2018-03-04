@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.fastadapter.utils.DefaultIdDistributor;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
@@ -23,7 +25,7 @@ public class AccountActivity extends BaseActivity {
     private TextView nome, email;
     private Button logout;
     private Uri urlfoto;
-    private ImageView immagineprofilo;
+    private CircleImageView immagineprofilo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,17 @@ public class AccountActivity extends BaseActivity {
         toolbar.setTitle(R.string.account_toolbar);
         nome = (TextView)findViewById(R.id.textViewNome);
         email = (TextView)findViewById(R.id.textViewEmail);
-        immagineprofilo = (ImageView)findViewById(R.id.imageAccount);
+        immagineprofilo = (CircleImageView) findViewById(R.id.imageAccount);
         if(FirebaseUtilities.getIstance().isLogged()){
             nome.setText(FirebaseUtilities.getIstance().getNome());
             email.setText(FirebaseUtilities.getIstance().getEmail());
             urlfoto = FirebaseUtilities.getIstance().getFotoProfilo();
-            immagineprofilo.setImageURI(urlfoto);
+            Glide
+                    .with(getApplicationContext())
+                    .load(urlfoto)
+                    .centerCrop()
+                    .into(immagineprofilo);
+            //immagineprofilo.setImageURI(urlfoto);
         }
         logout = (Button)findViewById(R.id.buttonLogout);
         logout.setOnClickListener(new View.OnClickListener() {

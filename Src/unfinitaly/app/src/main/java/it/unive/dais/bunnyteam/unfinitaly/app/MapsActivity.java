@@ -438,6 +438,7 @@ public class MapsActivity extends BaseActivity
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
+        //activateHeatmap();
     }
 
     /**

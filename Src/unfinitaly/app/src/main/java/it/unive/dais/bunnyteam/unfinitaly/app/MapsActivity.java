@@ -325,7 +325,8 @@ public class MapsActivity extends BaseActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startSettingsActivity();
+                Intent i = new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(i);
             }
         }, 700);
     }
@@ -435,7 +436,7 @@ public class MapsActivity extends BaseActivity
 
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
-        animateOnItaly();
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
     }
 

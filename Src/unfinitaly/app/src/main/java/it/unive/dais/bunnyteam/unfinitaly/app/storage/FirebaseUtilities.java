@@ -1,5 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -8,8 +10,8 @@ import com.google.firebase.auth.FirebaseUser;
  */
 
 public class FirebaseUtilities {
-    private static FirebaseAuth auth;
-    private static FirebaseUser user;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
     private static FirebaseUtilities fbutilites = new FirebaseUtilities();
     private FirebaseUtilities(){
         auth = FirebaseAuth.getInstance();
@@ -19,7 +21,7 @@ public class FirebaseUtilities {
         return fbutilites;
     }
 
-    private static boolean isLogged(){
+    public boolean isLogged(){
         if(auth !=  null){
             user = auth.getCurrentUser();
             if(user != null)
@@ -31,7 +33,7 @@ public class FirebaseUtilities {
             return false;
     }
 
-    public static String getEmail(){
+    public String getEmail(){
         if (isLogged()){
             return user.getEmail().toString();
         }
@@ -39,11 +41,19 @@ public class FirebaseUtilities {
             return "";
     }
 
-    public static String getNome(){
+    public String getNome(){
         if (isLogged()){
             return user.getDisplayName().toString();
         }
         else
             return "";
+    }
+
+    public void logOut(){
+        auth.signOut();
+    }
+
+    public Uri getFotoProfilo(){
+        return user.getPhotoUrl();
     }
 }

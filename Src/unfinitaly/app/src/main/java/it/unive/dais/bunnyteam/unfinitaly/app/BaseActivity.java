@@ -26,11 +26,13 @@ import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 /**
  *
@@ -100,9 +102,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                startAccountActivity();
-                drawer.setSelection(-1);
-                return false;
+                if(FirebaseUtilities.getIstance().isLogged()){
+                    startAccountActivity();
+                    drawer.setSelection(-1);
+                    return false;
+                }
+                else{
+                    startLoginActivity();
+                    drawer.setSelection(-1);
+                    return false;
+                }
             }
         });
         informazioni.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -245,14 +254,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    private void startLoginActivity(){
+        Intent i = new Intent(this,LoginActivity.class);
+        i.putExtra("Activity","Base");
+        startActivity(i);
+    }
 
-    public void startSettingsActivity() {
+    private void startSettingsActivity() {
         Intent intent_info = new Intent(this, SettingsActivity.class);
         startActivity(intent_info);
         //overridePendingTransition(R.xml.slide_up_info, R.xml.no_change);
     }
 
-    public void startInfoActivity() {
+    private void startInfoActivity() {
         if (!(this instanceof InfoActivity)) {
             Intent intent_info = new Intent(this, InfoActivity.class);
             startActivity(intent_info);
@@ -267,7 +281,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void startAccountActivity(){
+    private void startAccountActivity(){
         Intent account = new Intent(this,AccountActivity.class);
         startActivity(account);
     }

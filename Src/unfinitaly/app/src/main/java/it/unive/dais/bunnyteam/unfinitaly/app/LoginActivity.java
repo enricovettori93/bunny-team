@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     public FirebaseAuth.AuthStateListener firebaseAuthListener;
     public GoogleApiClient googleApiClient;
     private boolean onBackPressed = false;
+    private Intent i;
+    private String intentcontent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         skip = (TextView)findViewById(R.id.textViewSkip);
         login = (com.google.android.gms.common.SignInButton)findViewById(R.id.buttonLogin);
-
+        i = getIntent();
+        intentcontent = i.getStringExtra("Activity");
         //Creazione e configurazione Sign In con Google
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -87,9 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null){
                     startMapsActivity();
                 }
-                else{
+                /*else{
                     Toast.makeText(getApplicationContext(),"User disconnected",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         };
     }
@@ -127,8 +130,13 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("NOME FIREBASE",firebaseUser.getDisplayName().toString());
                             User.getIstance().setEmail(firebaseUser.getEmail().toString());
                             Log.d("EMAIL FIREBASE",firebaseUser.getEmail().toString());
-                            Toast.makeText(getApplicationContext(),"Successo.",Toast.LENGTH_SHORT).show();
-                            startMapsActivity();
+                            Toast.makeText(getApplicationContext(),"Accesso effettuato con successo.",Toast.LENGTH_SHORT).show();
+                            if(intentcontent.equals("Account")){
+                                Intent i = new Intent(getApplicationContext(),AccountActivity.class);
+                                startActivity(i);
+                            }
+                            else
+                                startMapsActivity();
                         }
                         else{
                             Toast.makeText(getApplicationContext(),"Errore durante il login.",Toast.LENGTH_LONG).show();
@@ -154,22 +162,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        if(onBackPressed){
-            /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
-            Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
+        if(intentcontent.equals("Loading")){
+            //Sono stato chiamato da loading activity
+            if(onBackPressed){
+                /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
+                Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("EXIT", true);
+                startActivity(intent);
+            }
+            else{
+                onBackPressed=true;
+                Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onBackPressed=false;
+                    }
+                }, 2000);
+            }
         }
         else{
-            onBackPressed=true;
-            Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onBackPressed=false;
-                }
-            }, 2000);
+            //Sono stato chiamato da altre activity
+            Intent i = new Intent(this,MapsActivity.class);
+            startActivity(i);
         }
     }
 }

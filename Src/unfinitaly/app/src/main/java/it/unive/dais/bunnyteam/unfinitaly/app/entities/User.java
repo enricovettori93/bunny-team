@@ -14,6 +14,11 @@ public class User {
         email = "";
     }
 
+    public void userLogOut(){
+        name = "";
+        email = "";
+    }
+
     public String getEmail() {
         return email;
     }

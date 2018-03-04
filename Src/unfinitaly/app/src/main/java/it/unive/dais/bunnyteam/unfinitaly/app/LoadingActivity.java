@@ -39,8 +39,6 @@ public class LoadingActivity extends AppIntro {
     private FloatingActionButton fab;
     private View loadingView;
     private boolean ready = false;
-    private FirebaseUser user;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +61,9 @@ public class LoadingActivity extends AppIntro {
         setProgressButtonEnabled(true);
         showSkipButton(false);
         setFadeAnimation();
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth != null){
-            user = firebaseAuth.getCurrentUser();
-            if (user != null){
-                User.getIstance().setName(user.getDisplayName().toString());
-                User.getIstance().setEmail(user.getEmail().toString());
-            }
+        if(FirebaseUtilities.getIstance().isLogged()){
+            User.getIstance().setName(FirebaseUtilities.getIstance().getNome());
+            User.getIstance().setEmail(FirebaseUtilities.getIstance().getEmail());
         }
     }
     public void showWebView(){
@@ -147,8 +141,10 @@ public class LoadingActivity extends AppIntro {
         startActivity(new Intent(this, MapsActivity.class));
     }
 
-    public void startLoginActivity(){
-        startActivity(new Intent(this,LoginActivity.class));
+    private void startLoginActivity(){
+        Intent i = new Intent(this,LoginActivity.class);
+        i.putExtra("Activity","Loading");
+        startActivity(i);
     }
 
     public boolean isReady() {

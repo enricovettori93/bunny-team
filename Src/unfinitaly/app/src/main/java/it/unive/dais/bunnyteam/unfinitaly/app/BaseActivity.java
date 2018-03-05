@@ -88,21 +88,42 @@ public abstract class BaseActivity extends AppCompatActivity {
         else{
             //Utente loggato
             Uri imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
-            headerResult = new AccountHeaderBuilder()
-                    .withActivity(this)
-                    .withSelectionListEnabledForSingleProfile(false)
-                    .withHeaderBackground(R.drawable.background)
-                    .addProfiles(
-                            new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
-                    )
-                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                        @Override
-                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                            startAccountActivity();
-                            return false;
-                        }
-                    })
-                    .build();
+            if(imageprofile != null){
+                //L'immagine profilo è presente
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withHeaderBackground(R.drawable.background)
+                        .addProfiles(
+                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
+                        )
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startAccountActivity();
+                                return false;
+                            }
+                        })
+                        .build();
+            }
+            else{
+                //L'immagine profilo non è presente
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withHeaderBackground(R.drawable.background)
+                        .addProfiles(
+                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
+                        )
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startAccountActivity();
+                                return false;
+                            }
+                        })
+                        .build();
+            }
         }
 
         //Creazione voci di menu

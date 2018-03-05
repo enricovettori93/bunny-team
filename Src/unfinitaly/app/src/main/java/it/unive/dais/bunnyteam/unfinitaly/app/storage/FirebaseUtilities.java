@@ -1,9 +1,19 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import it.unive.dais.bunnyteam.unfinitaly.app.R;
 
 /**
  * Created by Enrico on 03/03/2018.
@@ -54,6 +64,9 @@ public class FirebaseUtilities {
     }
 
     public Uri getFotoProfilo(){
-        return user.getPhotoUrl();
+        if(isLogged())
+            return user.getPhotoUrl();
+        else
+            return null;
     }
 }

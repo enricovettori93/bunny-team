@@ -41,11 +41,13 @@ public class AccountActivity extends BaseActivity {
             nome.setText(FirebaseUtilities.getIstance().getNome());
             email.setText(FirebaseUtilities.getIstance().getEmail());
             urlfoto = FirebaseUtilities.getIstance().getFotoProfilo();
-            Glide
-                    .with(getApplicationContext())
-                    .load(urlfoto)
-                    .centerCrop()
-                    .into(immagineprofilo);
+            if(urlfoto != null){
+                Glide
+                        .with(getApplicationContext())
+                        .load(urlfoto)
+                        .centerCrop()
+                        .into(immagineprofilo);
+            }
             //immagineprofilo.setImageURI(urlfoto);
         }
         logout = (Button)findViewById(R.id.buttonLogout);

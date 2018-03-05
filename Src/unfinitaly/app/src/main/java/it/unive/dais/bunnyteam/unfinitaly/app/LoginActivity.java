@@ -90,9 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(user != null){
                     startMapsActivity();
                 }
-                /*else{
-                    Toast.makeText(getApplicationContext(),"User disconnected",Toast.LENGTH_SHORT).show();
-                }*/
             }
         };
     }
@@ -144,7 +141,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void startMapsActivity(){
+
+    private void startMapsActivity(){
         Intent i = new Intent(this,MapsActivity.class);
         startActivity(i);
     }

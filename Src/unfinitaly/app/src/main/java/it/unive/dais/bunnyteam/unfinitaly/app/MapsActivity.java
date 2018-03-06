@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
@@ -54,10 +55,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 
@@ -65,6 +70,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
 
@@ -434,12 +440,24 @@ public class MapsActivity extends BaseActivity
             }
         });
 
+        //Inserisco le % di opere nelle varie regioni
+        MapMarkerList.getInstance().setPercentageRegioni();
+        HashMapRegioni.getIstance().debugPrintPercentage();
+
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();
+        //setPolygonMap();
+    }
+
+    private void setPolygonMap(){
+        Polygon sicilia = gMap.addPolygon(new PolygonOptions()
+                .add(new LatLng(36.689565209919344, 15.104003939777613), new LatLng(38.24163164617907, 15.499511752277613), new LatLng(38.10344072413361, 12.467285189777613), new LatLng(36.689565209919344, 15.104003939777613))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
     }
 
     /**

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 
@@ -44,18 +46,26 @@ public class MapMarkerList extends MapMarkerListVersioningHelper implements Seri
         mapMarkers = list;
     }
 
-
     public ArrayList<MapMarker> getMapMarkers(){
         return instance.mapMarkers;
     }
+
     public void setMapMarkers(ArrayList<MapMarker> mapMarkers) { instance.mapMarkers = mapMarkers; }
+
     public boolean loadFromCache(Context context) throws IOException, ClassNotFoundException {
         return MapsItemIO.readFromCache(context);
     }
+
     public void loadFromCsv(LoadingActivity loadAct, TextView tv_status, TextView tvCountLoad, ProgressBar progressBar, AVLoadingIndicatorView loadinggif) throws InterruptedException, ExecutionException, IOException {
-        //instance.setMapMarkers(MapsItemIO.readFromCsvAsync(loadAct));
         new MapsItemIO().loadFromCsv(loadAct, tv_status, tvCountLoad, progressBar,loadinggif);
     }
+
+    public void setPercentageRegioni(){
+        for(MapMarker mm: mapMarkers){
+            HashMapRegioni.getIstance().addUnitRegione(mm.getRegione());
+        }
+    }
+
     public static void setInstance(MapMarkerList instance){
         MapMarkerList.instance = instance;
     }

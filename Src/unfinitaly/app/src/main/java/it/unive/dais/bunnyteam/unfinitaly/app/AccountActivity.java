@@ -48,17 +48,15 @@ public class AccountActivity extends BaseActivity {
                         .centerCrop()
                         .into(immagineprofilo);
             }
-            //immagineprofilo.setImageURI(urlfoto);
         }
         logout = (Button)findViewById(R.id.buttonLogout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseUtilities.getIstance().logOut();
-                User.getIstance().userLogOut();
-                Toast.makeText(getApplicationContext(),"Sei uscito con successo",Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplicationContext(),LoginActivity.class);
                 i.putExtra("Activity","Account");
+                //i.putExtra("Action","Logout");
                 startActivity(i);
             }
         });

@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 
 /**
  * Created by Enrico on 03/03/2018.
@@ -61,6 +62,7 @@ public class FirebaseUtilities {
 
     public void logOut(){
         auth.signOut();
+        User.getIstance().userLogOut();
     }
 
     public Uri getFotoProfilo(){

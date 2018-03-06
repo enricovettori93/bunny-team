@@ -43,7 +43,6 @@ public class CustomSliderLoading extends CustomSlider {
     }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d("CIAO", "ONCREATEVIEW!");
         if(v!=null)
             return v;
         else
@@ -54,7 +53,6 @@ public class CustomSliderLoading extends CustomSlider {
         if (v == null) {
             v = view;
             super.onViewCreated(view, savedInstanceState);
-            //qui possiamo inserire i metodi del loading.
             tv_status = (TextView) view.findViewById(R.id.tv_status2);
             tv_status.setText("Apertura file...");
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);

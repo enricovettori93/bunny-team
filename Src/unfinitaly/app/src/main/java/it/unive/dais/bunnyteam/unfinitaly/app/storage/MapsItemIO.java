@@ -72,7 +72,5 @@ public class MapsItemIO {
             Oos.writeObject(mmL);
         }
     }
-
-
 }
 

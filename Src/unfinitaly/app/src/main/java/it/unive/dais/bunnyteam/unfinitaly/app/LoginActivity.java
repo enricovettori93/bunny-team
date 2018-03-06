@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -30,7 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
     private TextView skip;
     private com.google.android.gms.common.SignInButton login;
     public static final String TAG = "LoginActivity";
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean onBackPressed = false;
     private Intent i;
     private String intentcontent;
+    private String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +78,22 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SignInFunction();
             }
         });
+
+        /*action = i.getStringExtra("Action");
+        if(action != null){
+            if(googleApiClient.isConnected()){
+                firebaseAuth.signOut();
+                Auth.GoogleSignInApi.signOut(googleApiClient);
+                User.getIstance().userLogOut();
+                Toast.makeText(getApplicationContext(),"Sei uscito con successo",Toast.LENGTH_SHORT).show();
+            }
+        }*/
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

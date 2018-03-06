@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlay;
@@ -26,6 +29,8 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -45,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ArrayList<Integer> selectedRegionsItems = new ArrayList<>();
     protected ArrayList<Integer> selectedCategoriesItems = new ArrayList<>();
     boolean resetfilter;
+    Uri imageprofile;
     TileOverlay mOverlay;
     HeatmapTileProvider mProvider;
     PrimaryDrawerItem user;
@@ -56,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     SwitchDrawerItem percentuale;
     SwitchDrawerItem distribuzione;
     PrimaryDrawerItem mappa;
+    SwitchDrawerItem percentualeRegione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,15 +94,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         else{
             //Utente loggato
-            Uri imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
+            imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
+            Log.d("URI IMAGE:",""+imageprofile);
             if(imageprofile != null){
                 //L'immagine profilo è presente
+                //CODICE CHE FA COSE DA SOLO PER INSERIRE L'IMMAGINE PROFILO
+                DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+                    @Override
+                    public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                        Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+                    }
+
+                    @Override
+                    public void cancel(ImageView imageView) {
+                        Glide.clear(imageView);
+                    }
+                });
                 headerResult = new AccountHeaderBuilder()
                         .withActivity(this)
                         .withSelectionListEnabledForSingleProfile(false)
                         .withHeaderBackground(R.drawable.background)
                         .addProfiles(
-                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
+                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(imageprofile)
                         )
                         .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                             @Override
@@ -168,6 +188,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             categoria = new PrimaryDrawerItem().withIdentifier(3).withName("Filtro per categoria").withIcon(R.drawable.categoria);
             percentuale = new SwitchDrawerItem().withIdentifier(4).withName("Filtro per percentuale").withIcon(R.drawable.percentage);
             distribuzione = new SwitchDrawerItem().withIdentifier(5).withName("Distribuzione").withIcon(R.drawable.distribuzione).withChecked(true);
+            percentualeRegione = new SwitchDrawerItem().withIdentifier(6).withName("Percentuale regione").withIcon(R.drawable.ic_dashboard_black_24dp).withChecked(false);
             //Associazione listener alle varie voci
             tutte.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
@@ -199,7 +220,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             });
             categoria.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     drawer.setSelection(-1);
                     showAlertDialogCategory();
@@ -230,13 +250,23 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawer.setSelection(-1);
                 }
             });
+            percentualeRegione.withOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked)
+                        Toast.makeText(getApplicationContext(),"Checked",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(),"Unchecked",Toast.LENGTH_SHORT).show();
+                }
+            });
+
             drawer = new com.mikepenz.materialdrawer.DrawerBuilder()
                     .withActivity(this)
                     .withAccountHeader(headerResult)
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
+                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
                     )
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);

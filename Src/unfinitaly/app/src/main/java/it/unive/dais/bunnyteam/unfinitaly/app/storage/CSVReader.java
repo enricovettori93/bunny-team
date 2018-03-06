@@ -84,13 +84,11 @@ public class CSVReader extends AsyncTask<Void, Integer, Void> {
         /*terminiamo la LoadingActivity*/
         /*aggiorniamo i marker e salviamoli in cache -> va fatto qui perchè devono essere salvati quando ho finito di leggerli*/
         MapMarkerList.getInstance().setMapMarkers(items);
-        Log.d("CIAO", "DONE!");
         try {
             MapsItemIO.saveToCache(MapMarkerList.getInstance(), loadingAct);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("CIAO", "showing skip button!");
         tv_status.setText("Caricamento completato.");
         loadinggif.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);

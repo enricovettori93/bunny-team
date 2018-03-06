@@ -450,12 +450,16 @@ public class MapsActivity extends BaseActivity
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();
-        //setPolygonMap();
+        setPolygonMap();
     }
 
     private void setPolygonMap(){
         Polygon sicilia = gMap.addPolygon(new PolygonOptions()
                 .add(new LatLng(36.689565209919344, 15.104003939777613), new LatLng(38.24163164617907, 15.499511752277613), new LatLng(38.10344072413361, 12.467285189777613), new LatLng(36.689565209919344, 15.104003939777613))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon veneto = gMap.addPolygon(new PolygonOptions()
+                .add(new LatLng(44.58964692837859,10.12739417117145), new LatLng(46.93501967162141,10.12739417117145), new LatLng(46.93501967162141,13.25455782882855), new LatLng(44.58964692837859, 13.25455782882855),new LatLng(44.58964692837859, 10.12739417117145))
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE));
     }

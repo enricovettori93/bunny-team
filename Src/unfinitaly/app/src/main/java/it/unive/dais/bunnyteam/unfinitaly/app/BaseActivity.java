@@ -253,10 +253,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             percentualeRegione.withOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked)
-                        Toast.makeText(getApplicationContext(),"Checked",Toast.LENGTH_SHORT).show();
+                    if(isChecked){
+                        if(distribuzione.isChecked()){
+                            distribuzione.withChecked(false);
+                            drawer.updateItem(distribuzione);
+                            mOverlay.setVisible(false);
+                        }
+                        ((MapsActivity)thisActivity).setPolygonMap();
+                    }
                     else
-                        Toast.makeText(getApplicationContext(),"Unchecked",Toast.LENGTH_SHORT).show();
+                        ((MapsActivity)thisActivity).unsetPolygonMap();
                 }
             });
 

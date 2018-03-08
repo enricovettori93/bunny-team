@@ -71,6 +71,7 @@ import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
+import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
 
@@ -450,16 +451,88 @@ public class MapsActivity extends BaseActivity
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();
-        setPolygonMap();
     }
 
-    private void setPolygonMap(){
+    public void unsetPolygonMap(){
+        Log.d("POLYGON MAP","UNSETTING");
+    }
+
+    public void setPolygonMap(){
+        Log.d("POLYGON MAP","SETTING");
+        /*Polygon abruzzo = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Abruzzo"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        */Polygon basilicata = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Basilicata"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon campania = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Campania"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon emilia = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Emilia-Romagna"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon fiuli = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Friuli-Venezia Giulia"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon lazio = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Lazio"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon liguria = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Liguria"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon lombardia = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Lombardia"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon marche = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Marche"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon molise = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Molise"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon piemonte = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Piemonte"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon puglia = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Puglia"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon sardegna = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Sardegna"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
         Polygon sicilia = gMap.addPolygon(new PolygonOptions()
-                .add(new LatLng(36.689565209919344, 15.104003939777613), new LatLng(38.24163164617907, 15.499511752277613), new LatLng(38.10344072413361, 12.467285189777613), new LatLng(36.689565209919344, 15.104003939777613))
+                .add(RegioniFactory.getIstance().createRegione("Sicilia"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon toscana = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Toscana"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon trentino = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Trentino-Alto Adige"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon umbria = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Umbria"))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+        Polygon valleaosta = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Valle d'Aosta"))
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE));
         Polygon veneto = gMap.addPolygon(new PolygonOptions()
-                .add(new LatLng(44.58964692837859,10.12739417117145), new LatLng(46.93501967162141,10.12739417117145), new LatLng(46.93501967162141,13.25455782882855), new LatLng(44.58964692837859, 13.25455782882855),new LatLng(44.58964692837859, 10.12739417117145))
+                .add(RegioniFactory.getIstance().createRegione("Veneto"))
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE));
     }

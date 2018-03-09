@@ -44,7 +44,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
     /**
      * Getter dell'impostazione relativa allo stile della mappa.
-     * Riprodurre un getter simile nel caso in cui sia necessario implementare nuove impostazioni.
      *
      * @param ctx oggetto di tipo Context.
      * @return l'intero
@@ -120,10 +119,10 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         //setContentView(R.layout.activity_settings);
         addPreferencesFromResource(R.xml.preferences);
         updateAllSummaries();
-        AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
+        /*AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        delegate.setSupportActionBar(toolbar);
+        delegate.setSupportActionBar(toolbar);*/
     }
 
     /**
@@ -208,7 +207,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
                 break;
             }
-            case KEY_ZOOM_THRESHOLD: {
+            /*case KEY_ZOOM_THRESHOLD: {
                 Float x = getZoomThreshold(this, sp);
                 String s;
                 if (x.compareTo((float) getResources().getInteger(R.integer.zoomFactor_low)) == 0)
@@ -221,7 +220,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                     throw new UnexpectedException(String.format("undefined zoom threshold value: %g", x));
                 updateSummaryWithActiveValue(p, s);
                 break;
-            }
+            }*/
         }
     }
 

@@ -25,6 +25,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 public class MapMarkerList extends MapMarkerListVersioningHelper implements Serializable {
     private static MapMarkerList instance = null;
     private ArrayList<MapMarker> mapMarkers = null;
+    private boolean firstTime = true;
     /*INCREMENTARE VERSION_ID SE SI EFFETTUANO MODIFICHE ALLA CLASSE
     * Modificare entrambi gli int: VERSION_ID serve per controllare il num. di versione salvato in memoria,
     * STATIC_VERSION_ID invece per controllare la versione della classe.
@@ -61,9 +62,13 @@ public class MapMarkerList extends MapMarkerListVersioningHelper implements Seri
     }
 
     public void setPercentageRegioni(){
-        for(MapMarker mm: mapMarkers){
-            HashMapRegioni.getIstance().addUnitRegione(mm.getRegione());
+        if(firstTime = true){
+            for(MapMarker mm: mapMarkers){
+                HashMapRegioni.getIstance().addUnitRegione(mm.getRegione());
+            }
         }
+        else
+            firstTime = false;
     }
 
     public static void setInstance(MapMarkerList instance){

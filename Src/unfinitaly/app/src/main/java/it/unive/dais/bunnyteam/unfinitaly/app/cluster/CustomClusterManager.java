@@ -229,10 +229,10 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     @Override
     public void onCameraIdle() {
-        Log.d("Positione",""+((MapsActivity)context).getMap().getCameraPosition());
+        //Log.d("Positione",""+((MapsActivity)context).getMap().getCameraPosition());
         float[] result;
         result = ((MapsActivity)context).checkDistanceCamera(((MapsActivity)context).getMap().getCameraPosition());
-        Log.d("Distanza dall'italia",""+result[0]);
+        //Log.d("Distanza dall'italia",""+result[0]);
         if (result[0] > 1000000){
             ((MapsActivity)context).animateOnItaly();
         }

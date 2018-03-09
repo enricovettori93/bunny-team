@@ -109,6 +109,7 @@ public class MapsActivity extends BaseActivity
     private MapMarkerList mapMarkers = null;
     private View info;
     private ImageView list;
+    private Polygon abruzzo, basilicata, campania, calabria, emilia, friuli, lazio, liguria, lombardia, marche, molise, piemonte, puglia, sardegna, sicilia, toscana, trentino, umbria, valleaosta, veneto;
     /**
      * API per i servizi di localizzazione.
      */
@@ -444,97 +445,167 @@ public class MapsActivity extends BaseActivity
         //Inserisco le % di opere nelle varie regioni
         MapMarkerList.getInstance().setPercentageRegioni();
         HashMapRegioni.getIstance().debugPrintPercentage();
-
+        //Applico le varie impostazioni alla mappa
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();
+        createPolygonMap();
     }
 
-    public void unsetPolygonMap(){
-        Log.d("POLYGON MAP","UNSETTING");
+    /*
+     * Setta al valore booleano status la proprietà visible dei poligoni
+     */
+    public void setVisibilityPolygon(boolean status){
+        abruzzo.setVisible(status);
+        basilicata.setVisible(status);
+        campania.setVisible(status);
+        calabria.setVisible(status);
+        emilia.setVisible(status);
+        friuli.setVisible(status);
+        lazio.setVisible(status);
+        liguria.setVisible(status);
+        lombardia.setVisible(status);
+        marche.setVisible(status);
+        molise.setVisible(status);
+        piemonte.setVisible(status);
+        puglia.setVisible(status);
+        sardegna.setVisible(status);
+        sicilia.setVisible(status);
+        toscana.setVisible(status);
+        trentino.setVisible(status);
+        umbria.setVisible(status);
+        valleaosta.setVisible(status);
+        veneto.setVisible(status);
     }
 
-    public void setPolygonMap(){
+    /*
+     * Creo i poligoni nella mappa
+     */
+    public void createPolygonMap(){
         Log.d("POLYGON MAP","SETTING");
-        /*Polygon abruzzo = gMap.addPolygon(new PolygonOptions()
+        abruzzo = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Abruzzo"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        */Polygon basilicata = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Abruzzo")));
+        basilicata = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Basilicata"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon campania = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Basilicata")));
+        campania = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Campania"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon emilia = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Campania")));
+        calabria = gMap.addPolygon(new PolygonOptions()
+                .add(RegioniFactory.getIstance().createRegione("Calabria"))
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Calabria")));
+        emilia = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Emilia-Romagna"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon fiuli = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Emilia-Romagna")));
+        friuli = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Friuli-Venezia Giulia"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon lazio = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Friuli-Venezia Giulia")));
+        lazio = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Lazio"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon liguria = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Lazio")));
+        liguria = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Liguria"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon lombardia = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Liguria")));
+        lombardia = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Lombardia"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon marche = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Lombardia")));
+        marche = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Marche"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon molise = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Marche")));
+        molise = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Molise"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon piemonte = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Molise")));
+        piemonte = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Piemonte"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon puglia = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Piemonte")));
+        puglia = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Puglia"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon sardegna = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Puglia")));
+        sardegna = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Sardegna"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon sicilia = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Sardegna")));
+        sicilia = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Sicilia"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon toscana = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Sicilia")));
+        toscana = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Toscana"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon trentino = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Toscana")));
+        trentino = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Trentino-Alto Adige"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon umbria = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Trentino-Alto Adige")));
+        umbria = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Umbria"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon valleaosta = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Umbria")));
+        valleaosta = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Valle d'Aosta"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
-        Polygon veneto = gMap.addPolygon(new PolygonOptions()
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Valle d'Aosta")));
+        veneto = gMap.addPolygon(new PolygonOptions()
                 .add(RegioniFactory.getIstance().createRegione("Veneto"))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
+                .visible(false)
+                .strokeWidth(5)
+                .strokeColor(Color.BLACK)
+                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Veneto")));
     }
 
     /**
@@ -606,7 +677,9 @@ public class MapsActivity extends BaseActivity
         });
     }
 
-
+    /*
+     * Quando l'utente fa click sul popup del marker, si apre la scheda relativa
+     */
     public void showMarkerInfo(MapMarker mapMarker){
         Intent i = new Intent(this, MarkerInfoActivity.class);
         i.putExtra("MapMarker", mapMarker);
@@ -647,6 +720,9 @@ public class MapsActivity extends BaseActivity
         return gMap;
     }
 
+    /*
+     * Setta al valore booleano visibility il pulsante che mostra la lista di opere
+     */
     public void setIconListVisibility(boolean visibility){
         ImageView icon = (ImageView)findViewById(R.id.button_list);
         if(visibility == true)

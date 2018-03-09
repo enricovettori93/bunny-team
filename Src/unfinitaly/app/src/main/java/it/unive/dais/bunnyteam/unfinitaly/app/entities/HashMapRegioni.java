@@ -1,5 +1,6 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.entities;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -50,12 +51,34 @@ public class HashMapRegioni {
         return (100*percentualeRegioni.get(regione))/totale;
     }
 
+    public int getColorByPercentage(String regione){
+        double app;
+        app = getPercentualeRegione(regione);
+        if(app <= 2){
+            return 0xffccff99;
+        }
+        if(app > 2 && app <= 5){
+            return 0xffffff99;
+        }
+        if(app > 5 && app <= 20){
+            return 0xffff9933;
+        }
+        if(app > 20){
+            return 0xffff0000;
+        }
+        //Qui non ci arrivo mai
+        return 0xffff0000;
+    }
+
     public void debugPrintPercentage(){
         int countregionetot = 0;
+        double countpercentage = 0;
         for(String key : percentualeRegioni.keySet()){
             countregionetot += percentualeRegioni.get(key);
+            countpercentage += getPercentualeRegione(key);
             Log.d("REGIONE: " + key," PERCENTUALE: "+ getPercentualeRegione(key) + " OPERE: " + percentualeRegioni.get(key) + " TOTALE: " + totale);
         }
-        Log.d("TOTALE OPERE REGIONI:",""+countregionetot);
+        Log.d("TOTALE OPERE",""+countregionetot);
+        Log.d("TOTALE PERC OPERE",""+countpercentage);
     }
 }

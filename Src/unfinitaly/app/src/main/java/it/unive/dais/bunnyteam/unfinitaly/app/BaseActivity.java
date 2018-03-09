@@ -259,10 +259,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                             drawer.updateItem(distribuzione);
                             mOverlay.setVisible(false);
                         }
-                        ((MapsActivity)thisActivity).setPolygonMap();
+                        ((MapsActivity)thisActivity).setVisibilityPolygon(true);
                     }
                     else
-                        ((MapsActivity)thisActivity).unsetPolygonMap();
+                        ((MapsActivity)thisActivity).setVisibilityPolygon(false);
                 }
             });
 

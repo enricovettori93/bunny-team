@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -48,35 +49,49 @@ public class LoadingActivity extends AppIntro {
             finish();
             System.exit(0);
         }
-        csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
-        addSlide(csl);
-        ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.msg_loading);
-        addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
-        addSlide(CustomSlider.newInstance(R.layout.fragmentinfo3));
-        addSlide(CustomSlider.newInstance(R.layout.fragmentinfo4));
-        addSlide(CustomSlider.newInstance(R.layout.fragmentinfo5));
-        setBarColor(Color.parseColor("#66000000"));
-        setSeparatorColor(Color.parseColor("#66000000"));
-        curFragment = fragments.get(0);
-        setProgressButtonEnabled(true);
-        showSkipButton(false);
-        setFadeAnimation();
-        if(FirebaseUtilities.getIstance().isLogged()){
-            User.getIstance().setName(FirebaseUtilities.getIstance().getNome());
-            User.getIstance().setEmail(FirebaseUtilities.getIstance().getEmail());
+        Log.d("LETTURA DATI","STO PER LEGGERE I DATI DA FIREBASE");
+        FirebaseUtilities.getIstance().readFromFirebase(LoadingActivity.this);
+        //TODO: togliere sto sleep che fa cagare
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-    public void showWebView(){
-        webview.setVisibility(View.VISIBLE);
-        tv_status.setVisibility(View.INVISIBLE);
-        tvCountLoad.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
-    }
-    public void unshowWebView(){
-        webview.setVisibility(View.INVISIBLE);
-        tv_status.setVisibility(View.VISIBLE);
-        tvCountLoad.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+
+    public void resumeLoadingAfterFirebase(){
+        //Check se l'applicazione è stata usata una volta, leggo le shared preferences
+        SharedPreferences sharedPreferences = getApplication().getSharedPreferences("first",MODE_PRIVATE);
+        String first = sharedPreferences.getString("text",null);
+        if(first != null){
+            //Non era il primo avvio
+            if(FirebaseUtilities.getIstance().isLogged()){
+                User.getIstance().setName(FirebaseUtilities.getIstance().getNome());
+                User.getIstance().setEmail(FirebaseUtilities.getIstance().getEmail());
+            }
+            startMapsActivity();
+        }
+        else{
+            //E' il primo avvio, scrivo qualcosa nelle sharedpreferences
+            SharedPreferences.Editor editor = getSharedPreferences("first",MODE_PRIVATE).edit();
+            editor.putString("text","avviata");
+            editor.commit();
+            //Continuo col caricamento di tutto il resto
+            csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
+            addSlide(csl);
+            ready = true;
+            ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.msg_ok);
+            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
+            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo3));
+            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo4));
+            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo5));
+            setBarColor(Color.parseColor("#66000000"));
+            setSeparatorColor(Color.parseColor("#66000000"));
+            curFragment = fragments.get(0);
+            setProgressButtonEnabled(true);
+            showSkipButton(false);
+            setFadeAnimation();
+        }
     }
 
     public void setStatus(int status) {
@@ -131,7 +146,7 @@ public class LoadingActivity extends AppIntro {
             snack.setAction(R.string.loading_snackbarcontinue, new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    startLoginActivity();
+                    startMapsActivity();
                 }
             });
         }

@@ -1,12 +1,14 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.marker;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.maps.android.clustering.ClusterItem;
 
 /**
  * Created by Enrico on 13/03/2018.
  */
 @IgnoreExtraProperties
-public class OperaFirebase {
+public class OperaFirebase implements ClusterItem {
     String ambito_oggettivo;
     String ambito_soggettivo;
     String anno_decisione_attuazione;
@@ -435,5 +437,13 @@ public class OperaFirebase {
                 ", tipologia_opera_incompiuta='" + tipologia_opera_incompiuta + '\'' +
                 ", title='" + title + '\'' +
                 '}';
+    }
+    @Override
+    public String getSnippet() {
+        return getTitle() + " " + getDescrizione();
+    }
+    @Override
+    public LatLng getPosition() {
+        return new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
     }
 }

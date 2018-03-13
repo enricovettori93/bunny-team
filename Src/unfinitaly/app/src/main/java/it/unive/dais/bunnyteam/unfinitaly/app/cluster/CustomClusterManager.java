@@ -22,22 +22,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
 import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 
 /**
  *
  * @author BunnyTeam, Università Ca' Foscari
  */
 
-public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<MapMarker> implements GoogleMap.OnCameraIdleListener{
+public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<OperaFirebase> implements GoogleMap.OnCameraIdleListener{
 
-    private MapMarkerList mapMarkers = null;
-    private ArrayList<MapMarker> mapMarkersRegion = null;
-    private ArrayList<MapMarker> mapMarkersCategory = null;
-    private ArrayList<MapMarker> mapMarkersActive = null;
+    private ListaOpereFirebase mapMarkers = null;
+    //private ArrayList<MapMarker> mapMarkersRegion = null;
+    //private ArrayList<MapMarker> mapMarkersCategory = null;
+    private ArrayList<OperaFirebase> mapMarkersActive = null;
     private Context context;
     private GoogleMap map;
     private boolean flagregione = false;
@@ -48,9 +50,9 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         this.context = context;
         this.map = map;
         setOnClusterClickListener(getDefaultOnClusterClickListener());
-        setOnClusterItemClickListener(new OnClusterItemClickListener<MapMarker>() {
+        setOnClusterItemClickListener(new OnClusterItemClickListener<OperaFirebase>() {
             @Override
-            public boolean onClusterItemClick(final MapMarker mapMarker) {
+            public boolean onClusterItemClick(final OperaFirebase mapMarker) {
                 if(((Activity)context).findViewById(R.id.marker_window).getVisibility()==View.VISIBLE)
                     ((Activity)context).findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
                 ((MapsActivity)context).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(mapMarker.getPosition(), 13), new GoogleMap.CancelableCallback() {
@@ -123,7 +125,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     public void resetMarkers(){
         clearItems();
-        addItems(mapMarkers.getMapMarkers());
+        addItems(mapMarkers.getListaOpere());
         cluster();
     }
     protected void clearMarkers(){
@@ -146,7 +148,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     public ArrayList<String> getAllMarkerCategory(){
         ArrayList<String> allCategory = new ArrayList<>();
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             if(!allCategory.contains(mM.getCategoria()))
                 allCategory.add(mM.getCategoria());
         return allCategory;
@@ -154,7 +156,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     public int countMarkerByCategory(String category) {
         int i=0;
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             if(mM.getCategoria().equals(category))
                 i++;
         return i;
@@ -162,7 +164,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
 
     public int countMarkerByRegion(String region){
         int i=0;
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             if(mM.getRegione().equals(region))
                 i++;
         return i;
@@ -171,7 +173,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     public void showRegions(ArrayList<String> regions) {
         clearItems();
         mapMarkersActive = new ArrayList<>();
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             if(regions.contains(mM.getRegione())){
                 addItem(mM);
                 mapMarkersActive.add(mM);
@@ -183,7 +185,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     public void showCategory(ArrayList<String> selectedCategory) {
         clearItems();
         mapMarkersActive = new ArrayList<>();
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             if(selectedCategory.contains(mM.getCategoria())) {
                 addItem(mM);
                 mapMarkersActive.add(mM);
@@ -191,16 +193,16 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         cluster();
     }
 
-    public OnClusterClickListener<MapMarker> getDefaultOnClusterClickListener(){
-        return new ClusterManager.OnClusterClickListener<MapMarker>() {
+    public OnClusterClickListener<OperaFirebase> getDefaultOnClusterClickListener(){
+        return new ClusterManager.OnClusterClickListener<OperaFirebase>() {
             @Override
-            public boolean onClusterClick(Cluster<MapMarker> cluster) {
+            public boolean onClusterClick(Cluster<OperaFirebase> cluster) {
                 ((Activity)context).findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
                 final String[] stringclusterlista = new String[cluster.getSize()];
-                final Collection<MapMarker> clusterlist = cluster.getItems();
+                final Collection<OperaFirebase> clusterlist = cluster.getItems();
                 Log.d("Grandezza",""+cluster.getSize());
                 for(int i=0;i<clusterlist.size();i++){
-                    stringclusterlista[i]= R.string.clustercategoria + ": " +((MapMarker)clusterlist.toArray()[i]).getCategoria()+"\n"+((MapMarker)clusterlist.toArray()[i]).getTipologia_cup();
+                    stringclusterlista[i]= R.string.clustercategoria + ": " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
                 }
                 AlertDialog dialog = new AlertDialog.Builder(context)
                         .setTitle(R.string.clustertitle)
@@ -208,7 +210,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 if(context instanceof MapsActivity)
-                                    ((MapsActivity)context).showMarkerInfo((MapMarker)clusterlist.toArray()[id]);
+                                    ((MapsActivity)context).showMarkerInfo((OperaFirebase) clusterlist.toArray()[id]);
                             }
                         }).setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
                             @Override
@@ -223,7 +225,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     }
 
     @Override
-    public void setOnClusterItemClickListener(OnClusterItemClickListener<MapMarker> listener) {
+    public void setOnClusterItemClickListener(OnClusterItemClickListener<OperaFirebase> listener) {
         super.setOnClusterItemClickListener(listener);
     }
 
@@ -237,18 +239,18 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         cluster();
     }
 
-    public OnClusterItemInfoWindowClickListener<MapMarker> getDefaultOnClusterItemInfoWindowClickListener() {
-        return new ClusterManager.OnClusterItemInfoWindowClickListener<MapMarker>() {
+    public OnClusterItemInfoWindowClickListener<OperaFirebase> getDefaultOnClusterItemInfoWindowClickListener() {
+        return new ClusterManager.OnClusterItemInfoWindowClickListener<OperaFirebase>() {
             @Override
-            public void onClusterItemInfoWindowClick(MapMarker mapMarker) {
+            public void onClusterItemInfoWindowClick(OperaFirebase mapMarker) {
                 if (context instanceof MapsActivity)
                     ((MapsActivity) context).showMarkerInfo(mapMarker);
             }
         };
     }
-    public void setMapMarkerList(MapMarkerList mM){
+    public void setMapMarkerList(ListaOpereFirebase mM){
         this.mapMarkers = mM;
-        addItems(mM.getMapMarkers());
+        addItems(mM.getListaOpere());
         cluster();
     }
     public void setPercentageRenderer(){
@@ -261,11 +263,12 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     }
     public List<LatLng> getCoordList(){
         ArrayList<LatLng> lL = new ArrayList<>();
-        for(MapMarker mM: mapMarkers.getMapMarkers())
+        Log.d("GETTING COORDINATE","YAHOO");
+        for(OperaFirebase mM: mapMarkers.getListaOpere())
             lL.add(mM.getPosition());
         return lL;
     }
-    public ArrayList<MapMarker> getActiveMarkers(){
+    public ArrayList<OperaFirebase> getActiveMarkers(){
         return mapMarkersActive;
     }
 }

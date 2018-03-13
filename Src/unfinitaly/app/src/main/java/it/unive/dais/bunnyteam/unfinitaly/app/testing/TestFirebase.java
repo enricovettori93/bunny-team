@@ -27,8 +27,8 @@ public class TestFirebase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_firebase);
         printData = (TextView)findViewById(R.id.printData);
-        FirebaseUtilities.getIstance().readFromFirebase();
-        /*mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
+        /*FirebaseUtilities.getIstance().readFromFirebase();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

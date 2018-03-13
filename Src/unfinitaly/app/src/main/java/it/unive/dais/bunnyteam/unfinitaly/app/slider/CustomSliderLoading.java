@@ -59,8 +59,6 @@ public class CustomSliderLoading extends CustomSlider {
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
             loadinggif = (AVLoadingIndicatorView) view.findViewById(R.id.avi2);
-            FirebaseUtilities.getIstance().readFromFirebase();
-            loadAct.startMapsActivity();
             /*if (MapMarkerList.getInstance().getMapMarkers().size() == 0) {
                 try {
                     if (MapsItemIO.isCached(loadAct)) {

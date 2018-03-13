@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
@@ -74,7 +75,7 @@ public class FirebaseUtilities {
             return null;
     }
 
-    public void readFromFirebase(){
+    public void readFromFirebase(final LoadingActivity act){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,5 +93,6 @@ public class FirebaseUtilities {
                 Log.e("Error","Reading DB from Firebase");
             }
         });
+        act.resumeLoadingAfterFirebase();
     }
 }

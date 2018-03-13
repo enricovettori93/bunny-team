@@ -72,8 +72,10 @@ import java.util.ArrayList;
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
 import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 
 /**
  * Questa classe è la componente principale del toolkit: fornisce servizi primari per un'app basata su Google Maps, tra cui localizzazione, pulsanti
@@ -106,7 +108,7 @@ public class MapsActivity extends BaseActivity
     @Nullable
     protected Marker hereMarker = null;
     private CustomClusterManager<MapMarker> mClusterManager;
-    private MapMarkerList mapMarkers = null;
+    private ListaOpereFirebase mapMarkers = null;
     private View info;
     private ImageView list;
     private Polygon abruzzo, basilicata, campania, calabria, emilia, friuli, lazio, liguria, lombardia, marche, molise, piemonte, puglia, sardegna, sicilia, toscana, trentino, umbria, valleaosta, veneto;
@@ -124,7 +126,7 @@ public class MapsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        mapMarkers = MapMarkerList.getInstance();
+        mapMarkers = ListaOpereFirebase.getIstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         buildDrawer(toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -155,13 +157,7 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("Maps", "size of markers: "+mapMarkers.getMapMarkers().size());
-        if(mapMarkers.getMapMarkers().size()==0)
-            try {
-                mapMarkers.loadFromCache(this);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        //TODO: rileggere i dati da firebase
         applyMapSettings();
     }
 
@@ -412,6 +408,7 @@ public class MapsActivity extends BaseActivity
         mClusterManager.cluster();
 
         list = (ImageView)findViewById(R.id.button_list);
+        /* TODO: da rivedere con i nuovi oggetti marker
         list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -440,18 +437,18 @@ public class MapsActivity extends BaseActivity
                         .create();
                 alert.show();
             }
-        });
+        });*/
 
         //Inserisco le % di opere nelle varie regioni
-        MapMarkerList.getInstance().setPercentageRegioni();
+        ListaOpereFirebase.getIstance().setPercentageRegioni();
         //HashMapRegioni.getIstance().debugPrintPercentage();
         //Applico le varie impostazioni alla mappa
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
-        createOverlay();
-        activateHeatmap();
+        // TODO: riattivare dopo aver fixato -> createOverlay();
+        //activateHeatmap();
         createPolygonMap();
     }
 
@@ -680,9 +677,9 @@ public class MapsActivity extends BaseActivity
     /*
      * Quando l'utente fa click sul popup del marker, si apre la scheda relativa
      */
-    public void showMarkerInfo(MapMarker mapMarker){
+    public void showMarkerInfo(OperaFirebase mapMarker){
         Intent i = new Intent(this, MarkerInfoActivity.class);
-        i.putExtra("MapMarker", mapMarker);
+        //TODO: fixare -> i.putExtra("MapMarker", mapMarker);
         startActivity(i);
     }
 

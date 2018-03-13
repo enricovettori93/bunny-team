@@ -20,6 +20,7 @@ import com.google.maps.android.ui.IconGenerator;
 import com.google.maps.android.ui.SquareTextView;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 
 
 /**
@@ -27,7 +28,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
  * @author BunnyTeam, Università Ca' Foscari
  */
 
-public class ClusterRenderer<T extends MapMarker> extends DefaultClusterRenderer<MapMarker> {
+public class ClusterRenderer<T extends OperaFirebase> extends DefaultClusterRenderer<OperaFirebase> {
     protected final float mDensity;
     protected ShapeDrawable mColoredCircleBackground;
     protected SparseArray<BitmapDescriptor> mIcons = new SparseArray();
@@ -47,15 +48,14 @@ public class ClusterRenderer<T extends MapMarker> extends DefaultClusterRenderer
         return mMinClusterSize;
     }
     @Override
-    protected void onBeforeClusterRendered(Cluster<MapMarker> cluster, MarkerOptions markerOptions) {
+    protected void onBeforeClusterRendered(Cluster<OperaFirebase> cluster, MarkerOptions markerOptions) {
         //Bitmap icon = mClusterIconGenerator.makeIcon(String.valueOf(cluster.getSize()));
         //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
         int bucket = this.getBucket(cluster);
         BitmapDescriptor descriptor = (BitmapDescriptor)this.mIcons.get(bucket);
         if(descriptor == null) {
             this.mColoredCircleBackground.getPaint().setColor(this.getColor(bucket));
-            descriptor = BitmapDescriptorFactory.fromBitmap(this.mIconGenerator.makeIcon(String.valueOf(cluster.getSize()))); //real numbers
-            //descriptor = BitmapDescriptorFactory.fromBitmap(this.mIconGenerator.makeIcon(this.getClusterText(bucket))); //number +
+            descriptor = BitmapDescriptorFactory.fromBitmap(this.mIconGenerator.makeIcon(String.valueOf(cluster.getSize())));
             this.mIcons.put(bucket, descriptor);
         }
 
@@ -86,7 +86,7 @@ public class ClusterRenderer<T extends MapMarker> extends DefaultClusterRenderer
         return squareTextView;
     }
 
-    protected boolean shouldRenderAsCluster(Cluster<MapMarker> cluster) {
+    protected boolean shouldRenderAsCluster(Cluster<OperaFirebase> cluster) {
         return cluster.getSize() > this.mMinClusterSize;
     }
 }

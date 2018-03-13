@@ -315,10 +315,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         //Voglio che mProvider sia un sigleton, di conseguenza anche mOverlay sarà singleton
         if(mProvider == null){
             //CREO L'OVERLAY
+            /* TODO: fixare in fase di avvio app alla prima installazione
             mProvider = new HeatmapTileProvider.Builder()
                     .data(((MapsActivity) thisActivity).getClusterManager().getCoordList())
                     .build();
-            mOverlay = ((MapsActivity) thisActivity).getMap().addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+            mOverlay = ((MapsActivity) thisActivity).getMap().addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));*/
         }
     }
 

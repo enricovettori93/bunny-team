@@ -45,83 +45,83 @@ public class RegioniFactory {
         String[] coordinateapp;
         switch (nome){
             case "Abruzzo":
-                Log.d("GETTING COORD FROM","Abruzzo");
+                //Log.d("GETTING COORD FROM","Abruzzo");
                 coordinate = coordinateAbruzzo.split("/");
                 break;
             case "Basilicata":
-                Log.d("GETTING COORD FROM","Basilicata");
+                //Log.d("GETTING COORD FROM","Basilicata");
                 coordinate = coordinateBasilicata.split("/");
                 break;
             case "Calabria":
-                Log.d("GETTING COORD FROM","Calabria");
+                //Log.d("GETTING COORD FROM","Calabria");
                 coordinate = coordinateCalabria.split("/");
                 break;
             case "Campania":
-                Log.d("GETTING COORD FROM","Campania");
+                //Log.d("GETTING COORD FROM","Campania");
                 coordinate = coordinateCampania.split("/");
                 break;
             case "Emilia-Romagna":
-                Log.d("GETTING COORD FROM","Emilia-Romagna");
+                //Log.d("GETTING COORD FROM","Emilia-Romagna");
                 coordinate = coordinateElimia.split("/");
                 break;
             case "Friuli-Venezia Giulia":
-                Log.d("GETTING COORD FROM","Friuli");
+                //Log.d("GETTING COORD FROM","Friuli");
                 coordinate = coordinateFriuli.split("/");
                 break;
             case "Lazio":
-                Log.d("GETTING COORD FROM","Lazio");
+                //Log.d("GETTING COORD FROM","Lazio");
                 coordinate = coordinateLazio.split("/");
                 break;
             case "Liguria":
-                Log.d("GETTING COORD FROM","Liguria");
+                //Log.d("GETTING COORD FROM","Liguria");
                 coordinate = coordinateLiguria.split("/");
                 break;
             case "Lombardia":
-                Log.d("GETTING COORD FROM","Lombardia");
+                //Log.d("GETTING COORD FROM","Lombardia");
                 coordinate = coordinateLombardia.split("/");
                 break;
             case "Marche":
-                Log.d("GETTING COORD FROM","Marche");
+                //Log.d("GETTING COORD FROM","Marche");
                 coordinate = coordinateMarche.split("/");
                 break;
             case "Molise":
-                Log.d("GETTING COORD FROM","Molise");
+                //Log.d("GETTING COORD FROM","Molise");
                 coordinate = coordinateMolise.split("/");
                 break;
             case "Piemonte":
-                Log.d("GETTING COORD FROM","Piemonte");
+                //Log.d("GETTING COORD FROM","Piemonte");
                 coordinate = coordinatePiemonte.split("/");
                 break;
             case "Puglia":
-                Log.d("GETTING COORD FROM","Puglia");
+                //Log.d("GETTING COORD FROM","Puglia");
                 coordinate = coordinatePuglia.split("/");
                 break;
             case "Sardegna":
-                Log.d("GETTING COORD FROM","Sardegna");
+                //Log.d("GETTING COORD FROM","Sardegna");
                 coordinate = coordinateSardegna.split("/");
                 break;
             case "Sicilia":
-                Log.d("GETTING COORD FROM","Sicilia");
+                //Log.d("GETTING COORD FROM","Sicilia");
                 coordinate = coordinateSicilia.split("/");
                 break;
             case "Toscana":
-                Log.d("GETTING COORD FROM","Toscana");
+                //Log.d("GETTING COORD FROM","Toscana");
                 coordinate = coordinateToscana.split("/");
                 break;
             case "Trentino-Alto Adige":
-                Log.d("GETTING COORD FROM","Trentino");
+                //Log.d("GETTING COORD FROM","Trentino");
                 coordinate = coordinateTrentino.split("/");
                 break;
             case "Umbria":
-                Log.d("GETTING COORD FROM","Umbria");
+                //Log.d("GETTING COORD FROM","Umbria");
                 coordinate = coordinateUmbria.split("/");
                 break;
             case "Valle d'Aosta":
-                Log.d("GETTING COORD FROM","Valle d'Aosta");
+                //Log.d("GETTING COORD FROM","Valle d'Aosta");
                 coordinate = coordinateValleAosta.split("/");
                 break;
             case "Veneto":
-                Log.d("GETTING COORD FROM","Veneto");
+                //Log.d("GETTING COORD FROM","Veneto");
                 coordinate = coordinateVeneto.split("/");
                 break;
             default:

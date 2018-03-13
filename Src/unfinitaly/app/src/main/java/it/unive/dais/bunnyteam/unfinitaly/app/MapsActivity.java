@@ -444,7 +444,7 @@ public class MapsActivity extends BaseActivity
 
         //Inserisco le % di opere nelle varie regioni
         MapMarkerList.getInstance().setPercentageRegioni();
-        HashMapRegioni.getIstance().debugPrintPercentage();
+        //HashMapRegioni.getIstance().debugPrintPercentage();
         //Applico le varie impostazioni alla mappa
         applyMapSettings();
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));

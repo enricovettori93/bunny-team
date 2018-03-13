@@ -74,7 +74,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".testing.TestFirebase"></activity>
     </application>
 
 </manifest>

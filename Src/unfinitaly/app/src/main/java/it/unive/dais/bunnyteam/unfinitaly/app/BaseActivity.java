@@ -39,6 +39,7 @@ import java.util.Map;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
+import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
  *
@@ -63,6 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     SwitchDrawerItem distribuzione;
     PrimaryDrawerItem mappa;
     SwitchDrawerItem percentualeRegione;
+    PrimaryDrawerItem testing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
         informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);
         impostazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Impostazioni").withIcon(R.drawable.settings);
+        testing = new PrimaryDrawerItem().withIdentifier(99).withName("Test");
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -178,6 +181,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 startSettingsActivity();
                 drawer.setSelection(-1);
+                return false;
+            }
+        });
+        testing.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                Intent i = new Intent(getApplicationContext(), TestFirebase.class);
+                startActivity(i);
                 return false;
             }
         });
@@ -272,7 +283,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem()
+                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem(),testing
                     )
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);

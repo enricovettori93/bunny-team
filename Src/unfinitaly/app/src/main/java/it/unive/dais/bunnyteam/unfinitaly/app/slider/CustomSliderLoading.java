@@ -16,7 +16,9 @@ import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 /**
@@ -41,8 +43,7 @@ public class CustomSliderLoading extends CustomSlider {
         sampleSlide.loadAct = loadAct;
         return sampleSlide;
     }
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(v!=null)
             return v;
         else
@@ -58,8 +59,9 @@ public class CustomSliderLoading extends CustomSlider {
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
             loadinggif = (AVLoadingIndicatorView) view.findViewById(R.id.avi2);
+            //FirebaseUtilities.getIstance().readFromFirebase();
+            //loadAct.startMapsActivity();
             if (MapMarkerList.getInstance().getMapMarkers().size() == 0) {
-                /*non ci sono markers*/
                 try {
                     if (MapsItemIO.isCached(loadAct)) {
                         Log.i("loading", "is on cache!");

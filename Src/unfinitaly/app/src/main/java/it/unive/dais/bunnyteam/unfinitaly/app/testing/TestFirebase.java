@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.factory.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 public class TestFirebase extends AppCompatActivity {
@@ -22,13 +22,13 @@ public class TestFirebase extends AppCompatActivity {
     OperaFirebase opera;
     TextView printData;
     private DatabaseReference mDatabase;
-    private DatabaseReference opere;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_firebase);
         printData = (TextView)findViewById(R.id.printData);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
+        FirebaseUtilities.getIstance().readFromFirebase();
+        /*mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -38,7 +38,6 @@ public class TestFirebase extends AppCompatActivity {
                 }
                 Log.d("FINITO","FROM FIREBASE");
                 Log.d("SIZE ARRAYLIST",""+listaOpere.size());
-                /* Funziona, stampa di debug
                 for(int i = 0;i < listaOpere.size();i++){
                     try {
                         Thread.sleep(1);
@@ -46,13 +45,13 @@ public class TestFirebase extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Log.d("OPERA" + i,listaOpere.get(i).toString());
-                }*/
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("Error","Reading DB from Firebase");
             }
-        });
+        });*/
     }
 }

@@ -1,20 +1,21 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.R;
+import java.util.List;
+
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 
 /**
  * Created by Enrico on 03/03/2018.
@@ -23,6 +24,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 public class FirebaseUtilities {
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private DatabaseReference mDatabase;
     private static FirebaseUtilities fbutilites = new FirebaseUtilities();
     private FirebaseUtilities(){
         auth = FirebaseAuth.getInstance();
@@ -70,5 +72,25 @@ public class FirebaseUtilities {
             return user.getPhotoUrl();
         else
             return null;
+    }
+
+    public void readFromFirebase(){
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("NUMERO DATI LETTI",""+dataSnapshot.getChildrenCount());
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    ListaOpereFirebase.getIstance().getListaOpere().add(data.getValue(OperaFirebase.class));
+                }
+                Log.d("FINITO","FROM FIREBASE");
+                Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Error","Reading DB from Firebase");
+            }
+        });
     }
 }

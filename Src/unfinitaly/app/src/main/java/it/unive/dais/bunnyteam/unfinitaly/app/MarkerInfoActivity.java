@@ -63,7 +63,7 @@ public class MarkerInfoActivity extends BaseActivity {
                 return true;
             }
         });
-        final StreetViewPanoramaFragment streetViewPanoramaFragment =
+        /*final StreetViewPanoramaFragment streetViewPanoramaFragment =
                 (StreetViewPanoramaFragment) getFragmentManager()
                         .findFragmentById(R.id.streetviewpanorama);
         getFragmentManager().beginTransaction().hide(streetViewPanoramaFragment).commit();
@@ -80,8 +80,7 @@ public class MarkerInfoActivity extends BaseActivity {
                         });
                     panorama.setPosition(coordMapM);
                 }
-        });
-
+        });*/
     }
 
 }

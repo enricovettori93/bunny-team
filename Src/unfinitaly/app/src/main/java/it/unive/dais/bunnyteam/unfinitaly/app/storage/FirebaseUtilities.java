@@ -86,6 +86,7 @@ public class FirebaseUtilities {
                 }
                 Log.d("FINITO","FROM FIREBASE");
                 Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
+                act.resumeLoadingAfterFirebase();
             }
 
             @Override
@@ -93,6 +94,5 @@ public class FirebaseUtilities {
                 Log.e("Error","Reading DB from Firebase");
             }
         });
-        act.resumeLoadingAfterFirebase();
     }
 }

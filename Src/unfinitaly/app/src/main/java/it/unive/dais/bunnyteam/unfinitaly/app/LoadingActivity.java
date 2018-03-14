@@ -44,19 +44,20 @@ public class LoadingActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("ACTIVITY","LOADING");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
             System.exit(0);
         }
-        Log.d("LETTURA DATI","STO PER LEGGERE I DATI DA FIREBASE");
         FirebaseUtilities.getIstance().readFromFirebase(LoadingActivity.this);
         //TODO: togliere sto sleep che fa cagare
-        try {
+        /*try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
+        //resumeLoadingAfterFirebase();
     }
 
     public void resumeLoadingAfterFirebase(){
@@ -65,6 +66,7 @@ public class LoadingActivity extends AppIntro {
         String first = sharedPreferences.getString("text",null);
         if(first != null){
             //Non era il primo avvio
+            Log.d("AVVIO","NON IL PRIMO");
             if(FirebaseUtilities.getIstance().isLogged()){
                 User.getIstance().setName(FirebaseUtilities.getIstance().getNome());
                 User.getIstance().setEmail(FirebaseUtilities.getIstance().getEmail());
@@ -73,6 +75,7 @@ public class LoadingActivity extends AppIntro {
         }
         else{
             //E' il primo avvio, scrivo qualcosa nelle sharedpreferences
+            Log.d("AVVIO","IL PRIMO");
             SharedPreferences.Editor editor = getSharedPreferences("first",MODE_PRIVATE).edit();
             editor.putString("text","avviata");
             editor.commit();
@@ -92,13 +95,6 @@ public class LoadingActivity extends AppIntro {
             showSkipButton(false);
             setFadeAnimation();
         }
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    public WebView getWebview(){
-        return webview;
     }
 
     @Override

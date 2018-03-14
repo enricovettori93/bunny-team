@@ -202,7 +202,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 final Collection<OperaFirebase> clusterlist = cluster.getItems();
                 Log.d("Grandezza",""+cluster.getSize());
                 for(int i=0;i<clusterlist.size();i++){
-                    stringclusterlista[i]= R.string.clustercategoria + ": " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
+                    stringclusterlista[i]= "Categoria: " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
                 }
                 AlertDialog dialog = new AlertDialog.Builder(context)
                         .setTitle(R.string.clustertitle)

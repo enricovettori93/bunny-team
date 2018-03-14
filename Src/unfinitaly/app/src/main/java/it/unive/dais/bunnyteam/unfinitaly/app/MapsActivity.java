@@ -107,7 +107,7 @@ public class MapsActivity extends BaseActivity
     protected LatLng currentPosition = null;
     @Nullable
     protected Marker hereMarker = null;
-    private CustomClusterManager<MapMarker> mClusterManager;
+    private CustomClusterManager<OperaFirebase> mClusterManager;
     private ListaOpereFirebase mapMarkers = null;
     private View info;
     private ImageView list;
@@ -408,24 +408,22 @@ public class MapsActivity extends BaseActivity
         mClusterManager.cluster();
 
         list = (ImageView)findViewById(R.id.button_list);
-        /* TODO: da rivedere con i nuovi oggetti marker
         list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ArrayList<MapMarker> activemarkers;
+                final ArrayList<OperaFirebase> activemarkers;
                 String[] stringmarkers;
                 activemarkers = mClusterManager.getActiveMarkers();
                 stringmarkers = new String[activemarkers.size()];
                 for(int i=0;i<activemarkers.size();i++)
-                    stringmarkers[i]=R.string.clustercategoria + ": " +((MapMarker)activemarkers.toArray()[i]).getCategoria()+"\n"+((MapMarker)activemarkers.toArray()[i]).getTipologia_cup();
-                Log.d("BUTTON LIST","CLICKED");
+                    stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
                 Log.d("SIZE LIST",""+activemarkers.size());
                 final AlertDialog alert = new AlertDialog.Builder(thisActivity)
                         .setTitle("Elementi attivi")
                         .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int id) {
-                                showMarkerInfo((MapMarker)activemarkers.toArray()[id]);
+                                showMarkerInfo((OperaFirebase)activemarkers.toArray()[id]);
                             }
                         })
                         .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
@@ -437,18 +435,19 @@ public class MapsActivity extends BaseActivity
                         .create();
                 alert.show();
             }
-        });*/
+        });
 
         //Inserisco le % di opere nelle varie regioni
         ListaOpereFirebase.getIstance().setPercentageRegioni();
         //HashMapRegioni.getIstance().debugPrintPercentage();
         //Applico le varie impostazioni alla mappa
         applyMapSettings();
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
+        //googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         updateCurrentPosition();
         // TODO: riattivare dopo aver fixato -> createOverlay();
-        //activateHeatmap();
+        createOverlay();
+        activateHeatmap();
         createPolygonMap();
     }
 
@@ -679,7 +678,7 @@ public class MapsActivity extends BaseActivity
      */
     public void showMarkerInfo(OperaFirebase mapMarker){
         Intent i = new Intent(this, MarkerInfoActivity.class);
-        //TODO: fixare -> i.putExtra("MapMarker", mapMarker);
+        i.putExtra("MapMarker", mapMarker);
         startActivity(i);
     }
 

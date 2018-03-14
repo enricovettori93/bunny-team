@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import com.mikepenz.materialdrawer.Drawer;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
+import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.view.ProgressBarAnimation;
 
 /**
@@ -24,7 +26,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.view.ProgressBarAnimation;
  * @author BunnyTeam, Università Ca' Foscari
  */
 public class MarkerInfoActivity extends BaseActivity {
-    MapMarker thisMapMarker;
+    OperaFirebase thisMapMarker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,7 +36,7 @@ public class MarkerInfoActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         buildDrawer(toolbar);
         toolbar.setTitle("Informazioni opera");
-        thisMapMarker = (MapMarker)getIntent().getSerializableExtra("MapMarker");
+        thisMapMarker = (OperaFirebase)getIntent().getSerializableExtra("MapMarker");
         ((TextView)findViewById(R.id.tv_categoria)).setText(thisMapMarker.getCategoria());
         ((TextView)findViewById(R.id.tv_pubblicata_da)).setText(thisMapMarker.getRegione());
         ((TextView)findViewById(R.id.tv_sottosettore)).setText(thisMapMarker.getSottosettore());
@@ -42,8 +44,8 @@ public class MarkerInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.tv_tipo_cup)).setText(thisMapMarker.getTipologia_cup());
         ((TextView)findViewById(R.id.tv_descrizione)).setText(thisMapMarker.getTitle());
         ((TextView)findViewById(R.id.tv_fallimento)).setText(thisMapMarker.getCausa());
-        String sal = String.format("%.2f €",thisMapMarker.getImporto_sal());
-        String qe = String.format("%.2f €",thisMapMarker.getImporto_ultimo_qe());
+        String sal = String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_sal()));
+        String qe = String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe()));
         ((TextView)findViewById(R.id.ImportiSAL)).setText(qe);
         ((TextView)findViewById(R.id.importiQE)).setText(sal);
 
@@ -52,7 +54,7 @@ public class MarkerInfoActivity extends BaseActivity {
         ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
 
         rc.setMax(100);
-        mProgressAnimation.setProgress((int)thisMapMarker.getPercentage());
+        mProgressAnimation.setProgress((int)Double.parseDouble(thisMapMarker.getPercentage()));
         final LatLng coordMapM = thisMapMarker.getPosition();
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

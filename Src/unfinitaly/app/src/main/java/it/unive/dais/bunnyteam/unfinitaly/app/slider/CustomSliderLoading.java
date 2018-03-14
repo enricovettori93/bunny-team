@@ -55,7 +55,7 @@ public class CustomSliderLoading extends CustomSlider {
             v = view;
             super.onViewCreated(view, savedInstanceState);
             tv_status = (TextView) view.findViewById(R.id.tv_status2);
-            tv_status.setText("Apertura file...");
+            tv_status.setText("Caricamento...");
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
             loadinggif = (AVLoadingIndicatorView) view.findViewById(R.id.avi2);

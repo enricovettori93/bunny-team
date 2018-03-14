@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
+import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
@@ -256,7 +257,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if(percentualeRegione.isChecked()){
                             percentualeRegione.withChecked(false);
                             drawer.updateItem(percentualeRegione);
-                            ((MapsActivity)thisActivity).setVisibilityPolygon(false);
+                            PolygonManager.getIstance().setVisibilityPolygon(false);
                         }
                         mOverlay.setVisible(true);
                     }
@@ -275,10 +276,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                             drawer.updateItem(distribuzione);
                             mOverlay.setVisible(false);
                         }
-                        ((MapsActivity)thisActivity).setVisibilityPolygon(true);
+                        PolygonManager.getIstance().setVisibilityPolygon(true);
                     }
                     else
-                        ((MapsActivity)thisActivity).setVisibilityPolygon(false);
+                        PolygonManager.getIstance().setVisibilityPolygon(false);
                     drawer.setSelection(-1);
                 }
             });

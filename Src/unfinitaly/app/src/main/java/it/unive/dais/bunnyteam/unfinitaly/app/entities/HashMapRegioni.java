@@ -51,6 +51,10 @@ public class HashMapRegioni {
         return (100*percentualeRegioni.get(regione))/totale;
     }
 
+    public int getOpereRegione(String regione){
+        return percentualeRegioni.get(regione);
+    }
+
     public int getColorByPercentage(String regione){
         double app;
         app = getPercentualeRegione(regione);

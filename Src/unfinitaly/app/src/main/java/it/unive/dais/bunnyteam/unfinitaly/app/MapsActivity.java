@@ -12,15 +12,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
-import android.media.Image;
 import android.net.Uri;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -28,13 +25,11 @@ import android.support.v4.app.ActivityCompat;
 
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -53,28 +48,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 
 import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
+import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 
 /**
@@ -111,7 +98,6 @@ public class MapsActivity extends BaseActivity
     private ListaOpereFirebase mapMarkers = null;
     private View info;
     private ImageView list;
-    private Polygon abruzzo, basilicata, campania, calabria, emilia, friuli, lazio, liguria, lombardia, marche, molise, piemonte, puglia, sardegna, sicilia, toscana, trentino, umbria, valleaosta, veneto;
     /**
      * API per i servizi di localizzazione.
      */
@@ -444,37 +430,40 @@ public class MapsActivity extends BaseActivity
         applyMapSettings();
         //googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
+        gMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon polygon) {
+                Log.d("POLYGON", PolygonManager.getIstance().getNomeRegioneById(polygon.getId()));
+                String nomeRegione;
+                TextView nomeregione,opereRegione,percentualeOpere;
+                nomeRegione = PolygonManager.getIstance().getNomeRegioneById(polygon.getId());
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
+                LayoutInflater inflater = thisActivity.getLayoutInflater();
+                View mView = inflater.inflate(R.layout.region_dialog,null);
+                builder.setView(mView)
+                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}
+                        });
+                AlertDialog dialog = builder.create();
+                //Puglio le textview dopo la create
+                nomeregione = (TextView)mView.findViewById(R.id.textNomeRegione);
+                opereRegione = (TextView)mView.findViewById(R.id.textTotaleOpere);
+                percentualeOpere =(TextView)mView.findViewById(R.id.textPercOpere);
+                nomeregione.setText("Regione: " + nomeRegione);
+                opereRegione.setText("Numero opere: " + Integer.toString(HashMapRegioni.getIstance().getOpereRegione(nomeRegione)));
+                percentualeOpere.setText("Percentuale rispetto al totale: " + Double.toString(HashMapRegioni.getIstance().getPercentualeRegione(nomeRegione))+"%");
+                //Show del alert dialog
+                dialog.show();
+            }
+        });
+
+        //Setto le ultime cosine
         updateCurrentPosition();
-        // TODO: riattivare dopo aver fixato -> createOverlay();
         createOverlay();
         activateHeatmap();
         createPolygonMap();
-    }
-
-    /*
-     * Setta al valore booleano status la proprietà visible dei poligoni
-     */
-    public void setVisibilityPolygon(boolean status){
-        abruzzo.setVisible(status);
-        basilicata.setVisible(status);
-        campania.setVisible(status);
-        calabria.setVisible(status);
-        emilia.setVisible(status);
-        friuli.setVisible(status);
-        lazio.setVisible(status);
-        liguria.setVisible(status);
-        lombardia.setVisible(status);
-        marche.setVisible(status);
-        molise.setVisible(status);
-        piemonte.setVisible(status);
-        puglia.setVisible(status);
-        sardegna.setVisible(status);
-        sicilia.setVisible(status);
-        toscana.setVisible(status);
-        trentino.setVisible(status);
-        umbria.setVisible(status);
-        valleaosta.setVisible(status);
-        veneto.setVisible(status);
     }
 
     /*
@@ -482,126 +471,7 @@ public class MapsActivity extends BaseActivity
      */
     public void createPolygonMap(){
         Log.d("POLYGON MAP","SETTING");
-        abruzzo = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Abruzzo"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Abruzzo")));
-        basilicata = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Basilicata"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Basilicata")));
-        campania = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Campania"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Campania")));
-        calabria = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Calabria"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Calabria")));
-        emilia = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Emilia-Romagna"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Emilia-Romagna")));
-        friuli = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Friuli-Venezia Giulia"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Friuli-Venezia Giulia")));
-        lazio = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Lazio"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Lazio")));
-        liguria = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Liguria"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Liguria")));
-        lombardia = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Lombardia"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Lombardia")));
-        marche = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Marche"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Marche")));
-        molise = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Molise"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Molise")));
-        piemonte = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Piemonte"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Piemonte")));
-        puglia = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Puglia"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Puglia")));
-        sardegna = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Sardegna"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Sardegna")));
-        sicilia = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Sicilia"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Sicilia")));
-        toscana = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Toscana"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Toscana")));
-        trentino = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Trentino-Alto Adige"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Trentino-Alto Adige")));
-        umbria = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Umbria"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Umbria")));
-        valleaosta = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Valle d'Aosta"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Valle d'Aosta")));
-        veneto = gMap.addPolygon(new PolygonOptions()
-                .add(RegioniFactory.getIstance().createRegione("Veneto"))
-                .visible(false)
-                .strokeWidth(5)
-                .strokeColor(Color.BLACK)
-                .fillColor(HashMapRegioni.getIstance().getColorByPercentage("Veneto")));
+        PolygonManager.getIstance().putPolygonRegion(gMap);
     }
 
     /**
@@ -689,7 +559,6 @@ public class MapsActivity extends BaseActivity
             if(findViewById(R.id.marker_window).getVisibility()==View.VISIBLE)
                 findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
             else if(onBackPressed){
-                /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
                 Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);

@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity{
                             User.getIstance().setEmail(firebaseUser.getEmail().toString());
                             Log.d("EMAIL FIREBASE",firebaseUser.getEmail().toString());
                             Toast.makeText(getApplicationContext(),"Accesso effettuato con successo.",Toast.LENGTH_SHORT).show();
-                            if(intentcontent.equals("Account")){
+                            if(intentcontent.equals("Base")){
                                 Intent i = new Intent(getApplicationContext(),AccountActivity.class);
                                 startActivity(i);
                             }

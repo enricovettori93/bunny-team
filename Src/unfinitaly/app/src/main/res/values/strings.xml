@@ -2,6 +2,7 @@
     <!-- Customize your app's name here. -->
     <string name="app_name">UnfinItaly - Tesi</string>
     <string name="title_activity_maps">UnfinItaly - Tesi</string>
+    <string name="app_title">UnfinItaly</string>
     <!-- -->
 
     <string name="gps_disabled">GPS disattivato</string>
@@ -66,6 +67,10 @@
     <string name="creditsdatadroiderror">Questa applicazione è stata sviluppata usando il toolkit Datadroid.</string>
     <string name="email">Email\nunfinitaly.app@gmail.com</string>
     <string name="website">Sito web\nunfintaly.altervista.org</string>
+    <!-- -->
+
+    <!-- FragmentLoading -->
+    <string name="bad_db">Errore durante il caricamento dei dati. Controlla la connessione.</string>
     <!-- -->
 
     <!--FragmentInfo 1 -->

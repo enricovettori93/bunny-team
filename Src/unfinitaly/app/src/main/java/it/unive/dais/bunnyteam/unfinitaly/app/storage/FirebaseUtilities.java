@@ -67,7 +67,6 @@ public class FirebaseUtilities {
     }
 
     public void logOut(){
-        auth.signOut();
         User.getIstance().userLogOut();
     }
 

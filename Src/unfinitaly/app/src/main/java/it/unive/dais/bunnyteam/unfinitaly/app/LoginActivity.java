@@ -3,6 +3,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks{
     private TextView skip;
     private com.google.android.gms.common.SignInButton login;
     public static final String TAG = "LoginActivity";
@@ -70,6 +71,10 @@ public class LoginActivity extends AppCompatActivity{
                 .addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
                 .build();
 
+        googleApiClient.registerConnectionCallbacks(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //Listener login e skip
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,25 +82,25 @@ public class LoginActivity extends AppCompatActivity{
                 startActivity(i);
             }
         });
-
-        firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignInFunction();
+                signInFunction();
             }
         });
 
-        /*action = i.getStringExtra("Action");
-        if(action != null){
-            if(googleApiClient.isConnected()){
-                firebaseAuth.signOut();
-                Auth.GoogleSignInApi.signOut(googleApiClient);
-                User.getIstance().userLogOut();
-                FirebaseUtilities.getIstance().logOut();
-                Toast.makeText(getApplicationContext(),"Sei uscito con successo",Toast.LENGTH_SHORT).show();
+        //Controllo se è arrivato l'intent di uscire dalla account activity
+        action = i.getStringExtra("Action");
+        Log.d("ACTION",""+action);
+        if(action != null) {
+            if (googleApiClient.isConnected()) {
+                signOutFunction();
             }
-        }*/
+            else{
+                googleApiClient.connect();
+            }
+        }
+
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -107,9 +112,29 @@ public class LoginActivity extends AppCompatActivity{
         };
     }
 
-    public void SignInFunction(){
+    @Override
+    protected void onStart(){
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    /**
+     * Logga l'utente dall'app chiedendo un result all'autenticazione di Google
+     */
+    public void signInFunction(){
         Intent AuthIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(AuthIntent,RequestSignInCode);
+    }
+
+    /**
+     * Slogga l'utente dall'app
+     */
+    public void signOutFunction(){
+        Log.d("LOGOUT", "IN AZIONE");
+        firebaseAuth.signOut();
+        Auth.GoogleSignInApi.signOut(googleApiClient);
+        FirebaseUtilities.getIstance().logOut();
+        Toast.makeText(getApplicationContext(), "Sei uscito con successo", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -123,10 +148,12 @@ public class LoginActivity extends AppCompatActivity{
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
                 FirebaseUserAuth(googleSignInAccount);
             }
-            else
-                Log.d("LOGIN","INSUCCESSO");
+            else{
+                Toast.makeText(getApplicationContext(),"Errore durante il login",Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
     public void FirebaseUserAuth(GoogleSignInAccount googleSignInAccount) {
         AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
         Log.d("Login with google","Dovrei entrare qui, idToken:"+googleSignInAccount.getIdToken());
@@ -137,9 +164,7 @@ public class LoginActivity extends AppCompatActivity{
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             User.getIstance().setName(firebaseUser.getDisplayName().toString());
-                            Log.d("NOME FIREBASE",firebaseUser.getDisplayName().toString());
                             User.getIstance().setEmail(firebaseUser.getEmail().toString());
-                            Log.d("EMAIL FIREBASE",firebaseUser.getEmail().toString());
                             Toast.makeText(getApplicationContext(),"Accesso effettuato con successo.",Toast.LENGTH_SHORT).show();
                             if(intentcontent.equals("Base")){
                                 Intent i = new Intent(getApplicationContext(),AccountActivity.class);
@@ -147,9 +172,6 @@ public class LoginActivity extends AppCompatActivity{
                             }
                             else
                                 startMapsActivity();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(),"Errore durante il login.",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -199,5 +221,19 @@ public class LoginActivity extends AppCompatActivity{
             Intent i = new Intent(this,MapsActivity.class);
             startActivity(i);
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.d("CONNECTED","AAAA");
+        if(action != null){
+            Log.d("SLOGGO","AAAA");
+            signOutFunction();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        //Nothing
     }
 }

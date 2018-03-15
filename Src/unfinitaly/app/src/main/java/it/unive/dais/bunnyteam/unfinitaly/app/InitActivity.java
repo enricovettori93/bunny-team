@@ -35,12 +35,11 @@ public class InitActivity extends AppCompatActivity {
         progress_loading.setMax(100);
         progress_loading.setProgressTintList(ColorStateList.valueOf(Color.WHITE));
         if(!isOnline()){
-            Log.d("ONLINE","FALSE");
             status = false;
             resumeLoadingAfterFirebase();
         }
         else{
-            error.setText("Caricamento dati in corso..");
+            error.setText("Caricamento dati in corso...");
             status = FirebaseUtilities.getIstance().readFromFirebase(InitActivity.this);
         }
     }
@@ -56,6 +55,7 @@ public class InitActivity extends AppCompatActivity {
         }
         else{
             loading.hide();
+            progress_loading.setVisibility(View.INVISIBLE);
         }
     }
 

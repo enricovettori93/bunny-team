@@ -85,7 +85,10 @@ public class FirebaseUtilities {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long timebefore = System.nanoTime();
                 Log.d("NUMERO DATI LETTI",""+dataSnapshot.getChildrenCount());
+                int i = 0;
                 for(DataSnapshot data : dataSnapshot.getChildren()){
+                    i++;
+                    act.updateProgressBar((int)(100*dataSnapshot.getChildrenCount())/i);
                     ListaOpereFirebase.getIstance().getListaOpere().add(data.getValue(OperaFirebase.class));
                 }
                 long timeafter = System.nanoTime();

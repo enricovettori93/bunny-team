@@ -96,8 +96,8 @@ public class LoadingActivity extends AppIntro {
             editor.putString("text","avviata");
             editor.commit();
             //Continuo col caricamento di tutto il resto
-            csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
-            addSlide(csl);
+            //csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
+            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo1));
             ready = true;
             ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.msg_ok);
             addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
@@ -115,7 +115,8 @@ public class LoadingActivity extends AppIntro {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        finishAffinity();
+        System.exit(0);
     }
 
     @Override

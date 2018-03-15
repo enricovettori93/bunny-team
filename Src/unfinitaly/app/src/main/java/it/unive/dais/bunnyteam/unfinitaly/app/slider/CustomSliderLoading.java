@@ -54,10 +54,9 @@ public class CustomSliderLoading extends CustomSlider {
         if (v == null) {
             v = view;
             super.onViewCreated(view, savedInstanceState);
-            tv_status = (TextView) view.findViewById(R.id.tv_status2);
-            tv_status.setText("Caricamento...");
+            //tv_status = (TextView) view.findViewById(R.id.tv_status2);
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);
-            progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+            //progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
             loadinggif = (AVLoadingIndicatorView) view.findViewById(R.id.avi2);
             /*if (MapMarkerList.getInstance().getMapMarkers().size() == 0) {
                 try {

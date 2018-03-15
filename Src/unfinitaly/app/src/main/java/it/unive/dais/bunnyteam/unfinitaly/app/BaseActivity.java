@@ -158,8 +158,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 if(FirebaseUtilities.getIstance().isLogged()){
-                    startAccountActivity();
-                    drawer.setSelection(-1);
+                    if(thisActivity instanceof AccountActivity)
+                        drawer.setSelection(-1);
+                    else
+                        startAccountActivity();
                     return false;
                 }
                 else{

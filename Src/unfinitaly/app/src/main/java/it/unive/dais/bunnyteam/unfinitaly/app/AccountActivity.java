@@ -53,7 +53,6 @@ public class AccountActivity extends BaseActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //FirebaseUtilities.getIstance().logOut();
                 Intent i = new Intent(getApplicationContext(),LoginActivity.class);
                 i.putExtra("Activity","Account");
                 i.putExtra("Action","Logout");

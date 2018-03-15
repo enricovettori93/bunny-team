@@ -5,6 +5,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Enrico on 13/03/2018.
@@ -51,6 +53,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
     String tipologia_opera_incompiuta;
     String title;
     String id_firebase;
+    HashMap <String,String> commenti;
 
     public OperaFirebase(){}
 

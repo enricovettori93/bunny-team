@@ -65,25 +65,6 @@ public class MarkerInfoActivity extends BaseActivity {
                 return true;
             }
         });
-        /*final StreetViewPanoramaFragment streetViewPanoramaFragment =
-                (StreetViewPanoramaFragment) getFragmentManager()
-                        .findFragmentById(R.id.streetviewpanorama);
-        getFragmentManager().beginTransaction().hide(streetViewPanoramaFragment).commit();
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync(new OnStreetViewPanoramaReadyCallback() {
-                @Override
-                public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-                    panorama.setOnStreetViewPanoramaChangeListener(new StreetViewPanorama.OnStreetViewPanoramaChangeListener() {
-                            @Override
-                            public void onStreetViewPanoramaChange(StreetViewPanoramaLocation streetViewPanoramaLocation) {
-                                if (streetViewPanoramaLocation != null && streetViewPanoramaLocation.links != null) {
-                                    getFragmentManager().beginTransaction().show(streetViewPanoramaFragment).commit();
-                                }
-                            }
-                        });
-                    panorama.setPosition(coordMapM);
-                }
-        });*/
     }
-
 }
 

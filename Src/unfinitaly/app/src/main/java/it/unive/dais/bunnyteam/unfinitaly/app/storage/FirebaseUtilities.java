@@ -86,10 +86,13 @@ public class FirebaseUtilities {
                 Log.d("NUMERO DATI LETTI",""+dataSnapshot.getChildrenCount());
                 int i = 0;
                 for(DataSnapshot data : dataSnapshot.getChildren()){
+                    OperaFirebase app = data.getValue(OperaFirebase.class);
+                    app.setId_firebase(Integer.toString(i));
+                    ListaOpereFirebase.getIstance().getListaOpere().add(app);
                     i++;
                     act.updateProgressBar((int)(100*dataSnapshot.getChildrenCount())/i);
-                    ListaOpereFirebase.getIstance().getListaOpere().add(data.getValue(OperaFirebase.class));
                 }
+                Log.d("OPERA 1",ListaOpereFirebase.getIstance().getListaOpere().get(0).toString());
                 long timeafter = System.nanoTime();
                 Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
                 Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());

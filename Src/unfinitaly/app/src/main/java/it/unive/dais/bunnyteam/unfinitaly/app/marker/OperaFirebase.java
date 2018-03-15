@@ -50,6 +50,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
     String tipologia_cup;
     String tipologia_opera_incompiuta;
     String title;
+    String id_firebase;
 
     public OperaFirebase(){}
 
@@ -93,6 +94,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.tipologia_cup = tipologia_cup;
         this.tipologia_opera_incompiuta = tipologia_opera_incompiuta;
         this.title = title;
+        this.id_firebase = "";
     }
 
     public String getAmbito_oggettivo() {
@@ -407,10 +409,19 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.importo_sal = importo_sal;
     }
 
+    public String getId_firebase() {
+        return id_firebase;
+    }
+
+    public void setId_firebase(String id_firebase) {
+        this.id_firebase = id_firebase;
+    }
+
     @Override
     public String toString() {
         return "OperaFirebase{" +
-                "ambito_oggettivo='" + ambito_oggettivo + '\'' +
+                "ID_FIREBASE='" + id_firebase + '\'' +
+                ", ambito_oggettivo='" + ambito_oggettivo + '\'' +
                 ", ambito_soggettivo='" + ambito_soggettivo + '\'' +
                 ", anno_decisione_attuazione='" + anno_decisione_attuazione + '\'' +
                 ", categoria='" + categoria + '\'' +

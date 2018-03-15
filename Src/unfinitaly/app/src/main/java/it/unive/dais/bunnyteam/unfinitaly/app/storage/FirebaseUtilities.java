@@ -83,11 +83,13 @@ public class FirebaseUtilities {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                long timebefore = System.nanoTime();
                 Log.d("NUMERO DATI LETTI",""+dataSnapshot.getChildrenCount());
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     ListaOpereFirebase.getIstance().getListaOpere().add(data.getValue(OperaFirebase.class));
                 }
-                Log.d("FINITO","FROM FIREBASE");
+                long timeafter = System.nanoTime();
+                Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
                 Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
                 act.resumeLoadingAfterFirebase();
             }

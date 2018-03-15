@@ -1,5 +1,6 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.testing;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
@@ -26,8 +28,16 @@ public class TestFirebase extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_firebase);
-        printData = (TextView)findViewById(R.id.printData);
-        /*FirebaseUtilities.getIstance().readFromFirebase();
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            Log.d("EXIT","ESCO AAAAAAAAAa");
+            /*moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);*/
+            finishAffinity();
+            System.exit(0);
+        }
+        /*printData = (TextView)findViewById(R.id.printData);
+        FirebaseUtilities.getIstance().readFromFirebase();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override

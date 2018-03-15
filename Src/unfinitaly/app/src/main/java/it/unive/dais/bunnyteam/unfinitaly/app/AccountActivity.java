@@ -65,7 +65,7 @@ public class AccountActivity extends BaseActivity {
     @Override
     public void onBackPressed(){
         Intent i = new Intent(this,MapsActivity.class);
-        i.putExtra("Activity","Account");
+        //i.putExtra("Activity","Account");
         startActivity(i);
     }
 }

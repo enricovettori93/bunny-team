@@ -40,24 +40,40 @@ public class LoadingActivity extends AppIntro {
     private FloatingActionButton fab;
     private View loadingView;
     private boolean ready = false;
+    private boolean readyLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("ACTIVITY","LOADING");
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
+            finishAffinity();
             System.exit(0);
         }
-        FirebaseUtilities.getIstance().readFromFirebase(LoadingActivity.this);
-        //TODO: togliere sto sleep che fa cagare
-        /*try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-        //resumeLoadingAfterFirebase();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        resumeLoadingAfterFirebase();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d("PAUSA","AA");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d("RESUME","BB");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d("STOP","CC");
+    }
+
+    public void setReadyLoading (boolean value){
+        readyLoading = value;
     }
 
     public void resumeLoadingAfterFirebase(){

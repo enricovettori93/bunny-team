@@ -63,6 +63,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
  * Questa classe è la componente principale del toolkit: fornisce servizi primari per un'app basata su Google Maps, tra cui localizzazione, pulsanti
@@ -555,22 +556,22 @@ public class MapsActivity extends BaseActivity
     public void onBackPressed(){
         if(drawer.isDrawerOpen())
             drawer.closeDrawer();
-        else{
-            if(findViewById(R.id.marker_window).getVisibility()==View.VISIBLE)
+        else {
+            if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
                 findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
-            else if(onBackPressed){
+            }
+            if (onBackPressed) {
                 Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);
                 startActivity(intent);
-            }
-            else{
-                onBackPressed=true;
+            } else {
+                onBackPressed = true;
                 Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        onBackPressed=false;
+                        onBackPressed = false;
                     }
                 }, 2000);
             }

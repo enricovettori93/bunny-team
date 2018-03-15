@@ -30,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 public class LoginActivity extends AppCompatActivity{
     private TextView skip;
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity{
                 firebaseAuth.signOut();
                 Auth.GoogleSignInApi.signOut(googleApiClient);
                 User.getIstance().userLogOut();
+                FirebaseUtilities.getIstance().logOut();
                 Toast.makeText(getApplicationContext(),"Sei uscito con successo",Toast.LENGTH_SHORT).show();
             }
         }*/
@@ -171,10 +173,11 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void onBackPressed(){
+        Log.d("LOGIN BACK","ACT BEFORE: "+intentcontent);
         if(intentcontent.equals("Loading")){
+            Log.d("LOGIN BACK","LOADING ACTIVITY");
             //Sono stato chiamato da loading activity
             if(onBackPressed){
-                /*è stato premuto una volta. Lo ripremiamo, quindi dovremmo uscire*/
                 Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);

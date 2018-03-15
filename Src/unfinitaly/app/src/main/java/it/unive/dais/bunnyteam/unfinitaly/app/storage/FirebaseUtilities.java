@@ -13,10 +13,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.InitActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
  * Created by Enrico on 03/03/2018.
@@ -26,6 +28,7 @@ public class FirebaseUtilities {
     private FirebaseAuth auth;
     private FirebaseUser user;
     private DatabaseReference mDatabase;
+    private boolean ritorno = true;
     private static FirebaseUtilities fbutilites = new FirebaseUtilities();
     private FirebaseUtilities(){
         auth = FirebaseAuth.getInstance();
@@ -75,7 +78,7 @@ public class FirebaseUtilities {
             return null;
     }
 
-    public void readFromFirebase(final LoadingActivity act){
+    public boolean readFromFirebase(final InitActivity act){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +95,9 @@ public class FirebaseUtilities {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("Error","Reading DB from Firebase");
+                ritorno = false;
             }
         });
+        return ritorno;
     }
 }

@@ -53,7 +53,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
     String tipologia_opera_incompiuta;
     String title;
     String id_firebase;
-    HashMap <String,String> commenti;
+    //HashMap <String,String> commenti;
 
     public OperaFirebase(){}
 

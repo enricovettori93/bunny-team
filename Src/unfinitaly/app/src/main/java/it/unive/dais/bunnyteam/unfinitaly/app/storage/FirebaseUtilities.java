@@ -77,6 +77,13 @@ public class FirebaseUtilities {
             return null;
     }
 
+    public String getIdUtente(){
+        if(isLogged())
+            return user.getUid();
+        else
+            return null;
+    }
+
     public boolean readFromFirebase(final InitActivity act){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addValueEventListener(new ValueEventListener() {

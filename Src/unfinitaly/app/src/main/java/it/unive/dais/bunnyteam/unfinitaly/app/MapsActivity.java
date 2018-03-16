@@ -365,7 +365,6 @@ public class MapsActivity extends BaseActivity
         gMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener(){
             @Override
             public void onCameraMove() {
-                Log.d("zoom",""+gMap.getCameraPosition().zoom);
                 if(findViewById(R.id.marker_window).getVisibility() == View.VISIBLE && gMap.getCameraPosition().zoom < 8.2){
                     findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
                 }

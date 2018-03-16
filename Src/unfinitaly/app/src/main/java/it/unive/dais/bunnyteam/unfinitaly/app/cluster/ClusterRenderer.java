@@ -62,7 +62,7 @@ public class ClusterRenderer<T extends OperaFirebase> extends DefaultClusterRend
         markerOptions.icon(descriptor);
     }
 
-    protected void onBeforeClusterItemRendered(MapMarker item, MarkerOptions markerOptions) {
+    protected void onBeforeClusterItemRendered(OperaFirebase item, MarkerOptions markerOptions) {
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
     }

@@ -128,6 +128,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
         addItems(mapMarkers.getListaOpere());
         cluster();
     }
+
     protected void clearMarkers(){
         clearItems();
         cluster();

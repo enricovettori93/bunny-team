@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.cluster;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -20,6 +21,7 @@ public class PercentageClusterRenderer<T extends OperaFirebase> extends ClusterR
         super(context, map, clusterManager);
     }
 
+    @Override
     protected void onBeforeClusterItemRendered(OperaFirebase item, MarkerOptions markerOptions) {
         double percentage =  Double.parseDouble(item.getPercentage());
         if(percentage >= 0 && percentage < 25){

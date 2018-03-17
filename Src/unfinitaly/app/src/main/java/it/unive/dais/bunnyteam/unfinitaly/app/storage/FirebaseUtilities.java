@@ -15,6 +15,7 @@ import java.util.List;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.InitActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
+import it.unive.dais.bunnyteam.unfinitaly.app.MarkerInfoActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
@@ -29,6 +30,7 @@ public class FirebaseUtilities {
     private FirebaseUser user;
     private DatabaseReference mDatabase;
     private boolean ritorno = true;
+    private OperaFirebase operaLetta;
     private static FirebaseUtilities fbutilites = new FirebaseUtilities();
     private FirebaseUtilities(){
         auth = FirebaseAuth.getInstance();
@@ -109,6 +111,25 @@ public class FirebaseUtilities {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("Error","Reading DB from Firebase");
+                ritorno = false;
+            }
+        });
+        return ritorno;
+    }
+
+    public boolean readOperaSingolaFromFirebase(final MarkerInfoActivity activity, final OperaFirebase operaFirebase){
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere").child(operaFirebase.getId_firebase());
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("LETTURA DB","SINGOLA OPERA");
+                operaLetta = dataSnapshot.getValue(OperaFirebase.class);
+                operaLetta.setId_firebase(operaFirebase.getId_firebase());
+                activity.resumeAfterLoadingFirebase(operaLetta);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
                 ritorno = false;
             }
         });

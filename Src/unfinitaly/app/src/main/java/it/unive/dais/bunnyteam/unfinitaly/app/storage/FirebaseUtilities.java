@@ -86,7 +86,7 @@ public class FirebaseUtilities {
 
     public boolean readFromFirebase(final InitActivity act){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long timebefore = System.nanoTime();

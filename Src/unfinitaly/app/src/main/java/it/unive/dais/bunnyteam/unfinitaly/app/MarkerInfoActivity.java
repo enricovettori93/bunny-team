@@ -111,6 +111,8 @@ public class MarkerInfoActivity extends BaseActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Log.d("DATI CAMBIATI","INSERITO COMMENTO");
                                     Log.d("TOSTRING",dataSnapshot.toString());
+                                    commento.setText("");
+                                    commento.setHint("Inserisci un commento");
                                     Toast.makeText(getApplicationContext(),"Commento inserito", Toast.LENGTH_SHORT).show();
                                 }
 

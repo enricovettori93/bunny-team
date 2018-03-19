@@ -4,6 +4,10 @@ package it.unive.dais.bunnyteam.unfinitaly.app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,10 +33,19 @@ import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.Drawer;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.adapter.OpereAdapter;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.Commento;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
@@ -52,6 +65,10 @@ public class MarkerInfoActivity extends BaseActivity {
     boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
     RoundCornerProgressBar rc;
+    RecyclerView recyclerView;
+    OpereAdapter mAdapter;
+    List<Object> commenti_appoggio;
+    List<Commento> commenti = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +88,15 @@ public class MarkerInfoActivity extends BaseActivity {
                 return true;
             }
         });
+        //Setting recycleview commenti
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewCommenti);
+        mAdapter = new OpereAdapter(commenti);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+        //Leggo il marker
         passedMapMarker = (OperaFirebase) getIntent().getSerializableExtra("MapMarker");
         stillLoading(true);
         statoLetturaFirebase = FirebaseUtilities.getIstance().readOperaSingolaFromFirebase(this, passedMapMarker);
@@ -158,8 +184,9 @@ public class MarkerInfoActivity extends BaseActivity {
             final ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
             rc.setMax(100);
             mProgressAnimation.setProgress((int)Double.parseDouble(thisMapMarker.getPercentage()));
-            final LatLng coordMapM = thisMapMarker.getPosition();
-
+            //Setto i commenti
+            setCommenti();
+            //Guardo se l'utente è loggato, in caso affermativo gli si da la possibilità di inserire un commento
             mDatabase = FirebaseDatabase.getInstance().getReference();
             if(FirebaseUtilities.getIstance().isLogged()){
                 findViewById(R.id.buttonInserisciCommento).setVisibility(View.VISIBLE);
@@ -183,7 +210,7 @@ public class MarkerInfoActivity extends BaseActivity {
                                 Toast.makeText(getApplicationContext(),"Testo del commento vuoto.",Toast.LENGTH_SHORT).show();
                             else{
                                 Log.d("COMMENTO","ID FIREBASE"+thisMapMarker.getId_firebase());
-                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString(),new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()));
                                 FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -214,6 +241,47 @@ public class MarkerInfoActivity extends BaseActivity {
         else{
             Toast.makeText(getApplicationContext(),"Errore durante la lettura nel DB",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Metodo per andare a visualizzare i commenti del mapMarker
+     */
+    private void setCommenti(){
+        commenti.clear();
+        if(thisMapMarker.getCommenti().size() > 0){
+            commenti_appoggio = new ArrayList<>(thisMapMarker.getCommenti().values());
+            Log.d("TOSTRING",""+commenti_appoggio.toString());
+            Log.d("COMMENTI","NUMERO:"+thisMapMarker.getCommenti().size());
+            for(Object o:commenti_appoggio){
+                Log.d("OGGETTO_COMMENTO",o.toString());
+                //Parser creato al volo di prova, non so come cazzo risolvere al momento
+                String[] splitvirgola = o.toString().substring(1,o.toString().length()-1).split(",");
+                Log.d("VIRGOLA",splitvirgola[0]+"_"+splitvirgola[1]+"_"+splitvirgola[2]+"_"+splitvirgola[3]);
+
+                String[] data_commento = splitvirgola[0].split("=");
+                Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
+
+                String[] testo_commento = splitvirgola[1].split("=");
+                Log.d("TESTO",data_commento[0]+"_"+data_commento[1]);
+
+                String[] id_utente = splitvirgola[2].split("=");
+                Log.d("ID",data_commento[0]+"_"+data_commento[1]);
+
+                String[] nome_utente = splitvirgola[3].split("=");
+                Log.d("NOME",data_commento[0]+"_"+data_commento[1]);
+
+                commenti.add(new Commento(id_utente[1],nome_utente[1],testo_commento[1],data_commento[1]));
+            }
+            if(commenti.size()>1){
+                //Ordino in base alla data
+
+            }
+        }
+        else{
+            commenti.add(new Commento("","Nessun commento disponibile","",""));
+            Log.d("COMMENTI","NESSUNO");
+        }
+        mAdapter.notifyDataSetChanged();
     }
 }
 

@@ -118,7 +118,7 @@ public class FirebaseUtilities {
 
     public boolean readOperaSingolaFromFirebase(final MarkerInfoActivity activity, final OperaFirebase operaFirebase){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere").child(operaFirebase.getId_firebase());
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("LETTURA DB","SINGOLA OPERA");

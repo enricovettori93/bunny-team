@@ -422,6 +422,14 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.id_firebase = id_firebase;
     }
 
+    public Map<String, Object> getCommenti() {
+        return commenti;
+    }
+
+    public void setCommenti(Map<String, Object> commenti) {
+        this.commenti = commenti;
+    }
+
     @Override
     public String toString() {
         return "OperaFirebase{" +

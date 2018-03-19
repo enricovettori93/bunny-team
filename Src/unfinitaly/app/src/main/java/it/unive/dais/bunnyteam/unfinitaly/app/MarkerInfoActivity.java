@@ -48,6 +48,7 @@ public class MarkerInfoActivity extends BaseActivity {
     OperaFirebase passedMapMarker;
     Button insert;
     EditText commento;
+    Commento nuovo_commento;
     boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
     RoundCornerProgressBar rc;
@@ -133,6 +134,10 @@ public class MarkerInfoActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Riprende l'esecuzione del codice quando viene letta un'opera dal DB quando si entra in questa activity
+     * @param operaLetta: opera che viene letta dal DB quando si entra nell'activity
+     */
     public void resumeAfterLoadingFirebase(OperaFirebase operaLetta){
         if(statoLetturaFirebase){
             stillLoading(false);
@@ -178,7 +183,7 @@ public class MarkerInfoActivity extends BaseActivity {
                                 Toast.makeText(getApplicationContext(),"Testo del commento vuoto.",Toast.LENGTH_SHORT).show();
                             else{
                                 Log.d("COMMENTO","ID FIREBASE"+thisMapMarker.getId_firebase());
-                                Commento nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString());
+                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString(),new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
                                 FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {

@@ -101,7 +101,6 @@ public class FirebaseUtilities {
                     i++;
                     act.updateProgressBar((int)(100*dataSnapshot.getChildrenCount())/i);
                 }
-                Log.d("OPERA 1",ListaOpereFirebase.getIstance().getListaOpere().get(0).toString());
                 long timeafter = System.nanoTime();
                 Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
                 Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
@@ -125,6 +124,7 @@ public class FirebaseUtilities {
                 Log.d("LETTURA DB","SINGOLA OPERA");
                 operaLetta = dataSnapshot.getValue(OperaFirebase.class);
                 operaLetta.setId_firebase(operaFirebase.getId_firebase());
+                Log.d("OPERA LETTA",operaLetta.toString());
                 activity.resumeAfterLoadingFirebase(operaLetta);
             }
 

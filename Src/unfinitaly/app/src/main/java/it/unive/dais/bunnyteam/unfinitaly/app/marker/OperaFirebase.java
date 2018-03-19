@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,11 +54,11 @@ public class OperaFirebase implements ClusterItem, Serializable {
     String tipologia_opera_incompiuta;
     String title;
     String id_firebase;
-    //HashMap <String,String> commenti;
+    Map<String,Object> commenti = new HashMap<>();
 
     public OperaFirebase(){}
 
-    public OperaFirebase(String ambito_oggettivo, String ambito_soggettivo, String anno_decisione_attuazione, String categoria, String causa, String codice_categoria, String codice_fiscale, String codice_sotto_settore, String copertura_finanziaria, String costo_prog, String cpv, String cup, String data_assegnazione_cup, String data_chiusura_cup, String denominazione_stazione_appaltante, String descrizione, String dimensione_unita_misura, String dimensione_valore, String finanziamento_assegnato, String finanziamento_di_prog, String id, String importo_oneri, String importo_sal, String importo_ultimo_qe, String importo_ultimo_qe_approvato, String indirizzo, String lat, String lng, String natura_opera, String oneri_necessari_per_ultimazione_lavori, String percentage, String progetto_cumulativo, String regione, String sottosettore, String sponsorizzato, String strutture_coinvolte, String tipologia_cup, String tipologia_opera_incompiuta, String title) {
+    public OperaFirebase(String ambito_oggettivo, String ambito_soggettivo, String anno_decisione_attuazione, String categoria, String causa, String codice_categoria, String codice_fiscale, String codice_sotto_settore, String copertura_finanziaria, String costo_prog, String cpv, String cup, String data_assegnazione_cup, String data_chiusura_cup, String denominazione_stazione_appaltante, String descrizione, String dimensione_unita_misura, String dimensione_valore, String finanziamento_assegnato, String finanziamento_di_prog, String id, String importo_oneri, String importo_sal, String importo_ultimo_qe, String importo_ultimo_qe_approvato, String indirizzo, String lat, String lng, String natura_opera, String oneri_necessari_per_ultimazione_lavori, String percentage, String progetto_cumulativo, String regione, String sottosettore, String sponsorizzato, String strutture_coinvolte, String tipologia_cup, String tipologia_opera_incompiuta, String title, Map commenti) {
         this.ambito_oggettivo = ambito_oggettivo;
         this.ambito_soggettivo = ambito_soggettivo;
         this.anno_decisione_attuazione = anno_decisione_attuazione;
@@ -98,6 +99,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.tipologia_opera_incompiuta = tipologia_opera_incompiuta;
         this.title = title;
         this.id_firebase = "";
+        this.commenti = commenti;
     }
 
     public String getAmbito_oggettivo() {
@@ -462,6 +464,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
                 ", tipologia_cup='" + tipologia_cup + '\'' +
                 ", tipologia_opera_incompiuta='" + tipologia_opera_incompiuta + '\'' +
                 ", title='" + title + '\'' +
+                ", commenti: \n" + commenti.toString() +
                 '}';
     }
     @Override

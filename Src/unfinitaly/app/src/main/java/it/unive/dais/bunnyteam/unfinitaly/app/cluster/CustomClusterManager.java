@@ -1,9 +1,9 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.cluster;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -203,7 +203,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 final Collection<OperaFirebase> clusterlist = cluster.getItems();
                 Log.d("Grandezza",""+cluster.getSize());
                 for(int i=0;i<clusterlist.size();i++){
-                    stringclusterlista[i]= "Categoria: " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
+                    stringclusterlista[i]= "Categoria: " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
                 }
                 AlertDialog dialog = new AlertDialog.Builder(context)
                         .setTitle(R.string.clustertitle)
@@ -265,7 +265,6 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     public List<LatLng> getCoordList(){
         ArrayList<LatLng> lL = new ArrayList<>();
         for(OperaFirebase mM: mapMarkers.getListaOpere()){
-            //Log.d("COORD",""+mM.getPosition());
             lL.add(mM.getPosition());
         }
         return lL;

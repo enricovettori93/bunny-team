@@ -420,7 +420,7 @@ public class MapsActivity extends BaseActivity
                 activemarkers = mClusterManager.getActiveMarkers();
                 stringmarkers = new String[activemarkers.size()];
                 for(int i=0;i<activemarkers.size();i++)
-                    stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\n"+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
+                    stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
                 Log.d("SIZE LIST",""+activemarkers.size());
                 final AlertDialog alert = new AlertDialog.Builder(thisActivity)
                         .setTitle("Elementi attivi")

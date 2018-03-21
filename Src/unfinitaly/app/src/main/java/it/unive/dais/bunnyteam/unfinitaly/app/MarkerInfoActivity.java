@@ -210,7 +210,7 @@ public class MarkerInfoActivity extends BaseActivity {
                                 Toast.makeText(getApplicationContext(),"Testo del commento vuoto.",Toast.LENGTH_SHORT).show();
                             else{
                                 Log.d("COMMENTO","ID FIREBASE"+thisMapMarker.getId_firebase());
-                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()));
+                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString().replace(",","^^^"),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()));
                                 FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -261,7 +261,7 @@ public class MarkerInfoActivity extends BaseActivity {
                 String[] data_commento = splitvirgola[0].split("=");
                 Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
 
-                String[] testo_commento = splitvirgola[1].split("=");
+                String[] testo_commento = splitvirgola[1].replace("^^^",",").split("=");
                 Log.d("TESTO",testo_commento[0]+"_"+testo_commento[1]);
 
                 String[] id_utente = splitvirgola[2].split("=");

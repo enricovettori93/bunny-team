@@ -9,6 +9,7 @@ import android.view.ViewGroup;
  *
  * @author BunnyTeam, Università Ca' Foscari
  */
+@Deprecated
 public class CustomSlider extends Fragment {
 
     protected static final String ARG_LAYOUT_RES_ID = "layoutResId";

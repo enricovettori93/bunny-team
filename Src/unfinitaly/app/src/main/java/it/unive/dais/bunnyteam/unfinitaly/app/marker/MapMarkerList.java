@@ -22,6 +22,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
  * @author BunnyTeam, Università Ca' Foscari
  */
 
+@Deprecated
 public class MapMarkerList extends MapMarkerListVersioningHelper implements Serializable {
     private static MapMarkerList instance = null;
     private ArrayList<MapMarker> mapMarkers = null;

@@ -89,6 +89,11 @@ public class FirebaseUtilities {
             return null;
     }
 
+    /**
+     * Lettura da Firebase quando inizio l'app
+     * @param act
+     * @return
+     */
     public boolean readFromFirebase(final InitActivity act){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,6 +128,12 @@ public class FirebaseUtilities {
         return ritorno;
     }
 
+    /**
+     * Lettura da Firebase quando si riapre l'app chiusa da Android quando libera la memoria
+     * @param act
+     * @param googleMap
+     * @return
+     */
     public boolean readFromFirebase(final MapsActivity act, final GoogleMap googleMap){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -152,6 +163,12 @@ public class FirebaseUtilities {
         return ritorno;
     }
 
+    /**
+     * Lettura quando si entra nella schermata della singola opera, il listener rimane in ascolto per eventuali cambiamenti
+     * @param activity
+     * @param operaFirebase
+     * @return
+     */
     public boolean readOperaSingolaFromFirebase(final MarkerInfoActivity activity, final OperaFirebase operaFirebase){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere").child(operaFirebase.getId_firebase());
         mDatabase.addValueEventListener(new ValueEventListener() {

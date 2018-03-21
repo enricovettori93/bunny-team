@@ -122,6 +122,10 @@ public class MapsActivity extends BaseActivity
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // inizializza la mappa asincronamente
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        //Creo il drawer
+        buildDrawer(toolbar);
+        //Istanzio la mappa
+        mapFragment.getMapAsync(this);
     }
 
 
@@ -131,10 +135,6 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onStart() {
         super.onStart();
-        //Creo il drawer
-        buildDrawer(toolbar);
-        //Istanzio la mappa
-        mapFragment.getMapAsync(this);
         Log.d("STATO","START");
     }
 
@@ -366,6 +366,10 @@ public class MapsActivity extends BaseActivity
         }
     }
 
+    /**
+     * Metodo per preparare la mappa una volta che si ha letto i dati dal DB e la mappa è pronta
+     * @param googleMap
+     */
     public void prepareMap(GoogleMap googleMap){
         //Setto la mappa
         gMap = googleMap;
@@ -442,37 +446,42 @@ public class MapsActivity extends BaseActivity
         //HashMapRegioni.getIstance().debugPrintPercentage();
         //Applico le varie impostazioni alla mappa
         applyMapSettings();
-        //googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.bunnyteam2_map));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         gMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
                 Log.d("POLYGON", PolygonManager.getIstance().getNomeRegioneById(polygon.getId()));
-                String nomeRegione;
-                TextView nomeregione,opereRegione,percentualeOpere;
-                nomeRegione = PolygonManager.getIstance().getNomeRegioneById(polygon.getId());
+                /*Controllo se il banner dell'opera è aperto, se si, significa che l'utente non vuole vedere il popup della regione ma chiudere
+                il banner dell'opera*/
+                if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
+                }
+                else{
+                    String nomeRegione;
+                    TextView nomeregione,opereRegione,percentualeOpere;
+                    nomeRegione = PolygonManager.getIstance().getNomeRegioneById(polygon.getId());
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
-                LayoutInflater inflater = thisActivity.getLayoutInflater();
-                View mView = inflater.inflate(R.layout.region_dialog,null);
-                builder.setView(mView)
-                        .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {}
-                        });
-                AlertDialog dialog = builder.create();
-                //Puglio le textview dopo la create
-                nomeregione = (TextView)mView.findViewById(R.id.textNomeRegione);
-                opereRegione = (TextView)mView.findViewById(R.id.textTotaleOpere);
-                percentualeOpere =(TextView)mView.findViewById(R.id.textPercOpere);
-                nomeregione.setText("Regione: " + nomeRegione);
-                opereRegione.setText("Numero opere: " + Integer.toString(HashMapRegioni.getIstance().getOpereRegione(nomeRegione)));
-                percentualeOpere.setText("Percentuale rispetto al totale: " + Double.toString(HashMapRegioni.getIstance().getPercentualeRegione(nomeRegione))+"%");
-                //Show del alert dialog
-                dialog.show();
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
+                    LayoutInflater inflater = thisActivity.getLayoutInflater();
+                    View mView = inflater.inflate(R.layout.region_dialog,null);
+                    builder.setView(mView)
+                            .setNegativeButton("Indietro", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {}
+                            });
+                    AlertDialog dialog = builder.create();
+                    //Puglio le textview dopo la create
+                    nomeregione = (TextView)mView.findViewById(R.id.textNomeRegione);
+                    opereRegione = (TextView)mView.findViewById(R.id.textTotaleOpere);
+                    percentualeOpere =(TextView)mView.findViewById(R.id.textPercOpere);
+                    nomeregione.setText("Regione: " + nomeRegione);
+                    opereRegione.setText("Numero opere: " + Integer.toString(HashMapRegioni.getIstance().getOpereRegione(nomeRegione)));
+                    percentualeOpere.setText("Percentuale rispetto al totale: " + Double.toString(HashMapRegioni.getIstance().getPercentualeRegione(nomeRegione))+"%");
+                    //Show del alert dialog
+                    dialog.show();
+                }
             }
         });
-
         //Setto le ultime cosine
         updateCurrentPosition();
         createOverlay();
@@ -586,27 +595,27 @@ public class MapsActivity extends BaseActivity
             if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
                 findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
             }
-            if (onBackPressed) {
-                Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("EXIT", true);
-                startActivity(intent);
-            } else {
-                onBackPressed = true;
-                Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onBackPressed = false;
-                    }
-                }, 2000);
+            else{
+                if (onBackPressed) {
+                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("EXIT", true);
+                    startActivity(intent);
+                } else {
+                    onBackPressed = true;
+                    Toast.makeText(this, R.string.maps_onmapbackpress, Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            onBackPressed = false;
+                        }
+                    }, 2000);
+                }
             }
         }
     }
 
     public CustomClusterManager getClusterManager(){
-        if(mClusterManager == null)
-            Log.d("CLUSTER MANAGER","NULL");
         Log.d("CLUSTER MANAGER","RETURN CLUSTER MANAGER");
         return mClusterManager;
     }

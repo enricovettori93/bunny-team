@@ -13,6 +13,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
  * Created by Enrico on 13/03/2018.
  */
 
+@Deprecated
 public class ListaOpereFirebase {
     private ArrayList<OperaFirebase> listaOpere = new ArrayList<>();
     private static ListaOpereFirebase istanza = new ListaOpereFirebase();

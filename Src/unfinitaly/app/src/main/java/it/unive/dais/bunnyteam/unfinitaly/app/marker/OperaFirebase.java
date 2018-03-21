@@ -14,46 +14,11 @@ import java.util.Map;
  */
 @IgnoreExtraProperties
 public class OperaFirebase implements ClusterItem, Serializable {
-    String ambito_oggettivo;
-    String ambito_soggettivo;
-    String anno_decisione_attuazione;
-    String categoria;
-    String causa;
-    String codice_categoria;
-    String codice_fiscale;
-    String codice_sotto_settore;
-    String copertura_finanziaria;
-    String costo_prog;
-    String cpv;
-    String cup;
-    String data_assegnazione_cup;
-    String data_chiusura_cup;
-    String denominazione_stazione_appaltante;
-    String descrizione;
-    String dimensione_unita_misura;
-    String dimensione_valore;
-    String finanziamento_assegnato;
-    String finanziamento_di_prog;
-    String id;
-    String importo_oneri;
-    String importo_sal;
-    String importo_ultimo_qe;
-    String importo_ultimo_qe_approvato;
-    String indirizzo;
-    String lat;
-    String lng;
-    String natura_opera;
-    String oneri_necessari_per_ultimazione_lavori;
-    String percentage;
-    String progetto_cumulativo;
-    String regione;
-    String sottosettore;
-    String sponsorizzato;
-    String strutture_coinvolte;
-    String tipologia_cup;
-    String tipologia_opera_incompiuta;
-    String title;
-    String id_firebase;
+    private String ambito_oggettivo,ambito_soggettivo,anno_decisione_attuazione,categoria,causa,codice_categoria,codice_fiscale,codice_sotto_settore,
+            copertura_finanziaria,costo_prog,cpv,cup,data_assegnazione_cup,data_chiusura_cup,denominazione_stazione_appaltante,descrizione,
+            dimensione_unita_misura,dimensione_valore,finanziamento_assegnato,finanziamento_di_prog,id,importo_oneri,importo_sal,importo_ultimo_qe,
+            importo_ultimo_qe_approvato,indirizzo,lat,lng,natura_opera,oneri_necessari_per_ultimazione_lavori,percentage,progetto_cumulativo,regione,
+            sottosettore,sponsorizzato,strutture_coinvolte,tipologia_cup,tipologia_opera_incompiuta,title,id_firebase;
     Map<String,Object> commenti = new HashMap<>();
 
     public OperaFirebase(){}

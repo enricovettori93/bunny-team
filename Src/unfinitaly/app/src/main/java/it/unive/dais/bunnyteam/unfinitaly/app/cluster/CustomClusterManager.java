@@ -265,8 +265,10 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
     public List<LatLng> getCoordList(){
         ArrayList<LatLng> lL = new ArrayList<>();
         Log.d("GETTING COORDINATE","YAHOO");
-        for(OperaFirebase mM: mapMarkers.getListaOpere())
+        for(OperaFirebase mM: mapMarkers.getListaOpere()){
+            Log.d("COORD",""+mM.getPosition());
             lL.add(mM.getPosition());
+        }
         return lL;
     }
     public ArrayList<OperaFirebase> getActiveMarkers(){

@@ -274,7 +274,16 @@ public class MarkerInfoActivity extends BaseActivity {
             }
             if(commenti.size()>1){
                 //Ordino in base alla data
-
+                Collections.sort(commenti, new Comparator<Commento>() {
+                    @Override
+                    public int compare(Commento commento, Commento t1) {
+                        long data1,data2;
+                        data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                        data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                        Log.d("SORT COMMENTI",""+data1+"_"+data2);
+                        return 0;
+                    }
+                });
             }
         }
         else{

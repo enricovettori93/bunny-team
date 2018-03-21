@@ -99,6 +99,7 @@ public class MapsActivity extends BaseActivity
     private ListaOpereFirebase mapMarkers = null;
     private View info;
     private ImageView list;
+    SupportMapFragment mapFragment;
     /**
      * API per i servizi di localizzazione.
      */
@@ -113,15 +114,13 @@ public class MapsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        mapMarkers = ListaOpereFirebase.getIstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         buildDrawer(toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         // API per i servizi di localizzazione
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // inizializza la mappa asincronamente
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
     }
 
 
@@ -131,11 +130,21 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onStart() {
         super.onStart();
+        mapFragment.getMapAsync(this);
+        Log.d("STATO","START");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d("STATO","STOP");
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.d("STATO","RESTART");
+        PolygonManager.getIstance().putPolygonRegion(gMap);
     }
 
     /**
@@ -144,14 +153,12 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO: rileggere i dati da firebase
         applyMapSettings();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Maps", "OnPause");
     }
 
     /**
@@ -161,12 +168,6 @@ public class MapsActivity extends BaseActivity
     protected void onDestroy() {
         super.onDestroy();
         gMap.clear();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i("Maps", "on Restart");
     }
 
     /**
@@ -349,8 +350,13 @@ public class MapsActivity extends BaseActivity
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //Prendo la lista di opere
+        mapMarkers = ListaOpereFirebase.getIstance();
+        //Setto la mappa
         gMap = googleMap;
-        mClusterManager = new CustomClusterManager<>(this, googleMap);
+
+        /*prepare the cluster*/
+        prepareCluster(googleMap);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_BOTH_LOCATION);
@@ -385,13 +391,6 @@ public class MapsActivity extends BaseActivity
         gMap.getUiSettings().setCompassEnabled(true);
         gMap.getUiSettings().setZoomControlsEnabled(true);
         gMap.getUiSettings().setMapToolbarEnabled(true);
-
-        /*prepare the cluster*/
-        googleMap.setOnCameraIdleListener(mClusterManager);
-        googleMap.setOnMarkerClickListener(mClusterManager);
-        googleMap.setOnInfoWindowClickListener(mClusterManager);
-        mClusterManager.setMapMarkerList(mapMarkers);
-        mClusterManager.cluster();
 
         list = (ImageView)findViewById(R.id.button_list);
         list.setOnClickListener(new View.OnClickListener() {
@@ -464,6 +463,15 @@ public class MapsActivity extends BaseActivity
         createOverlay();
         activateHeatmap();
         createPolygonMap();
+    }
+
+    private void prepareCluster(GoogleMap googleMap){
+        mClusterManager = new CustomClusterManager<>(this, googleMap);
+        googleMap.setOnCameraIdleListener(mClusterManager);
+        googleMap.setOnMarkerClickListener(mClusterManager);
+        googleMap.setOnInfoWindowClickListener(mClusterManager);
+        mClusterManager.setMapMarkerList(mapMarkers);
+        mClusterManager.cluster();
     }
 
     /*
@@ -578,6 +586,9 @@ public class MapsActivity extends BaseActivity
     }
 
     public CustomClusterManager getClusterManager(){
+        if(mClusterManager == null)
+            Log.d("CLUSTER MANAGER","NULL");
+        Log.d("CLUSTER MANAGER","RETURN CLUSTER MANAGER");
         return mClusterManager;
     }
 

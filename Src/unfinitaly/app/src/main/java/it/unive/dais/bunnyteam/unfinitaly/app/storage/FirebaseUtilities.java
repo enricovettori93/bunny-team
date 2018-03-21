@@ -104,7 +104,10 @@ public class FirebaseUtilities {
                 long timeafter = System.nanoTime();
                 Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
                 Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
-                act.resumeLoadingAfterFirebase();
+                if(act != null)
+                    act.resumeLoadingAfterFirebase();
+                else
+                    ListaOpereFirebase.getIstance().finishLetturaOpereFromFirebase();
             }
 
             @Override

@@ -26,6 +26,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
  * @author BunnyTeam, Università Ca' Foscari
  */
 
+@Deprecated
 public class CustomSliderLoading extends CustomSlider {
     private TextView tv_status;
     private TextView tvCountLoad;

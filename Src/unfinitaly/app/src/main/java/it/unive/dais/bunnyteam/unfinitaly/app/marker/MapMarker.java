@@ -1,5 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.marker;
 
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
@@ -15,6 +17,7 @@ import it.unive.dais.bunnyteam.unfinitaly.lib.util.MapItem;
  * @author BunnyTeam, Università Ca' Foscari
  */
 
+@Deprecated
 public class MapMarker extends MapItem implements ClusterItem, Serializable {
     //VARIABILI
     private double lat;

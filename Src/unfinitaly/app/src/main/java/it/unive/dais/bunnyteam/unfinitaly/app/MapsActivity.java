@@ -63,6 +63,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
@@ -100,6 +101,7 @@ public class MapsActivity extends BaseActivity
     private View info;
     private ImageView list;
     SupportMapFragment mapFragment;
+    Toolbar toolbar;
     /**
      * API per i servizi di localizzazione.
      */
@@ -114,8 +116,7 @@ public class MapsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        buildDrawer(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         // API per i servizi di localizzazione
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -130,6 +131,9 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onStart() {
         super.onStart();
+        //Creo il drawer
+        buildDrawer(toolbar);
+        //Istanzio la mappa
         mapFragment.getMapAsync(this);
         Log.d("STATO","START");
     }
@@ -352,6 +356,17 @@ public class MapsActivity extends BaseActivity
     public void onMapReady(GoogleMap googleMap) {
         //Prendo la lista di opere
         mapMarkers = ListaOpereFirebase.getIstance();
+        //Controllo che non sia empty l'array di opere
+        if(mapMarkers.getListaOpere().size() == 0){
+            Log.d("LISTA OPERE","VUOTA");
+            FirebaseUtilities.getIstance().readFromFirebase(this,googleMap);
+        }
+        else{
+            prepareMap(googleMap);
+        }
+    }
+
+    public void prepareMap(GoogleMap googleMap){
         //Setto la mappa
         gMap = googleMap;
 
@@ -377,13 +392,13 @@ public class MapsActivity extends BaseActivity
             }
         });
         gMap.setOnMyLocationButtonClickListener(
-            new GoogleMap.OnMyLocationButtonClickListener() {
-                @Override
-                public boolean onMyLocationButtonClick() {
-                    gpsCheck();
-                    return false;
-                }
-            });
+                new GoogleMap.OnMyLocationButtonClickListener() {
+                    @Override
+                    public boolean onMyLocationButtonClick() {
+                        gpsCheck();
+                        return false;
+                    }
+                });
         gMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
         gMap.getUiSettings().setMapToolbarEnabled(false);
         gMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -465,6 +480,10 @@ public class MapsActivity extends BaseActivity
         createPolygonMap();
     }
 
+    /**
+     * Prepara il cluster sul parametro googleMap
+     * @param googleMap
+     */
     private void prepareCluster(GoogleMap googleMap){
         mClusterManager = new CustomClusterManager<>(this, googleMap);
         googleMap.setOnCameraIdleListener(mClusterManager);

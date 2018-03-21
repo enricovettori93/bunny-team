@@ -3,6 +3,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,8 +14,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.BaseActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.InitActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
+import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.MarkerInfoActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
@@ -99,7 +102,8 @@ public class FirebaseUtilities {
                     app.setId_firebase(Integer.toString(i));
                     ListaOpereFirebase.getIstance().getListaOpere().add(app);
                     i++;
-                    act.updateProgressBar((int)(100*dataSnapshot.getChildrenCount())/i);
+                    if(act != null)
+                        act.updateProgressBar((int)(100*dataSnapshot.getChildrenCount())/i);
                 }
                 long timeafter = System.nanoTime();
                 Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
@@ -108,6 +112,35 @@ public class FirebaseUtilities {
                     act.resumeLoadingAfterFirebase();
                 else
                     ListaOpereFirebase.getIstance().finishLetturaOpereFromFirebase();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Error","Reading DB from Firebase");
+                ritorno = false;
+            }
+        });
+        return ritorno;
+    }
+
+    public boolean readFromFirebase(final MapsActivity act, final GoogleMap googleMap){
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long timebefore = System.nanoTime();
+                Log.d("NUMERO DATI LETTI",""+dataSnapshot.getChildrenCount());
+                int i = 0;
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    OperaFirebase app = data.getValue(OperaFirebase.class);
+                    app.setId_firebase(Integer.toString(i));
+                    ListaOpereFirebase.getIstance().getListaOpere().add(app);
+                    i++;
+                }
+                long timeafter = System.nanoTime();
+                Log.d("FINITO","FROM FIREBASE IN MS: " + (int) ((timeafter - timebefore) / 1000000));
+                Log.d("SIZE ARRAYLIST",""+ ListaOpereFirebase.getIstance().getListaOpere().size());
+                act.prepareMap(googleMap);
             }
 
             @Override

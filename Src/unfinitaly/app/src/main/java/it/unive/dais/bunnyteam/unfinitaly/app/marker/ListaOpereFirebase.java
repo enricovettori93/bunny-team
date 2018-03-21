@@ -24,16 +24,16 @@ public class ListaOpereFirebase {
     }
 
     public ArrayList<OperaFirebase> getListaOpere(){
-        if(listaOpere == null){
-            //Controllo che non sia null, accade quando android libera risorse
-            Log.d("LISTA OPERE","NULL");
+        /*if(listaOpere.size() == 0){
+            //Controllo che non sia 0, accade quando android libera risorse
+            Log.d("LISTA OPERE","EMPTY SIZE " +listaOpere.size());
             FirebaseUtilities.getIstance().readFromFirebase(null);
             return finishLetturaOpereFromFirebase();
         }
-        else{
-            Log.d("LISTA OPERE","ON MEMORY");
+        else{*/
+            Log.d("LISTA OPERE","ON MEMORY, SIZE " + listaOpere.size());
             return listaOpere;
-        }
+        //}
     }
 
     public ArrayList<OperaFirebase> finishLetturaOpereFromFirebase(){

@@ -140,16 +140,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        Log.d("RESULT ACTIVITY","MESSAGGIO E DATI DI RITORNO, REQUEST CODE: " + requestCode + " RESULT CODE: "+ resultCode);
+        Log.d(TAG, "REQUEST CODE: " + requestCode + " RESULT CODE: "+ resultCode);
         if(requestCode == RequestSignInCode){
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(googleSignInResult.isSuccess()){
-                Log.d("LOGIN","SUCCESSO");
+                Log.d(TAG,"login succeded");
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
                 FirebaseUserAuth(googleSignInAccount);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Errore durante il login",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, String.format("login failed. Status message: %s", googleSignInResult.getStatus().getStatusMessage()));
+                Toast.makeText(getApplicationContext(), "Errore durante il login", Toast.LENGTH_SHORT).show();
             }
         }
     }

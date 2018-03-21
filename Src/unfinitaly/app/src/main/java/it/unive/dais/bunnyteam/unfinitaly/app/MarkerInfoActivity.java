@@ -286,10 +286,7 @@ public class MarkerInfoActivity extends BaseActivity {
                     data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
                     data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
                     Log.d("SORT COMMENTI",""+data1+"_"+data2);
-                    if(data1 < data2)
-                        return 1;
-                    else
-                        return 0;
+                    return (int)(data1 - data2);
                 }
             });
         }

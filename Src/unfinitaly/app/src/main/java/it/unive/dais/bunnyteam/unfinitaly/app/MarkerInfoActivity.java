@@ -179,7 +179,7 @@ public class MarkerInfoActivity extends BaseActivity {
             String qe = String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe()));
             ((TextView)findViewById(R.id.ImportiSAL)).setText(qe);
             ((TextView)findViewById(R.id.importiQE)).setText(sal);
-            String percentage = thisMapMarker.getPercentage()+"%";
+            String percentage = thisMapMarker.getPercentage().replace(".",",")+"%";
             ((TextView)findViewById(R.id.tv_percentuale)).setText(percentage);
             final ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
             rc.setMax(100);
@@ -262,33 +262,36 @@ public class MarkerInfoActivity extends BaseActivity {
                 Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
 
                 String[] testo_commento = splitvirgola[1].split("=");
-                Log.d("TESTO",data_commento[0]+"_"+data_commento[1]);
+                Log.d("TESTO",testo_commento[0]+"_"+testo_commento[1]);
 
                 String[] id_utente = splitvirgola[2].split("=");
-                Log.d("ID",data_commento[0]+"_"+data_commento[1]);
+                Log.d("ID",id_utente[0]+"_"+id_utente[1]);
 
                 String[] nome_utente = splitvirgola[3].split("=");
-                Log.d("NOME",data_commento[0]+"_"+data_commento[1]);
+                Log.d("NOME",nome_utente[0]+"_"+nome_utente[1]);
 
                 commenti.add(new Commento(id_utente[1],nome_utente[1],testo_commento[1],data_commento[1]));
-            }
-            if(commenti.size()>1){
-                //Ordino in base alla data
-                Collections.sort(commenti, new Comparator<Commento>() {
-                    @Override
-                    public int compare(Commento commento, Commento t1) {
-                        long data1,data2;
-                        data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                        data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                        Log.d("SORT COMMENTI",""+data1+"_"+data2);
-                        return 0;
-                    }
-                });
             }
         }
         else{
             commenti.add(new Commento("","Nessun commento disponibile","",""));
             Log.d("COMMENTI","NESSUNO");
+        }
+        if(commenti.size()>1){
+            //Ordino in base alla data
+            Collections.sort(commenti, new Comparator<Commento>() {
+                @Override
+                public int compare(Commento commento, Commento t1) {
+                    long data1,data2;
+                    data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                    data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                    Log.d("SORT COMMENTI",""+data1+"_"+data2);
+                    if(data1 < data2)
+                        return 1;
+                    else
+                        return 0;
+                }
+            });
         }
         mAdapter.notifyDataSetChanged();
     }

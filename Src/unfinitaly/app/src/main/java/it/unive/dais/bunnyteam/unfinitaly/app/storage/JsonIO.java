@@ -28,6 +28,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
  * Created by Enrico on 02/03/2018.
  */
 
+@Deprecated
 public class JsonIO {
     public static boolean isVersionCached(Context context) {
         File cacheDir = new File(context.getCacheDir(), "files");

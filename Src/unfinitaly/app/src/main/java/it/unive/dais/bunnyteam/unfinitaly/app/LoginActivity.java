@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         //Controllo se è arrivato l'intent di uscire dalla account activity
         action = i.getStringExtra("Action");
-        Log.d("ACTION",""+action);
+        Log.d(TAG,"AZIONE INTENT: "+action);
         if(action != null) {
             if (googleApiClient.isConnected()) {
                 signOutFunction();
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      * Slogga l'utente dall'app
      */
     public void signOutFunction(){
-        Log.d("LOGOUT", "IN AZIONE");
+        Log.d(TAG, "LOGOUT");
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(googleApiClient);
         FirebaseUtilities.getIstance().logOut();
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void FirebaseUserAuth(GoogleSignInAccount googleSignInAccount) {
         AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
-        Log.d("Login with google","Dovrei entrare qui, idToken:"+googleSignInAccount.getIdToken());
+        Log.d(TAG,"Login con Google, dovrei entrare qui, idToken:"+googleSignInAccount.getIdToken());
         firebaseAuth.signInWithCredential(authCredential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -196,9 +196,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void onBackPressed(){
-        Log.d("LOGIN BACK","ACT BEFORE: "+intentcontent);
+        Log.d(TAG,"ACT BEFORE: "+intentcontent);
         if(intentcontent.equals("Loading")){
-            Log.d("LOGIN BACK","LOADING ACTIVITY");
+            Log.d(TAG,"LOADING ACTIVITY");
             //Sono stato chiamato da loading activity
             if(onBackPressed){
                 Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
@@ -226,9 +226,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.d("CONNECTED","AAAA");
+        Log.d(TAG,"CONNESSO");
         if(action != null){
-            Log.d("SLOGGO","AAAA");
+            Log.d(TAG,"SLOGGO");
             signOutFunction();
         }
     }

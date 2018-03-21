@@ -25,7 +25,7 @@ import it.unive.dais.bunnyteam.unfinitaly.lib.parser.CsvRowParser;
  *
  * @author BunnyTeam, Università Ca' Foscari
  */
-
+@Deprecated
 public class CSVReader extends AsyncTask<Void, Integer, Void> {
     LoadingActivity loadingAct;
     ArrayList<MapMarker> items;

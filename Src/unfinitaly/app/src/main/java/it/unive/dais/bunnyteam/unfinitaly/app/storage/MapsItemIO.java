@@ -23,6 +23,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerListVersioningHelp
  * @author BunnyTeam, Università Ca' Foscari
  */
 
+@Deprecated
 public class MapsItemIO {
 
     public static boolean isCached(Context context) {

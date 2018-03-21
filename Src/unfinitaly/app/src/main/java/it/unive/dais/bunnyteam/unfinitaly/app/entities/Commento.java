@@ -6,7 +6,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app.entities;
 
 public class Commento {
     //Variabili per il commento
-    private String id_utente, nome_utente, testo_commento, data_commento;
+    String id_utente, nome_utente, testo_commento, data_commento;
 
     //Costruttori
     public Commento(){}

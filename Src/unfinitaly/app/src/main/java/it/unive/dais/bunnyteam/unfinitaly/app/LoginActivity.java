@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(googleApiClient);
         FirebaseUtilities.getIstance().logOut();
-        Toast.makeText(getApplicationContext(), "Sei uscito con successo", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -144,13 +144,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if(requestCode == RequestSignInCode){
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(googleSignInResult.isSuccess()){
-                Log.d(TAG,"login succeded");
+                Log.d(TAG, String.format("login success. Status message: %s", googleSignInResult.getStatus().getStatusCode()));
                 GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
                 FirebaseUserAuth(googleSignInAccount);
             }
             else{
-                Log.d(TAG, String.format("login failed. Status message: %s", googleSignInResult.getStatus().getStatusMessage()));
-                Toast.makeText(getApplicationContext(), "Errore durante il login", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, String.format("login failed. Status message: %s", googleSignInResult.getStatus().getStatusCode()));
+                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             User.getIstance().setName(firebaseUser.getDisplayName().toString());
                             User.getIstance().setEmail(firebaseUser.getEmail().toString());
-                            Toast.makeText(getApplicationContext(),"Accesso effettuato con successo.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_SHORT).show();
                             if(intentcontent.equals("Base")){
                                 Intent i = new Intent(getApplicationContext(),AccountActivity.class);
                                 startActivity(i);

@@ -116,4 +116,25 @@
     <string name="account_logout">Logout</string>
     <string name="account_toolbar">Il tuo account</string>
     <!-- -->
+
+    <!-- Login Activity -->
+    <string name="login_success">Accesso effettuato con successo.</string>
+    <string name="login_failed">Errore durante il login.</string>
+    <string name="logout_success">Sei uscito con successo.</string>
+    <!-- -->
+
+    <!-- Side menu -->
+    <string name="menu_account_nologin">UnfinItaly</string>
+    <string name="menu_email_nologin">unfinitaly.app@gmail.com</string>
+    <string name="menu_user">Il tuo profilo</string>
+    <string name="menu_informazioni">Informazioni</string>
+    <string name="menu_impostazioni">Impostazioni</string>
+    <string name="menu_reset_filtri">Reset filtri</string>
+    <string name="menu_regione">Filtro per regione</string>
+    <string name="menu_categoria">Filtro per categoria</string>
+    <string name="menu_percentuale">Filtro per percentuale</string>
+    <string name="menu_distribuzione">Distribuzione</string>
+    <string name="menu_percentuale_regione">Percentuale regione</string>
+    <string name="menu_mappa">Mappa</string>
+    <!-- -->
 </resources>

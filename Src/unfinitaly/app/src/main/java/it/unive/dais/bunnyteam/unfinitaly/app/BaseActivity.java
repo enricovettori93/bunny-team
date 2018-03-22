@@ -55,17 +55,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     Uri imageprofile;
     TileOverlay mOverlay;
     HeatmapTileProvider mProvider;
-    PrimaryDrawerItem user;
-    PrimaryDrawerItem informazioni;
-    PrimaryDrawerItem impostazioni;
-    PrimaryDrawerItem tutte;
-    PrimaryDrawerItem regione;
-    PrimaryDrawerItem categoria;
-    SwitchDrawerItem percentuale;
-    SwitchDrawerItem distribuzione;
-    PrimaryDrawerItem mappa;
-    SwitchDrawerItem percentualeRegione;
+    PrimaryDrawerItem user,informazioni,impostazioni,reset,regione,categoria,mappa;
     PrimaryDrawerItem testing;
+    SwitchDrawerItem percentuale,distribuzione,percentualeRegione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withHeaderBackground(R.drawable.background)
                     .withProfileImagesVisible(false)
                     .addProfiles(
-                            new ProfileDrawerItem().withName("UnfinItaly").withEmail("unfinitaly.app@gmail.com")
+                            new ProfileDrawerItem().withName(R.string.menu_account_nologin).withEmail(R.string.menu_email_nologin)
                     )
                     .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                         @Override
@@ -150,9 +142,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         //Creazione voci di menu
-        user = new PrimaryDrawerItem().withIdentifier(10).withName("Il tuo profilo").withIcon(R.drawable.ic_account_circle_black_24dp);
-        informazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Informazioni").withIcon(R.drawable.info);
-        impostazioni = new PrimaryDrawerItem().withIdentifier(1).withName("Impostazioni").withIcon(R.drawable.settings);
+        user = new PrimaryDrawerItem().withIdentifier(10).withName(R.string.menu_user).withIcon(R.drawable.ic_account_circle_black_24dp);
+        informazioni = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_informazioni).withIcon(R.drawable.info);
+        impostazioni = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_impostazioni).withIcon(R.drawable.settings);
         testing = new PrimaryDrawerItem().withIdentifier(99).withName("Test");
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
@@ -197,14 +189,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
         if (this instanceof MapsActivity) {
             //CREO I PULSANTI
-            tutte = new PrimaryDrawerItem().withIdentifier(1).withName("Reset filtri").withIcon(R.drawable.unset);
-            regione = new PrimaryDrawerItem().withIdentifier(2).withName("Filtro per regione").withIcon(R.drawable.regione);
-            categoria = new PrimaryDrawerItem().withIdentifier(3).withName("Filtro per categoria").withIcon(R.drawable.categoria);
-            percentuale = new SwitchDrawerItem().withIdentifier(4).withName("Filtro per percentuale").withIcon(R.drawable.percentage);
-            distribuzione = new SwitchDrawerItem().withIdentifier(5).withName("Distribuzione").withIcon(R.drawable.distribuzione).withChecked(true);
-            percentualeRegione = new SwitchDrawerItem().withIdentifier(6).withName("Percentuale regione").withIcon(R.drawable.ic_dashboard_black_24dp).withChecked(false);
+            reset = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_reset_filtri).withIcon(R.drawable.unset);
+            regione = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_regione).withIcon(R.drawable.regione);
+            categoria = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.menu_categoria).withIcon(R.drawable.categoria);
+            percentuale = new SwitchDrawerItem().withIdentifier(4).withName(R.string.menu_percentuale).withIcon(R.drawable.percentage);
+            distribuzione = new SwitchDrawerItem().withIdentifier(5).withName(R.string.menu_distribuzione).withIcon(R.drawable.distribuzione).withChecked(true);
+            percentualeRegione = new SwitchDrawerItem().withIdentifier(6).withName(R.string.menu_percentuale_regione).withIcon(R.drawable.ic_dashboard_black_24dp).withChecked(false);
             //Associazione listener alle varie voci
-            tutte.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            reset.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     ((MapsActivity)thisActivity).getClusterManager().resetMarkers();
@@ -241,7 +233,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             });
             percentuale.withOnCheckedChangeListener(new OnCheckedChangeListener() {
-                @Override
                 public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
                         ((MapsActivity)thisActivity).getClusterManager().setPercentageRenderer();
@@ -292,13 +283,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                           user,new DividerDrawerItem(),tutte, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem(),testing
+                           user,new DividerDrawerItem(),reset, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem(),testing
                     )
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         } else {
-            mappa = new PrimaryDrawerItem().withIdentifier(1).withName("Mappa").withIcon(R.drawable.maps);
+            mappa = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_mappa).withIcon(R.drawable.maps);
             mappa.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                 @Override
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

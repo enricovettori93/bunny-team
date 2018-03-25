@@ -254,23 +254,27 @@ public class MarkerInfoActivity extends BaseActivity {
             Log.d("COMMENTI","NUMERO:"+thisMapMarker.getCommenti().size());
             for(Object o:commenti_appoggio){
                 Log.d("OGGETTO_COMMENTO",o.toString());
-                //Parser creato al volo di prova, non so come cazzo risolvere al momento
-                String[] splitvirgola = o.toString().substring(1,o.toString().length()-1).split(",");
-                Log.d("VIRGOLA",splitvirgola[0]+"_"+splitvirgola[1]+"_"+splitvirgola[2]+"_"+splitvirgola[3]);
+                try{
+                    //Parser creato al volo di prova, non so come cazzo risolvere al momento
+                    String[] splitvirgola = o.toString().substring(1,o.toString().length()-1).split(",");
+                    Log.d("VIRGOLA",splitvirgola[0]+"_"+splitvirgola[1]+"_"+splitvirgola[2]+"_"+splitvirgola[3]);
 
-                String[] data_commento = splitvirgola[0].split("=");
-                Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
+                    String[] data_commento = splitvirgola[0].split("=");
+                    Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
 
-                String[] testo_commento = splitvirgola[1].replace("^^^",",").split("=");
-                Log.d("TESTO",testo_commento[0]+"_"+testo_commento[1]);
+                    String[] testo_commento = splitvirgola[1].replace("^^^",",").split("=");
+                    Log.d("TESTO",testo_commento[0]+"_"+testo_commento[1]);
 
-                String[] id_utente = splitvirgola[2].split("=");
-                Log.d("ID",id_utente[0]+"_"+id_utente[1]);
+                    String[] id_utente = splitvirgola[2].split("=");
+                    Log.d("ID",id_utente[0]+"_"+id_utente[1]);
 
-                String[] nome_utente = splitvirgola[3].split("=");
-                Log.d("NOME",nome_utente[0]+"_"+nome_utente[1]);
+                    String[] nome_utente = splitvirgola[3].split("=");
+                    Log.d("NOME",nome_utente[0]+"_"+nome_utente[1]);
 
-                commenti.add(new Commento(id_utente[1],nome_utente[1],testo_commento[1],data_commento[1]));
+                    commenti.add(new Commento(id_utente[1],nome_utente[1],testo_commento[1],data_commento[1]));
+                }catch(ArrayIndexOutOfBoundsException e){
+                    commenti.add(new Commento("","Errore lettura del commento.","",""));
+                }
             }
         }
         else{

@@ -66,11 +66,10 @@
         <activity
             android:name=".LoadingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".AccountActivity" />
-        <activity android:name=".testing.TestFirebase">
-        </activity>
+        <activity android:name=".testing.TestFirebase"></activity>
         <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,6 +77,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivityNewAccount"></activity>
     </application>
 
 </manifest>

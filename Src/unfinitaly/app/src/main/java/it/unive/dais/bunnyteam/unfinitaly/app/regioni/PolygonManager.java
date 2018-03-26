@@ -16,7 +16,8 @@ public class PolygonManager {
     //Variabili di classe
     private static PolygonManager istance = new PolygonManager();
     //NB: GLI ID DEI POLIGONI SONO CRESCENTI IN BASE A COME LI SI CREA
-    private Polygon abruzzo, basilicata, campania, calabria, emilia, friuli, lazio, liguria, lombardia, marche, molise, piemonte, puglia, sardegna, sicilia, toscana, trentino, umbria, valleaosta, veneto;
+    private Polygon abruzzo, basilicata, campania, calabria, emilia, friuli, lazio, liguria, lombardia, marche, molise, piemonte, puglia, sardegna,
+            sicilia, toscana, trentino, umbria, valleaosta, veneto;
     //Costruttore privato
     private PolygonManager(){}
     //Metodi di accesso

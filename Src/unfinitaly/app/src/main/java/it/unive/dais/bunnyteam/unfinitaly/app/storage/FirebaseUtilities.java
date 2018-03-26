@@ -1,9 +1,13 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.ActivityNewAccount;
 import it.unive.dais.bunnyteam.unfinitaly.app.InitActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.MarkerInfoActivity;
@@ -59,9 +64,11 @@ public class FirebaseUtilities {
     }
 
     public String getNome(){
-        if (isLogged()){
-            return user.getDisplayName().toString();
-        }
+        if (isLogged())
+            if(user.getDisplayName() != null)
+                return user.getDisplayName().toString();
+            else
+                return "";
         else
             return "";
     }
@@ -183,4 +190,5 @@ public class FirebaseUtilities {
         });
         return ritorno;
     }
+
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener firebaseAuthListener;
     public GoogleApiClient googleApiClient;
+    private Button newAccount;
     private boolean onBackPressed = false;
     private Intent i;
     private String intentcontent;
@@ -53,6 +55,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         skip = (TextView)findViewById(R.id.textViewSkip);
         login = (com.google.android.gms.common.SignInButton)findViewById(R.id.buttonLogin);
         i = getIntent();
+        newAccount = (Button)findViewById(R.id.buttonNewAccount);
+        newAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ActivityNewAccount.class);
+                startActivity(i);
+            }
+        });
+
         intentcontent = i.getStringExtra("Activity");
         //Creazione e configurazione Sign In con Google
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -134,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(googleApiClient);
         FirebaseUtilities.getIstance().logOut();
-        Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -197,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void onBackPressed(){
         Log.d(TAG,"ACT BEFORE: "+intentcontent);
-        if(intentcontent.equals("Loading")){
+        if(intentcontent != null && intentcontent.equals("Loading")){
             Log.d(TAG,"LOADING ACTIVITY");
             //Sono stato chiamato da loading activity
             if(onBackPressed){

@@ -23,8 +23,8 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="153dp"
+        android:layout_height="47dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="112dp"
@@ -46,6 +46,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonNewAccount"
+        app:layout_constraintVertical_bias="0.021" />
+
+    <Button
+        android:id="@+id/buttonNewAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/login_new_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 </android.support.constraint.ConstraintLayout>

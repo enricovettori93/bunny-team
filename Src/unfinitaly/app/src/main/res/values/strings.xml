@@ -107,6 +107,7 @@
     <!-- Login Activity -->
     <string name="login_text">Accedi con il tuo account Google\nper commentare le opere.</string>
     <string name="login_button">Accedi</string>
+    <string name="login_new_account">Crea un account.</string>
     <string name="login_skip">Salta il login</string>
     <!-- -->
 
@@ -136,5 +137,15 @@
     <string name="menu_distribuzione">Distribuzione</string>
     <string name="menu_percentuale_regione">Percentuale regione</string>
     <string name="menu_mappa">Mappa</string>
+    <!-- -->
+
+    <!-- Nuovo account activity -->
+    <string name="new_account_title">Crea il tuo account.</string>
+    <string name="new_account_name">Inserisci il nome e cognome</string>
+    <string name="new_account_email">Inserisci la tua email</string>
+    <string name="new_account_psw">Inserisci la password</string>
+    <string name="new_acocunt_psw_repeat">Ripeti la password</string>
+    <string name="new_account_conferma">Registrati</string>
+    <string name="new_account_cancel">Annulla</string>
     <!-- -->
 </resources>

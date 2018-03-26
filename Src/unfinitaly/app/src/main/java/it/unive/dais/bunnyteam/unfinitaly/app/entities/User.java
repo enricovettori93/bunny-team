@@ -4,6 +4,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app.entities;
  * Created by Enrico on 02/03/2018.
  */
 
+@Deprecated
 public class User {
     private String name;
     private String email;

@@ -287,10 +287,15 @@ public class MarkerInfoActivity extends BaseActivity {
                 @Override
                 public int compare(Commento commento, Commento t1) {
                     long data1,data2;
-                    data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                    data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                    Log.d("SORT COMMENTI",""+data1+"_"+data2);
-                    return (int)(data1 - data2);
+                    try{
+                        data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                        data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                        Log.d("SORT COMMENTI",""+data1+"_"+data2);
+                        return (int)(data1 - data2);
+                    }catch(Exception e) {
+                        Log.e("MarkerInfo","CRASH " + e);
+                        return 1;
+                    }
                 }
             });
         }

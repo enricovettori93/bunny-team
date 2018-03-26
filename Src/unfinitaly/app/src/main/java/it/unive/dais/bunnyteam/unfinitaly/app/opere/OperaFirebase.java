@@ -1,16 +1,10 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.marker;
+package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.Commento;
 
 /**
  * Created by Enrico on 13/03/2018.

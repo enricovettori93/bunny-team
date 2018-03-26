@@ -1,7 +1,6 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.storage;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,8 +16,8 @@ import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarker;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarkerList;
 import it.unive.dais.bunnyteam.unfinitaly.lib.parser.CsvRowParser;
 
 /**

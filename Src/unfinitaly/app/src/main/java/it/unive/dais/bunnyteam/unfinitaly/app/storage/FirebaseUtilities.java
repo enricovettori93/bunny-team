@@ -12,17 +12,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
-import it.unive.dais.bunnyteam.unfinitaly.app.BaseActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.InitActivity;
-import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.MarkerInfoActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.ListaOpereFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 
 /**
  * Created by Enrico on 03/03/2018.

@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
@@ -32,13 +30,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
-import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
+import it.unive.dais.bunnyteam.unfinitaly.app.regioni.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 

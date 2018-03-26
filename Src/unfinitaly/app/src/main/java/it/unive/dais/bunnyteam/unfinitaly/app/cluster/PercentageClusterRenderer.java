@@ -1,15 +1,13 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.cluster;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 
 /**
  *

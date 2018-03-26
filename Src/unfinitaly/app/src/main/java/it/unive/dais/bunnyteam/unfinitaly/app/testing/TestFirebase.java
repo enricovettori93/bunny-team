@@ -1,24 +1,18 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.testing;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 
+@Deprecated
 public class TestFirebase extends AppCompatActivity {
     ArrayList<OperaFirebase> listaOpere = new ArrayList<>();
     OperaFirebase opera;

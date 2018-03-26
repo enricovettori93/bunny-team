@@ -19,8 +19,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 import com.google.maps.android.ui.SquareTextView;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 
 
 /**

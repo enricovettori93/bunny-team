@@ -16,18 +16,14 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 
 /**
  *

@@ -2,7 +2,6 @@ package it.unive.dais.bunnyteam.unfinitaly.app.slider;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,8 @@ import android.widget.TextView;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
-import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
-import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 /**
  *

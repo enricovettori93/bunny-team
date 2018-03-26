@@ -1,6 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.factory;
-
-import android.util.Log;
+package it.unive.dais.bunnyteam.unfinitaly.app.regioni;
 
 import com.google.android.gms.maps.model.LatLng;
 

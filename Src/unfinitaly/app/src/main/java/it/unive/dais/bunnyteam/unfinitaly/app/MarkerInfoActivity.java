@@ -1,7 +1,6 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,43 +12,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
-import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
-import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.StreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.materialdrawer.Drawer;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.adapter.OpereAdapter;
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.Commento;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.Commento;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 import it.unive.dais.bunnyteam.unfinitaly.app.view.ProgressBarAnimation;
 
@@ -68,7 +54,7 @@ public class MarkerInfoActivity extends BaseActivity {
     RoundCornerProgressBar rc;
     RecyclerView recyclerView;
     OpereAdapter mAdapter;
-    List<Commento> commenti_appoggio;
+    //List<Commento> commenti_appoggio;
     List<Commento> commenti = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

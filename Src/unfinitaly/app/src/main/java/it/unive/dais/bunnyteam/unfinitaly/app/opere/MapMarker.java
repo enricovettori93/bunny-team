@@ -1,13 +1,8 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.marker;
-
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import it.unive.dais.bunnyteam.unfinitaly.lib.util.MapItem;

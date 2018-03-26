@@ -1,13 +1,8 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.marker;
-
-import android.graphics.Path;
-import android.util.Log;
+package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
-import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 /**
  * Created by Enrico on 13/03/2018.

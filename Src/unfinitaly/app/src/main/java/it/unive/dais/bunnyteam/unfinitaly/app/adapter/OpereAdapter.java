@@ -6,13 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Comment;
-
 import java.util.List;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.Commento;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.Commento;
 
 /**
  * Created by Enrico on 19/03/2018.

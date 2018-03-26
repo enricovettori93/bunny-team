@@ -1,4 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.factory;
+package it.unive.dais.bunnyteam.unfinitaly.app.regioni;
 
 import android.graphics.Color;
 

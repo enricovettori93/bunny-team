@@ -15,8 +15,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerListVersioningHelper;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarkerListVersioningHelper;
 
 /**
  *

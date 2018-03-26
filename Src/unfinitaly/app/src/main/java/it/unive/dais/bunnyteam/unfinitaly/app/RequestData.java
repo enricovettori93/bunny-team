@@ -13,6 +13,7 @@ import java.net.URL;
  * Created by Enrico on 30/01/2018.
  */
 
+@Deprecated
 public class RequestData extends AsyncTask<String, Void, String>{
         Activity requested;
         private double lat;

@@ -1,4 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.marker;
+package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
 import android.content.Context;
 import android.widget.ProgressBar;
@@ -13,7 +13,6 @@ import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.MapsItemIO;
 
 

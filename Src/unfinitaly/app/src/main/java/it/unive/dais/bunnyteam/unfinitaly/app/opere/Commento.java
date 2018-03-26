@@ -1,4 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.entities;
+package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
 /**
  * Created by Enrico on 16/03/2018.

@@ -59,12 +59,10 @@ import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
-import it.unive.dais.bunnyteam.unfinitaly.app.factory.PolygonManager;
-import it.unive.dais.bunnyteam.unfinitaly.app.factory.RegioniFactory;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.ListaOpereFirebase;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.OperaFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.regioni.PolygonManager;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.ListaOpereFirebase;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
-import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
  * Questa classe è la componente principale del toolkit: fornisce servizi primari per un'app basata su Google Maps, tra cui localizzazione, pulsanti

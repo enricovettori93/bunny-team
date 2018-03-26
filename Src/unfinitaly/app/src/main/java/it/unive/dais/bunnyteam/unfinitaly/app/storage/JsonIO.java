@@ -21,8 +21,8 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarker;
-import it.unive.dais.bunnyteam.unfinitaly.app.marker.MapMarkerList;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarker;
+import it.unive.dais.bunnyteam.unfinitaly.app.opere.MapMarkerList;
 
 /**
  * Created by Enrico on 02/03/2018.

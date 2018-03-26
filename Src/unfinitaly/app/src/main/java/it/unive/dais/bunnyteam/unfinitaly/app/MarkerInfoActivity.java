@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,7 +68,7 @@ public class MarkerInfoActivity extends BaseActivity {
     RoundCornerProgressBar rc;
     RecyclerView recyclerView;
     OpereAdapter mAdapter;
-    List<Object> commenti_appoggio;
+    List<Commento> commenti_appoggio;
     List<Commento> commenti = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +211,7 @@ public class MarkerInfoActivity extends BaseActivity {
                                 Toast.makeText(getApplicationContext(),"Testo del commento vuoto.",Toast.LENGTH_SHORT).show();
                             else{
                                 Log.d("COMMENTO","ID FIREBASE"+thisMapMarker.getId_firebase());
-                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString().replace(",","^^^"),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()));
+                                nuovo_commento = new Commento(FirebaseUtilities.getIstance().getIdUtente(),FirebaseUtilities.getIstance().getNome(),commento.getText().toString(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()));
                                 FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -248,11 +249,11 @@ public class MarkerInfoActivity extends BaseActivity {
      */
     private void setCommenti(){
         commenti.clear();
-        if(thisMapMarker.getCommenti().size() > 0){
-            commenti_appoggio = new ArrayList<>(thisMapMarker.getCommenti().values());
+        /*if(thisMapMarker.getCommenti().size() > 0){
+            commenti_appoggio = (List)thisMapMarker.getCommenti().values();
             Log.d("TOSTRING",""+commenti_appoggio.toString());
             Log.d("COMMENTI","NUMERO:"+thisMapMarker.getCommenti().size());
-            for(Object o:commenti_appoggio){
+            for(Commento o:commenti_appoggio){
                 Log.d("OGGETTO_COMMENTO",o.toString());
                 try{
                     //Parser creato al volo di prova, non so come cazzo risolvere al momento
@@ -271,7 +272,7 @@ public class MarkerInfoActivity extends BaseActivity {
                     String[] nome_utente = splitvirgola[3].split("=");
                     Log.d("NOME",nome_utente[0]+"_"+nome_utente[1]);
 
-                    commenti.add(new Commento(id_utente[1],nome_utente[1],testo_commento[1],data_commento[1]));
+                    commenti.add(o);
                 }catch(ArrayIndexOutOfBoundsException e){
                     commenti.add(new Commento("","Errore lettura del commento.","",""));
                 }
@@ -298,8 +299,47 @@ public class MarkerInfoActivity extends BaseActivity {
                     }
                 }
             });
-        }
-        mAdapter.notifyDataSetChanged();
+        }*/
+        //Prendo i commenti dal database
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).child("commenti");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() == 0){
+                    //Non ho commenti
+                    if(FirebaseUtilities.getIstance().isLogged() ? commenti.add(new Commento("","Nessun commento scritto.","Vuoi essere il primo a scrivere?","")) : commenti.add(new Commento("","Nessun commento scritto.","Esegui il login per commentare.","")));
+                    Log.d("COMMENTI","NESSUNO");
+                }
+                else{
+                    //Ho almeno un commento
+                    for(DataSnapshot dato: dataSnapshot.getChildren()){
+                        commenti.add(dato.getValue(Commento.class));
+                    }
+                }
+                //Ordino i commenti in base alla data
+                Collections.sort(commenti, new Comparator<Commento>() {
+                    @Override
+                    public int compare(Commento commento, Commento t1) {
+                        long data1,data2;
+                        try{
+                            data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                            data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
+                            Log.d("SORT COMMENTI",""+data1+"_"+data2);
+                            return (int)(data1 - data2);
+                        }catch(Exception e) {
+                            Log.e("MarkerInfo","CRASH " + e);
+                            return 1;
+                        }
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"Errore lettura nei commenti.",Toast.LENGTH_SHORT).show();
+                Log.d("COMMENTI","ERRORE LETTURA");
+            }
+        });
     }
 }
 

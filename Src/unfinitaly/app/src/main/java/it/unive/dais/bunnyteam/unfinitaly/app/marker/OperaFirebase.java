@@ -7,7 +7,10 @@ import com.google.maps.android.clustering.ClusterItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import it.unive.dais.bunnyteam.unfinitaly.app.entities.Commento;
 
 /**
  * Created by Enrico on 13/03/2018.
@@ -20,12 +23,22 @@ public class OperaFirebase implements ClusterItem, Serializable {
             dimensione_unita_misura,dimensione_valore,finanziamento_assegnato,finanziamento_di_prog,id,importo_oneri,importo_sal,importo_ultimo_qe,
             importo_ultimo_qe_approvato,indirizzo,lat,lng,natura_opera,oneri_necessari_per_ultimazione_lavori,percentage,progetto_cumulativo,regione,
             sottosettore,sponsorizzato,strutture_coinvolte,tipologia_cup,tipologia_opera_incompiuta,title,id_firebase;
-    private Map<String,Object> commenti = new HashMap<>();
+    //private HashMap<String, Commento> commenti = new HashMap<>();
 
     //Costruttori
     public OperaFirebase(){}
 
-    public OperaFirebase(String ambito_oggettivo, String ambito_soggettivo, String anno_decisione_attuazione, String categoria, String causa, String codice_categoria, String codice_fiscale, String codice_sotto_settore, String copertura_finanziaria, String costo_prog, String cpv, String cup, String data_assegnazione_cup, String data_chiusura_cup, String denominazione_stazione_appaltante, String descrizione, String dimensione_unita_misura, String dimensione_valore, String finanziamento_assegnato, String finanziamento_di_prog, String id, String importo_oneri, String importo_sal, String importo_ultimo_qe, String importo_ultimo_qe_approvato, String indirizzo, String lat, String lng, String natura_opera, String oneri_necessari_per_ultimazione_lavori, String percentage, String progetto_cumulativo, String regione, String sottosettore, String sponsorizzato, String strutture_coinvolte, String tipologia_cup, String tipologia_opera_incompiuta, String title, Map commenti) {
+    public OperaFirebase(String ambito_oggettivo, String ambito_soggettivo, String anno_decisione_attuazione, String categoria,
+                         String causa, String codice_categoria, String codice_fiscale, String codice_sotto_settore,
+                         String copertura_finanziaria, String costo_prog, String cpv, String cup, String data_assegnazione_cup,
+                         String data_chiusura_cup, String denominazione_stazione_appaltante, String descrizione,
+                         String dimensione_unita_misura, String dimensione_valore, String finanziamento_assegnato,
+                         String finanziamento_di_prog, String id, String importo_oneri, String importo_sal,
+                         String importo_ultimo_qe, String importo_ultimo_qe_approvato, String indirizzo, String lat, String lng,
+                         String natura_opera, String oneri_necessari_per_ultimazione_lavori, String percentage,
+                         String progetto_cumulativo, String regione, String sottosettore, String sponsorizzato,
+                         String strutture_coinvolte, String tipologia_cup, String tipologia_opera_incompiuta,
+                         String title) {
         this.ambito_oggettivo = ambito_oggettivo;
         this.ambito_soggettivo = ambito_soggettivo;
         this.anno_decisione_attuazione = anno_decisione_attuazione;
@@ -66,7 +79,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.tipologia_opera_incompiuta = tipologia_opera_incompiuta;
         this.title = title;
         this.id_firebase = "";
-        this.commenti = commenti;
+        //this.commenti = commenti;
     }
 
     //Getter e setter
@@ -390,13 +403,13 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.id_firebase = id_firebase;
     }
 
-    public Map<String, Object> getCommenti() {
+    /*public HashMap<String, Commento> getCommenti() {
         return commenti;
-    }
+    }*/
 
-    public void setCommenti(Map<String, Object> commenti) {
+    /*public void setCommenti(HashMap<String, Commento> commenti) {
         this.commenti = commenti;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -440,7 +453,7 @@ public class OperaFirebase implements ClusterItem, Serializable {
                 ", tipologia_cup='" + tipologia_cup + '\'' +
                 ", tipologia_opera_incompiuta='" + tipologia_opera_incompiuta + '\'' +
                 ", title='" + title + '\'' +
-                ", commenti: \n" + commenti.toString() +
+                //", commenti: \n" + commenti.toString() +
                 '}';
     }
     @Override

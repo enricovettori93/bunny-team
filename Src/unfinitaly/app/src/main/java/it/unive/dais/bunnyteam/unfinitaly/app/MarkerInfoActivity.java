@@ -176,12 +176,9 @@ public class MarkerInfoActivity extends BaseActivity {
             ((TextView)findViewById(R.id.tv_tipo_cup)).setText(thisMapMarker.getTipologia_cup());
             ((TextView)findViewById(R.id.tv_descrizione)).setText(thisMapMarker.getTitle()+" ID_FB: "+thisMapMarker.getId_firebase());
             ((TextView)findViewById(R.id.tv_fallimento)).setText(thisMapMarker.getCausa());
-            String sal = String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_sal()));
-            String qe = String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe()));
-            ((TextView)findViewById(R.id.ImportiSAL)).setText(qe);
-            ((TextView)findViewById(R.id.importiQE)).setText(sal);
-            String percentage = thisMapMarker.getPercentage().replace(".",",")+"%";
-            ((TextView)findViewById(R.id.tv_percentuale)).setText(percentage);
+            ((TextView)findViewById(R.id.ImportiSAL)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_sal())));
+            ((TextView)findViewById(R.id.importiQE)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe_approvato())));
+            ((TextView)findViewById(R.id.tv_percentuale)).setText(thisMapMarker.getPercentage().replace(".",",")+"%");
             final ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
             rc.setMax(100);
             mProgressAnimation.setProgress((int)Double.parseDouble(thisMapMarker.getPercentage()));

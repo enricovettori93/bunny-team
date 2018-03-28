@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,9 +43,18 @@ public class AccountActivity extends BaseActivity {
             email.setText(FirebaseUtilities.getIstance().getEmail());
             urlfoto = FirebaseUtilities.getIstance().getFotoProfilo();
             if(urlfoto != null){
+                //Foto presente
                 Glide
                         .with(getApplicationContext())
                         .load(urlfoto)
+                        .centerCrop()
+                        .into(immagineprofilo);
+            }
+            else{
+                //Foto non presente
+                Glide
+                        .with(getApplicationContext())
+                        .load(R.drawable.ic_account_circle_black_24dp)
                         .centerCrop()
                         .into(immagineprofilo);
             }

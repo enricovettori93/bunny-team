@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
@@ -64,7 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         resetfilter = false;
         setSupportActionBar(toolbar);
         AccountHeader headerResult;
-        if(User.getIstance().getEmail().equals("")){
+        if(!FirebaseUtilities.getIstance().isLogged()){
             //Utente non loggato
             headerResult = new AccountHeaderBuilder()
                     .withActivity(this)

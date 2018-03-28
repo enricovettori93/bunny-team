@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 public class ActivityNewAccount extends AppCompatActivity {
     private Button registrati, cancel;
@@ -77,9 +81,10 @@ public class ActivityNewAccount extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Log.d("REGISTRAZIONE","RIUSCITA " + task.getResult().toString());
-                    Toast.makeText(getApplicationContext(),"Registrazione completata.",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),AccountActivity.class);
-                    startActivity(i);
+                    if(!nome.getText().toString().isEmpty())
+                        insertName();
+                    else
+                        continueAfterRegistration();
                 }
                 else{
                     try{
@@ -95,6 +100,31 @@ public class ActivityNewAccount extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void insertName(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                .setDisplayName(nome.getText().toString())
+                .build();
+        user.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d("NEWACCOUNT","OK NOME");
+                    continueAfterRegistration();
+                }
+                else{
+                    Log.d("NEWACCOUNT","ERRORE NOME");
+                }
+            }
+        });
+    }
+
+    private void continueAfterRegistration(){
+        Toast.makeText(getApplicationContext(),"Registrazione completata.",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getApplicationContext(),AccountActivity.class);
+        startActivity(i);
     }
 
     @Override

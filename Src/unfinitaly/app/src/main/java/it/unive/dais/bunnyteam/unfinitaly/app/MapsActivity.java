@@ -114,16 +114,6 @@ public class MapsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-    }
-
-
-    // ciclo di vita della app
-    //
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("STATO","START");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         // API per i servizi di localizzazione
@@ -134,6 +124,16 @@ public class MapsActivity extends BaseActivity
         buildDrawer(toolbar);
         //Istanzio la mappa
         mapFragment.getMapAsync(this);
+    }
+
+
+    // ciclo di vita della app
+    //
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("STATO","START");
     }
 
     @Override

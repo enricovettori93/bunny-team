@@ -114,16 +114,6 @@ public class MapsActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        // API per i servizi di localizzazione
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        // inizializza la mappa asincronamente
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        //Creo il drawer
-        buildDrawer(toolbar);
-        //Istanzio la mappa
-        mapFragment.getMapAsync(this);
     }
 
 
@@ -134,6 +124,16 @@ public class MapsActivity extends BaseActivity
     protected void onStart() {
         super.onStart();
         Log.d("STATO","START");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        // API per i servizi di localizzazione
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        // inizializza la mappa asincronamente
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        //Creo il drawer
+        buildDrawer(toolbar);
+        //Istanzio la mappa
+        mapFragment.getMapAsync(this);
     }
 
     @Override

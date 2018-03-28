@@ -107,7 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         .withSelectionListEnabledForSingleProfile(false)
                         .withHeaderBackground(R.drawable.background)
                         .addProfiles(
-                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(imageprofile)
+                                new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(imageprofile)
                         )
                         .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                             @Override
@@ -125,7 +125,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         .withSelectionListEnabledForSingleProfile(false)
                         .withHeaderBackground(R.drawable.background)
                         .addProfiles(
-                                new ProfileDrawerItem().withName(User.getIstance().getName()).withEmail(User.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
+                                new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
                         )
                         .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                             @Override

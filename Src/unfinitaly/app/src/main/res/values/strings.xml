@@ -105,8 +105,10 @@
     <!-- -->
 
     <!-- Login Activity -->
-    <string name="login_text">Accedi con il tuo account Google\nper commentare le opere.</string>
+    <string name="login_text">Accedi con il tuo account\nper commentare le opere.</string>
     <string name="login_button">Accedi</string>
+    <string name="login_email">Email</string>
+    <string name="login_psw">Password</string>
     <string name="login_new_account">Crea un account.</string>
     <string name="login_skip">Salta il login</string>
     <!-- -->

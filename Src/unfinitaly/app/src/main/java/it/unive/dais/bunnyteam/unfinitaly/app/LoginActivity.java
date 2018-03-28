@@ -2,6 +2,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +45,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public FirebaseAuth.AuthStateListener firebaseAuthListener;
     public GoogleApiClient googleApiClient;
     private Button newAccount;
+    private Button loginNoGoogle;
     private boolean onBackPressed = false;
     private Intent i;
     private String intentcontent;
     private String action;
+    private EditText editTextEmail, editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         skip = (TextView)findViewById(R.id.textViewSkip);
         login = (com.google.android.gms.common.SignInButton)findViewById(R.id.buttonLogin);
+        loginNoGoogle = (Button)findViewById(R.id.buttonAccedi);
+        editTextEmail = (EditText)findViewById(R.id.editTextLoginEmail);
+        editTextPassword = (EditText)findViewById(R.id.editTextLoginPsw);
         i = getIntent();
         newAccount = (Button)findViewById(R.id.buttonNewAccount);
         newAccount.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +107,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+        //Aggiungo il listener al bottone per loggarsi senza google
+        loginNoGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInNoGoogle();
+            }
+        });
+
         //Controllo se è arrivato l'intent di uscire dalla account activity
         action = i.getStringExtra("Action");
         Log.d(TAG,"AZIONE INTENT: "+action);
@@ -127,6 +142,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStart(){
         super.onStart();
         googleApiClient.connect();
+    }
+
+    /**
+     * Logga l'utente con email e password
+     */
+    public void signInNoGoogle(){
+        String email, password;
+        email = editTextEmail.getText().toString();
+        password = editTextPassword.getText().toString();
+        if(password.length() >= 6 && !password.isEmpty() && !email.isEmpty()){
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),R.string.login_failed,Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 
     /**

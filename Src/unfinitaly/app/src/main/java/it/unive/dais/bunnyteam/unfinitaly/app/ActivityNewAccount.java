@@ -37,7 +37,7 @@ public class ActivityNewAccount extends AppCompatActivity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(nome.getText().toString() != "" && email.getText().toString() != "" && psw.getText().toString() != "" && repeatpsw.getText().toString() != ""){
+                if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !psw.getText().toString().isEmpty() && !repeatpsw.getText().toString().isEmpty()){
                     if(!psw.getText().toString().equals(repeatpsw.getText().toString()))
                         Toast.makeText(getApplicationContext(),"Le password non sono uguali!",Toast.LENGTH_SHORT).show();
                     else

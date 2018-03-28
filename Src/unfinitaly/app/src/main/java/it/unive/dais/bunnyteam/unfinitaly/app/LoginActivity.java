@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_LONG).show();
+                        continueAfterLogin();
                     }
                     else{
                         Toast.makeText(getApplicationContext(),R.string.login_failed,Toast.LENGTH_LONG).show();
@@ -215,15 +216,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             User.getIstance().setName(firebaseUser.getDisplayName().toString());
                             User.getIstance().setEmail(firebaseUser.getEmail().toString());
                             Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_SHORT).show();
-                            if(intentcontent.equals("Base")){
-                                Intent i = new Intent(getApplicationContext(),AccountActivity.class);
-                                startActivity(i);
-                            }
-                            else
-                                startMapsActivity();
+                            continueAfterLogin();
                         }
                     }
                 });
+    }
+
+    private void continueAfterLogin(){
+        if(intentcontent.equals("Base")){
+            Intent i = new Intent(getApplicationContext(),AccountActivity.class);
+            startActivity(i);
+        }
+        else
+            startMapsActivity();
     }
 
     private void startMapsActivity(){

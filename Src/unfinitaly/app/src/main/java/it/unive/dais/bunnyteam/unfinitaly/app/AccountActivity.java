@@ -2,6 +2,7 @@ package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.fastadapter.utils.DefaultIdDistributor;
@@ -24,7 +27,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 public class AccountActivity extends BaseActivity {
     Toolbar toolbar;
     private TextView nome, email;
-    private Button logout;
+    private Button logout, reset_psw;
     private Uri urlfoto;
     private CircleImageView immagineprofilo;
 
@@ -67,6 +70,20 @@ public class AccountActivity extends BaseActivity {
                 i.putExtra("Activity","Account");
                 i.putExtra("Action","Logout");
                 startActivity(i);
+            }
+        });
+        reset_psw = (Button)findViewById(R.id.buttonResetPsw);
+        reset_psw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseUtilities.getIstance().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(),"Email di reset inviata.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
     }

@@ -111,12 +111,14 @@
     <string name="login_psw">Password</string>
     <string name="login_new_account">Crea un account.</string>
     <string name="login_skip">Salta il login</string>
+    <string name="login_forgot_psw">Reset password</string>
     <!-- -->
 
     <!-- Account Activity -->
     <string name="account_name">Il tuo profilo</string>
     <string name="account_email">La tua email</string>
     <string name="account_logout">Logout</string>
+    <string name="account_reset">Cambia password</string>
     <string name="account_toolbar">Il tuo account</string>
     <!-- -->
 

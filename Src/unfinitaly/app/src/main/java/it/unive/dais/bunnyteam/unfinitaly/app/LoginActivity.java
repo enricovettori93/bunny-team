@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,8 +45,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener firebaseAuthListener;
     public GoogleApiClient googleApiClient;
-    private Button newAccount;
-    private Button loginNoGoogle;
+    private Button newAccount, loginNoGoogle, resetPsw;
     private boolean onBackPressed = false;
     private Intent i;
     private String intentcontent;
@@ -127,6 +127,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
 
+        resetPsw = (Button)findViewById(R.id.buttonLoginReset);
+        resetPsw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editTextEmail.getText().toString().isEmpty())
+                    Toast.makeText(getApplicationContext(),"Campo email vuoto.",Toast.LENGTH_SHORT).show();
+                else
+                    if(!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches())
+                        Toast.makeText(getApplicationContext(),"Indirizzo email non valido.",Toast.LENGTH_SHORT).show();
+                    else
+                        resettaPassword();
+            }
+        });
+
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -142,6 +156,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStart(){
         super.onStart();
         googleApiClient.connect();
+    }
+
+    /**
+     * Funzione per resettare la password
+     */
+    private void resettaPassword(){
+        FirebaseAuth.getInstance().sendPasswordResetEmail(editTextEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),"Invio email riuscito, controlla la casella per resettare la password",Toast.LENGTH_SHORT).show();
+                    Log.d("LOGIN","INVIO EMAIL RESET RIUSCITO");
+                }
+                 else{
+                    Toast.makeText(getApplicationContext(),"Invio email non riuscito",Toast.LENGTH_SHORT).show();
+                    Log.d("LOGIN","INVIO EMAIL RESET FALLITO");
+                }
+            }
+        });
     }
 
     /**

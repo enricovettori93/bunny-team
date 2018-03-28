@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:text="@string/login_text"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -23,8 +23,8 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/buttonLogin"
-        android:layout_width="153dp"
-        android:layout_height="47dp"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -52,12 +52,14 @@
 
     <Button
         android:id="@+id/buttonNewAccount"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/login_new_account"
+        android:theme="@style/Custom.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="@string/login_email"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -122,25 +124,30 @@
 
     <Button
         android:id="@+id/buttonAccedi"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/login_button"
+        android:theme="@style/Custom.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLoginPsw" />
 
     <Button
         android:id="@+id/buttonLoginReset"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/login_forgot_psw"
+        android:theme="@style/Custom.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAccedi" />
+
 </android.support.constraint.ConstraintLayout>

@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-                android:text="Sviluppatori:\n\nEnrico Vettori\nGiacomo Zanatta\nElena Rossetto\nFatjona Ismailaj\n"
+                android:text="Sviluppatore:\n\nEnrico Vettori"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

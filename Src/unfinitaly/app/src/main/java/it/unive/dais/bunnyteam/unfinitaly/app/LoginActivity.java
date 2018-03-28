@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Handler;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
@@ -127,12 +128,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
 
+        //Creo il listener per il pulsante per il reset della password
         resetPsw = (Button)findViewById(R.id.buttonLoginReset);
         resetPsw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editTextEmail.getText().toString().isEmpty())
+                if(editTextEmail.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Campo email vuoto.",Toast.LENGTH_SHORT).show();
+                    editTextEmail.setFocusable(true);
+                }
                 else
                     if(!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches())
                         Toast.makeText(getApplicationContext(),"Indirizzo email non valido.",Toast.LENGTH_SHORT).show();
@@ -197,6 +201,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 }
             });
+        }
+        else{
+            if(password.isEmpty() || email.isEmpty())
+                Toast.makeText(getApplicationContext(),"Inserire i campi richiesti",Toast.LENGTH_SHORT).show();
+            else
+                if(password.length() < 6)
+                    Toast.makeText(getApplicationContext(),"Password troppo corta",Toast.LENGTH_SHORT).show();
         }
     }
 

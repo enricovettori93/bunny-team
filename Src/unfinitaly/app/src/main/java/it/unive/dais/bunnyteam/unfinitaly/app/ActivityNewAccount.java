@@ -43,10 +43,10 @@ public class ActivityNewAccount extends AppCompatActivity {
             public void onClick(View view) {
                 if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !psw.getText().toString().isEmpty() && !repeatpsw.getText().toString().isEmpty()){
                     if(!psw.getText().toString().equals(repeatpsw.getText().toString()))
-                        Toast.makeText(getApplicationContext(),"Le password non sono uguali!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Le password sono diverse",Toast.LENGTH_SHORT).show();
                     else
                         if(psw.getText().toString().length() < 6)
-                            Toast.makeText(getApplicationContext(),"Password corta, almeno 6 caratteri!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Password corta, almeno 6 caratteri",Toast.LENGTH_SHORT).show();
                         else
                             register();
                 }
@@ -63,11 +63,11 @@ public class ActivityNewAccount extends AppCompatActivity {
     }
 
     private void alertMissingData(){
-        Toast.makeText(getApplicationContext(),"Dati mancanti.",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Dati mancanti",Toast.LENGTH_SHORT).show();
     }
 
     private void cancel(){
-        Toast.makeText(getApplicationContext(),"Operazione annullata.",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Operazione annullata",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this,LoginActivity.class);
         i.putExtra("Action","newAccount");
         startActivity(i);
@@ -90,9 +90,9 @@ public class ActivityNewAccount extends AppCompatActivity {
                     try{
                         throw task.getException();
                     } catch(FirebaseAuthWeakPasswordException e) {
-                        Toast.makeText(getApplicationContext(),"Password debole.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Password debole",Toast.LENGTH_SHORT).show();
                     } catch(FirebaseAuthUserCollisionException e) {
-                        Toast.makeText(getApplicationContext(),"Email già usata.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Email già usata",Toast.LENGTH_SHORT).show();
                     } catch(Exception e) {
                         Log.d("REGISTRAZIONE","FALLITA " + task.getResult().toString());
                     }

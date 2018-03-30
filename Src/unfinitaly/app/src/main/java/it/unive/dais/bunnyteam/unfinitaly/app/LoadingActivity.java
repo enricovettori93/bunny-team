@@ -95,6 +95,12 @@ public class LoadingActivity extends AppIntro {
             SharedPreferences.Editor editor = getSharedPreferences("first",MODE_PRIVATE).edit();
             editor.putString("text","avviata");
             editor.commit();
+            //Setto le variabili di default dei pin
+            SharedPreferences.Editor editor2 = getSharedPreferences("flags",MODE_PRIVATE).edit();
+            editor2.putString("distribuzione","true");
+            editor2.putString("percentualeRegione","false");
+            editor2.putString("percentualePin","false");
+            editor2.commit();
             //Continuo col caricamento di tutto il resto
             //csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
             addSlide(CustomSlider.newInstance(R.layout.fragmentinfo1));

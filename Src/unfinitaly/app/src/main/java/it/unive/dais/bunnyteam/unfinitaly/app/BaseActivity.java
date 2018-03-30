@@ -1,6 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -137,7 +138,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                         .build();
             }
         }
-
+        //Guardo le shared preferences
+        final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
+        final SharedPreferences.Editor editor = getSharedPreferences("flags",MODE_PRIVATE).edit();
         //Creazione voci di menu
         user = new PrimaryDrawerItem().withIdentifier(10).withName(R.string.menu_user).withIcon(R.drawable.ic_account_circle_black_24dp);
         informazioni = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_informazioni).withIcon(R.drawable.info);
@@ -233,9 +236,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                 public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
                         ((MapsActivity)thisActivity).getClusterManager().setPercentageRenderer();
+                        editor.putString("percentualePin","true");
+                        editor.commit();
                     }
                     else{
                         ((MapsActivity)thisActivity).getClusterManager().unsetPercentageRender();
+                        editor.putString("percentualePin","false");
+                        editor.commit();
                     }
                     drawer.setSelection(-1);
                 }
@@ -248,11 +255,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                             percentualeRegione.withChecked(false);
                             drawer.updateItem(percentualeRegione);
                             PolygonManager.getIstance().setVisibilityPolygon(false);
+                            editor.putString("distribuzione","true");
+                            editor.commit();
                         }
                         mOverlay.setVisible(true);
                     }
                     else{
                         mOverlay.setVisible(false);
+                        editor.putString("distribuzione","false");
+                        editor.commit();
                     }
                     drawer.setSelection(-1);
                 }
@@ -267,9 +278,16 @@ public abstract class BaseActivity extends AppCompatActivity {
                             mOverlay.setVisible(false);
                         }
                         PolygonManager.getIstance().setVisibilityPolygon(true);
+                        editor.putString("percentualeRegione","true");
+                        editor.putString("distribuzione","false");
+                        editor.commit();
                     }
-                    else
+                    else {
                         PolygonManager.getIstance().setVisibilityPolygon(false);
+                        editor.putString("percentualeRegione","false");
+                        editor.putString("distribuzione","true");
+                        editor.commit();
+                    }
                     drawer.setSelection(-1);
                 }
             });
@@ -306,6 +324,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         }
+    }
+
+    protected void loadSharedPreferences(){
+        final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
+        String percentualePin = flags.getString("percentualePin",null);
+        String distribuzioneMappa = flags.getString("distribuzione",null);
+        String percentualeRegionePref = flags.getString("percentualeRegione",null);
+        Log.d("STATO PIN","COLORAZIONE PIN: "+percentualePin+" DISTRIBUZIONE: "+distribuzioneMappa+" PERCENTUALE REGIONE: "+percentualeRegionePref);
+        if(percentualePin == "true"){
+            percentuale.withChecked(true);
+        }
+        if(distribuzioneMappa == "true"){
+            PolygonManager.getIstance().setVisibilityPolygon(false);
+            mOverlay.setVisible(true);
+            distribuzione.withChecked(true);
+            percentualeRegione.withChecked(false);
+        }
+        if(percentualeRegionePref == "true"){
+            PolygonManager.getIstance().setVisibilityPolygon(true);
+            mOverlay.setVisible(false);
+            distribuzione.withChecked(false);
+            percentualeRegione.withChecked(true);
+        }
+        drawer.updateItem(percentuale);
+        drawer.updateItem(distribuzione);
+        drawer.updateItem(percentualeRegione);
     }
 
     public void createOverlay(){

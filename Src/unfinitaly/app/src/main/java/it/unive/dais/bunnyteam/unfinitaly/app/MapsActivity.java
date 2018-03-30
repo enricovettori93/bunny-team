@@ -485,6 +485,8 @@ public class MapsActivity extends BaseActivity
         createOverlay();
         activateHeatmap();
         createPolygonMap();
+        //Riapplico le impostazioni del drawer
+        loadSharedPreferences();
     }
 
     /**

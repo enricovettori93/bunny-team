@@ -1,5 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app.opere;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;

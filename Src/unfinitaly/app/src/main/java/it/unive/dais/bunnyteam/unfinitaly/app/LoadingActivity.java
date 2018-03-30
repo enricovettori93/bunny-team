@@ -124,6 +124,10 @@ public class LoadingActivity extends AppIntro {
         startMapsActivity();
     }
 
+    /**
+     * Da cancellare
+     */
+    @Deprecated
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
@@ -148,6 +152,7 @@ public class LoadingActivity extends AppIntro {
     }
 
 
+    @Deprecated
     public void showFinishSnackbar() {
         ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText(R.string.loading_snackbarcontinue);
         if(curFragment.getView() != null){

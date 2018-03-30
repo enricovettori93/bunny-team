@@ -116,12 +116,12 @@ public class MapsActivity extends BaseActivity
         setContentView(R.layout.activity_maps);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        //Creo il drawer
+        buildDrawer(toolbar);
         // API per i servizi di localizzazione
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         // inizializza la mappa asincronamente
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        //Creo il drawer
-        buildDrawer(toolbar);
         //Istanzio la mappa
         mapFragment.getMapAsync(this);
     }
@@ -146,7 +146,6 @@ public class MapsActivity extends BaseActivity
     protected void onRestart(){
         super.onRestart();
         Log.d("STATO","RESTART");
-        PolygonManager.getIstance().putPolygonRegion(gMap);
     }
 
     /**
@@ -155,12 +154,14 @@ public class MapsActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("STATO","RESUME");
         applyMapSettings();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("STATO","PAUSE");
     }
 
     /**
@@ -369,9 +370,9 @@ public class MapsActivity extends BaseActivity
      * @param googleMap
      */
     public void prepareMap(GoogleMap googleMap){
+        Log.d("MAP","PREPARO LA MAPPA DOPO AVERLA RICEVUTA DA GOOGLE");
         //Setto la mappa
         gMap = googleMap;
-
         /*prepare the cluster*/
         prepareCluster(googleMap);
 
@@ -438,17 +439,12 @@ public class MapsActivity extends BaseActivity
                 alert.show();
             }
         });
-
-        //Inserisco le % di opere nelle varie regioni
-        ListaOpereFirebase.getIstance().setPercentageRegioni();
         //HashMapRegioni.getIstance().debugPrintPercentage();
-        //Applico le varie impostazioni alla mappa
-        applyMapSettings();
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         gMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
-                Log.d("POLYGON", PolygonManager.getIstance().getNomeRegioneById(polygon.getId()));
+                Log.d("POLYGON", PolygonManager.getIstance().getNomeRegioneById(""+(int)polygon.getZIndex()));
                 /*Controllo se il banner dell'opera è aperto, se si, significa che l'utente non vuole vedere il popup della regione ma chiudere
                 il banner dell'opera*/
                 if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
@@ -457,7 +453,7 @@ public class MapsActivity extends BaseActivity
                 else{
                     String nomeRegione;
                     TextView nomeregione,opereRegione,percentualeOpere;
-                    nomeRegione = PolygonManager.getIstance().getNomeRegioneById(polygon.getId());
+                    nomeRegione = PolygonManager.getIstance().getNomeRegioneById("pg"+(int)polygon.getZIndex());
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
                     LayoutInflater inflater = thisActivity.getLayoutInflater();
@@ -481,6 +477,10 @@ public class MapsActivity extends BaseActivity
             }
         });
         //Setto le ultime cosine
+        //Applico le varie impostazioni alla mappa
+        applyMapSettings();
+        //Inserisco le % di opere nelle varie regioni
+        ListaOpereFirebase.getIstance().setPercentageRegioni();
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();
@@ -492,6 +492,7 @@ public class MapsActivity extends BaseActivity
      * @param googleMap
      */
     private void prepareCluster(GoogleMap googleMap){
+        Log.d("CLUSTER","IN PREPARAZIONE");
         mClusterManager = new CustomClusterManager<>(this, googleMap);
         googleMap.setOnCameraIdleListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
@@ -500,7 +501,7 @@ public class MapsActivity extends BaseActivity
         mClusterManager.cluster();
     }
 
-    /*
+    /**
      * Creo i poligoni nella mappa
      */
     public void createPolygonMap(){
@@ -517,6 +518,9 @@ public class MapsActivity extends BaseActivity
         }
     }
 
+    /**
+     * Sposta la camera sopra l'Italia
+     */
     public void animateOnItaly(){
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
     }

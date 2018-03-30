@@ -10,8 +10,8 @@ import java.util.HashMap;
  */
 
 public class HashMapRegioni {
-    private static HashMap<String, Integer> percentualeRegioni = new HashMap<>();
-    private static HashMapRegioni singleton = new HashMapRegioni();
+    private static HashMap<String, Integer> percentualeRegioni;
+    private static HashMapRegioni singleton;
     private static int totale;
 
     private HashMapRegioni(){
@@ -39,7 +39,13 @@ public class HashMapRegioni {
     }
 
     public static HashMapRegioni getIstance(){
-        return singleton;
+        if(singleton != null)
+            return singleton;
+        else{
+            percentualeRegioni = new HashMap<>();
+            singleton = new HashMapRegioni();
+            return singleton;
+        }
     }
 
     public void addUnitRegione(String regione){
@@ -48,11 +54,21 @@ public class HashMapRegioni {
     }
 
     public double getPercentualeRegione(String regione){
-        return (100*percentualeRegioni.get(regione))/totale;
+        try {
+            return (100*percentualeRegioni.get(regione))/totale;
+        }catch(Exception e){
+            Log.e("ERRORE",""+e);
+            return 0;
+        }
     }
 
     public int getOpereRegione(String regione){
-        return percentualeRegioni.get(regione);
+        try {
+            return percentualeRegioni.get(regione);
+        }catch(Exception e){
+            Log.e("ERRORE",""+e);
+            return 0;
+        }
     }
 
     public int getColorByPercentage(String regione){

@@ -43,6 +43,7 @@ public class LoadingActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         Log.d("ACTIVITY","LOADING");
         if (getIntent().getBooleanExtra("EXIT", false)) {
+            this.finishAffinity();
             finishAffinity();
             System.exit(0);
         }

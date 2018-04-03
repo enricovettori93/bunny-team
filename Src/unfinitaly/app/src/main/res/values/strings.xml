@@ -70,7 +70,8 @@
     <!-- -->
 
     <!-- FragmentLoading -->
-    <string name="bad_db">Errore durante il caricamento dei dati. Controlla la connessione.</string>
+    <string name="loading_ok">Caricamento dati in corso...</string>
+    <string name="loading_bad">Errore durante il caricamento dei dati. Controlla la connessione.</string>
     <!-- -->
 
     <!--FragmentInfo 1 -->

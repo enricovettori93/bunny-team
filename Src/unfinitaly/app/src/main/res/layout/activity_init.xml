@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@drawable/loading_activity_background2"
     tools:context="it.unive.dais.bunnyteam.unfinitaly.app.InitActivity">
 
@@ -38,14 +39,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textError"
+        android:id="@+id/textMessageLoading"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_marginBottom="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bad_db"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="12sp"

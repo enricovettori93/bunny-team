@@ -75,7 +75,7 @@
 
     <!--FragmentInfo 1 -->
     <string name="fi1_description">Questa schermata verrà visualizzata solo al primo avvio.</string>
-    <string name="fi1_bottom">Prima di iniziare, vogliamo spiegarti in breve il funzionamento di UnfinItaly</string>
+    <string name="fi1_bottom">Prima di iniziare, vogliamo spiegarti in breve il funzionamento di UnfinItaly.</string>
     <string name="f1_menu">Benvenuto su UnfinItaly</string>
     <!-- -->
 

@@ -1,4 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.slider;
+package it.unive.dais.bunnyteam.unfinitaly.app.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,14 +9,13 @@ import android.view.ViewGroup;
  *
  * @author BunnyTeam, Università Ca' Foscari
  */
-@Deprecated
-public class CustomSlider extends Fragment {
+public class CustomIntroFragment extends Fragment {
 
     protected static final String ARG_LAYOUT_RES_ID = "layoutResId";
     protected int layoutResId;
     private View view;
-    public static CustomSlider newInstance(int layoutResId) {
-        CustomSlider sampleSlide = new CustomSlider();
+    public static CustomIntroFragment newInstance(int layoutResId) {
+        CustomIntroFragment sampleSlide = new CustomIntroFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_LAYOUT_RES_ID, layoutResId);
         sampleSlide.setArguments(args);

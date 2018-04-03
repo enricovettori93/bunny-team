@@ -204,23 +204,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                         throw new UnexpectedException(String.format("undefined map style value: %d", n));
                 }
                 updateSummaryWithActiveValue(p, s);
-
                 break;
             }
-            /*case KEY_ZOOM_THRESHOLD: {
-                Float x = getZoomThreshold(this, sp);
-                String s;
-                if (x.compareTo((float) getResources().getInteger(R.integer.zoomFactor_low)) == 0)
-                    s = getString(R.string.menu_zoomThreshold_low);
-                else if (x.compareTo((float) getResources().getInteger(R.integer.zoomFactor_high)) == 0)
-                    s = getString(R.string.menu_zoomThreshold_high);
-                else if (x.compareTo((float) getResources().getInteger(R.integer.zoomFactor_mid)) == 0)
-                    s = getString(R.string.menu_zoomThreshold_mid);
-                else
-                    throw new UnexpectedException(String.format("undefined zoom threshold value: %g", x));
-                updateSummaryWithActiveValue(p, s);
-                break;
-            }*/
         }
     }
 

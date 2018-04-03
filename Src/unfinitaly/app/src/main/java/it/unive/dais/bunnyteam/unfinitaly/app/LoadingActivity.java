@@ -16,13 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.paolorotolo.appintro.AppIntro;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
-import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSlider;
+import it.unive.dais.bunnyteam.unfinitaly.app.view.CustomIntroFragment;
 import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSliderLoading;
-import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 /**
  *
@@ -103,13 +99,13 @@ public class LoadingActivity extends AppIntro {
             editor2.commit();
             //Continuo col caricamento di tutto il resto
             //csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
-            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo1));
+            addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo1));
             ready = true;
             ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText("CONTINUA");
-            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo2));
-            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo3));
-            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo4));
-            addSlide(CustomSlider.newInstance(R.layout.fragmentinfo5));
+            addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo2));
+            addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo3));
+            addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo4));
+            addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo5));
             setBarColor(Color.parseColor("#66000000"));
             setSeparatorColor(Color.parseColor("#66000000"));
             curFragment = fragments.get(0);

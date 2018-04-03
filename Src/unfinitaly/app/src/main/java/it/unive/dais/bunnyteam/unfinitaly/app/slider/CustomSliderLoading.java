@@ -12,6 +12,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.LoadingActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
+import it.unive.dais.bunnyteam.unfinitaly.app.view.CustomIntroFragment;
 
 /**
  *
@@ -19,7 +20,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.R;
  */
 
 @Deprecated
-public class CustomSliderLoading extends CustomSlider {
+public class CustomSliderLoading extends CustomIntroFragment {
     private TextView tv_status;
     private TextView tvCountLoad;
     private ProgressBar progressBar;

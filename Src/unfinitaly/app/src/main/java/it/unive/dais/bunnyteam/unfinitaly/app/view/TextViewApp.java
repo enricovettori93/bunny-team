@@ -30,7 +30,5 @@ public class TextViewApp extends AppCompatTextView {
     public void init() {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Montserrat-Regular.ttf");
         setTypeface(tf ,1);
-
     }
-
 }

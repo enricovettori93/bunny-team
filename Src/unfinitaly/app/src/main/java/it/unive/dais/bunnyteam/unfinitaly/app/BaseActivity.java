@@ -261,6 +261,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                             drawer.updateItem(percentualeRegione);
                             PolygonManager.getIstance().setVisibilityPolygon(false);
                             editor.putString("distribuzione","true");
+                            editor.putString("percentualeRegione","false");
                             editor.commit();
                         }
                         mOverlay.setVisible(true);
@@ -268,6 +269,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     else{
                         mOverlay.setVisible(false);
                         editor.putString("distribuzione","false");
+                        editor.putString("percentualeRegione","false");
                         editor.commit();
                     }
                     drawer.setSelection(-1);
@@ -340,16 +342,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         String distribuzioneMappa = flags.getString("distribuzione",null);
         String percentualeRegionePref = flags.getString("percentualeRegione",null);
         Log.d("STATO PIN","COLORAZIONE PIN: "+percentualePin+" DISTRIBUZIONE: "+distribuzioneMappa+" PERCENTUALE REGIONE: "+percentualeRegionePref);
-        if(percentualePin == "true"){
+        if(percentualePin.equals("true")){
+            Log.d("STATO PIN","SONO IN PERCENTUALE");
+            ((MapsActivity)thisActivity).getClusterManager().setPercentageRenderer();
             percentuale.withChecked(true);
         }
-        if(distribuzioneMappa == "true"){
+        if(distribuzioneMappa.equals("true")){
+            Log.d("STATO PIN","SONO IN DISTRIBUZIONE");
             PolygonManager.getIstance().setVisibilityPolygon(false);
             mOverlay.setVisible(true);
             distribuzione.withChecked(true);
             percentualeRegione.withChecked(false);
         }
-        if(percentualeRegionePref == "true"){
+        if(percentualeRegionePref.equals("true")){
+            Log.d("STATO PIN","SONO IN PERCENTUALE REGIONE");
             PolygonManager.getIstance().setVisibilityPolygon(true);
             mOverlay.setVisible(false);
             distribuzione.withChecked(false);

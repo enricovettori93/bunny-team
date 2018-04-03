@@ -236,57 +236,6 @@ public class MarkerInfoActivity extends BaseActivity {
      */
     private void setCommenti(){
         commenti.clear();
-        /*if(thisMapMarker.getCommenti().size() > 0){
-            commenti_appoggio = (List)thisMapMarker.getCommenti().values();
-            Log.d("TOSTRING",""+commenti_appoggio.toString());
-            Log.d("COMMENTI","NUMERO:"+thisMapMarker.getCommenti().size());
-            for(Commento o:commenti_appoggio){
-                Log.d("OGGETTO_COMMENTO",o.toString());
-                try{
-                    //Parser creato al volo di prova, non so come cazzo risolvere al momento
-                    String[] splitvirgola = o.toString().substring(1,o.toString().length()-1).split(",");
-                    Log.d("VIRGOLA",splitvirgola[0]+"_"+splitvirgola[1]+"_"+splitvirgola[2]+"_"+splitvirgola[3]);
-
-                    String[] data_commento = splitvirgola[0].split("=");
-                    Log.d("DATA",data_commento[0]+"_"+data_commento[1]);
-
-                    String[] testo_commento = splitvirgola[1].replace("^^^",",").split("=");
-                    Log.d("TESTO",testo_commento[0]+"_"+testo_commento[1]);
-
-                    String[] id_utente = splitvirgola[2].split("=");
-                    Log.d("ID",id_utente[0]+"_"+id_utente[1]);
-
-                    String[] nome_utente = splitvirgola[3].split("=");
-                    Log.d("NOME",nome_utente[0]+"_"+nome_utente[1]);
-
-                    commenti.add(o);
-                }catch(ArrayIndexOutOfBoundsException e){
-                    commenti.add(new Commento("","Errore lettura del commento.","",""));
-                }
-            }
-        }
-        else{
-            commenti.add(new Commento("","Nessun commento disponibile","",""));
-            Log.d("COMMENTI","NESSUNO");
-        }
-        if(commenti.size()>1){
-            //Ordino in base alla data
-            Collections.sort(commenti, new Comparator<Commento>() {
-                @Override
-                public int compare(Commento commento, Commento t1) {
-                    long data1,data2;
-                    try{
-                        data1 = Long.parseLong(commento.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                        data2 = Long.parseLong(t1.getData_commento().replace("-","").replace(":","").replace(" ",""));
-                        Log.d("SORT COMMENTI",""+data1+"_"+data2);
-                        return (int)(data1 - data2);
-                    }catch(Exception e) {
-                        Log.e("MarkerInfo","CRASH " + e);
-                        return 1;
-                    }
-                }
-            });
-        }*/
         //Prendo i commenti dal database
         mDatabase = FirebaseDatabase.getInstance().getReference().child("opere").child(thisMapMarker.getId_firebase()).child("commenti");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {

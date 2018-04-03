@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String intentcontent;
     private String action;
     private EditText editTextEmail, editTextPassword;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         };
+
+        //Creo il dialog per il caricamento
+        dialog = new AlertDialog.Builder(this).setMessage("Accesso in corso...").create();
     }
 
     @Override
@@ -189,9 +194,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
         if(password.length() >= 6 && !password.isEmpty() && !email.isEmpty()){
+            showDialogLoading(true);
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    showDialogLoading(false);
                     if(task.isSuccessful()){
                         Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_LONG).show();
                         continueAfterLogin();
@@ -233,6 +240,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+        showDialogLoading(true);
+        editTextEmail.clearFocus();
+        editTextPassword.clearFocus();
         Log.d(TAG, "REQUEST CODE: " + requestCode + " RESULT CODE: "+ resultCode);
         if(requestCode == RequestSignInCode){
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -242,9 +252,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 FirebaseUserAuth(googleSignInAccount);
             }
             else{
+                showDialogLoading(false);
                 Log.d(TAG, String.format("login failed. Status message: %s", googleSignInResult.getStatus().getStatusCode()));
                 Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
+        }
+        else{
+            showDialogLoading(false);
         }
     }
 
@@ -266,7 +280,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
+    private void showDialogLoading(boolean status){
+        if(status){
+            dialog.show();
+        }
+        else{
+            dialog.dismiss();
+        }
+    }
+
     private void continueAfterLogin(){
+        showDialogLoading(false);
         if(intentcontent.equals("Base")){
             Intent i = new Intent(getApplicationContext(),AccountActivity.class);
             startActivity(i);

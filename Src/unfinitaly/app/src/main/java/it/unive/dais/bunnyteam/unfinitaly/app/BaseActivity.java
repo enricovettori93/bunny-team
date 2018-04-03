@@ -54,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     TileOverlay mOverlay;
     HeatmapTileProvider mProvider;
     PrimaryDrawerItem user,informazioni,impostazioni,reset,regione,categoria,mappa;
-    PrimaryDrawerItem testing;
+    //PrimaryDrawerItem testing;
     SwitchDrawerItem percentuale,distribuzione,percentualeRegione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withSelectionListEnabledForSingleProfile(false)
                     .withHeaderBackground(R.drawable.background)
                     .withProfileImagesVisible(false)
+                    .withCompactStyle(true)
                     .addProfiles(
                             new ProfileDrawerItem().withName(R.string.menu_account_nologin).withEmail(R.string.menu_email_nologin)
                     )
@@ -145,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         user = new PrimaryDrawerItem().withIdentifier(10).withName(R.string.menu_user).withIcon(R.drawable.ic_account_circle_black_24dp);
         informazioni = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_informazioni).withIcon(R.drawable.info);
         impostazioni = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_impostazioni).withIcon(R.drawable.settings);
-        testing = new PrimaryDrawerItem().withIdentifier(99).withName("Test");
+        //testing = new PrimaryDrawerItem().withIdentifier(99).withName("Test");
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -179,14 +180,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
-        testing.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+        /*testing.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent i = new Intent(getApplicationContext(), TestFirebase.class);
                 startActivity(i);
                 return false;
             }
-        });
+        });*/
         if (this instanceof MapsActivity) {
             //CREO I PULSANTI
             reset = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_reset_filtri).withIcon(R.drawable.unset);
@@ -214,6 +215,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                     ((MapsActivity)thisActivity).getClusterManager().resetFlags();
                     ((MapsActivity)thisActivity).setIconListVisibility(false);
                     drawer.setSelection(-1);
+                    editor.putString("percentualePin","false");
+                    editor.putString("distribuzione","false");
+                    editor.putString("percentualeRegione","false");
+                    editor.commit();
                     return false;
                 }
             });
@@ -298,7 +303,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     .withToolbar(toolbar)
                     .withSelectedItem(-1)
                     .addDrawerItems(
-                           user,new DividerDrawerItem(),reset, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni, new DividerDrawerItem(),testing
+                           user,new DividerDrawerItem(),reset, regione, categoria, percentuale, percentualeRegione, distribuzione, new DividerDrawerItem(), informazioni, impostazioni/*, new DividerDrawerItem(),testing*/
                     )
                     .build();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -326,6 +331,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Leggo dalle shared preferences i filtri applicati, in modo da averli sempre salvati, anche quando l'utente riapre l'app
+     */
     protected void loadSharedPreferences(){
         final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
         String percentualePin = flags.getString("percentualePin",null);

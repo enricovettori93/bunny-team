@@ -88,55 +88,41 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         else{
             //Utente loggato
+            headerResult = new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .withHeaderBackground(R.drawable.background)
+                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        @Override
+                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                            startAccountActivity();
+                            return false;
+                        }
+                    })
+                    .build();
+
             imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
             Log.d("URI IMAGE:",""+imageprofile);
             if(imageprofile != null){
                 //L'immagine profilo è presente
-                //CODICE CHE FA COSE DA SOLO PER INSERIRE L'IMMAGINE PROFILO
                 DrawerImageLoader.init(new AbstractDrawerImageLoader() {
                     @Override
                     public void set(ImageView imageView, Uri uri, Drawable placeholder) {
                         Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
                     }
-
                     @Override
                     public void cancel(ImageView imageView) {
                         Glide.clear(imageView);
                     }
                 });
-                headerResult = new AccountHeaderBuilder()
-                        .withActivity(this)
-                        .withSelectionListEnabledForSingleProfile(false)
-                        .withHeaderBackground(R.drawable.background)
-                        .addProfiles(
-                                new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(imageprofile)
-                        )
-                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                            @Override
-                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                                startAccountActivity();
-                                return false;
-                            }
-                        })
-                        .build();
+                headerResult.addProfiles(
+                        new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(imageprofile));
+
             }
             else{
                 //L'immagine profilo non è presente
-                headerResult = new AccountHeaderBuilder()
-                        .withActivity(this)
-                        .withSelectionListEnabledForSingleProfile(false)
-                        .withHeaderBackground(R.drawable.background)
-                        .addProfiles(
-                                new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp)
-                        )
-                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                            @Override
-                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                                startAccountActivity();
-                                return false;
-                            }
-                        })
-                        .build();
+                headerResult.addProfiles(
+                        new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp));
             }
         }
         //Guardo le shared preferences
@@ -336,7 +322,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * Leggo dalle shared preferences i filtri applicati, in modo da averli sempre salvati, anche quando l'utente riapre l'app
      */
-    protected void loadSharedPreferences(){
+    protected void loadSharedPreferencesFilterDrawer(){
         final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
         String percentualePin = flags.getString("percentualePin",null);
         String distribuzioneMappa = flags.getString("distribuzione",null);

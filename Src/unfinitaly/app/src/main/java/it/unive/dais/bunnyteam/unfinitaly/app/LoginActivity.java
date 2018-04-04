@@ -291,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void continueAfterLogin(){
         showDialogLoading(false);
-        if(intentcontent.equals("Base")){
+        if(intentcontent != null && intentcontent.equals("Base")){
             Intent i = new Intent(getApplicationContext(),AccountActivity.class);
             startActivity(i);
         }

@@ -68,7 +68,8 @@ public class InitActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        unregisterReceiver(networkStateReceiver);
+        if(networkStateReceiver != null)
+            unregisterReceiver(networkStateReceiver);
         super.onPause();
     }
 

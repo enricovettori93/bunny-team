@@ -46,18 +46,17 @@ import it.unive.dais.bunnyteam.unfinitaly.app.view.ProgressBarAnimation;
  * @author BunnyTeam, Università Ca' Foscari
  */
 public class MarkerInfoActivity extends BaseActivity {
-    OperaFirebase thisMapMarker, passedMapMarker;
-    Button insert;
-    EditText commento;
-    TextView countChar;
-    Commento nuovo_commento;
+    private OperaFirebase thisMapMarker, passedMapMarker;
+    private Button insert;
+    private EditText commento;
+    private TextView countChar;
+    private Commento nuovo_commento;
     boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
-    RoundCornerProgressBar rc;
-    RecyclerView recyclerView;
-    OpereAdapter mAdapter;
-    //List<Commento> commenti_appoggio;
-    List<Commento> commenti = new ArrayList<>();
+    private RoundCornerProgressBar rc;
+    private RecyclerView recyclerView;
+    private OpereAdapter mAdapter;
+    private List<Commento> commenti = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +116,7 @@ public class MarkerInfoActivity extends BaseActivity {
     public void stillLoading(boolean loading){
         if(loading){
             //Sta caricando
+            findViewById(R.id.loading_spinner).setVisibility(View.VISIBLE);
             findViewById(R.id.imgmarker).setVisibility(View.INVISIBLE);
             findViewById(R.id.textView).setVisibility(View.INVISIBLE);
             findViewById(R.id.textView6).setVisibility(View.INVISIBLE);
@@ -144,7 +144,7 @@ public class MarkerInfoActivity extends BaseActivity {
         }
         else{
             //Ha finito
-            findViewById(R.id.aviInfo).setVisibility(View.INVISIBLE);
+            findViewById(R.id.loading_spinner).setVisibility(View.INVISIBLE);
             findViewById(R.id.imgmarker).setVisibility(View.VISIBLE);
             findViewById(R.id.textView).setVisibility(View.VISIBLE);
             findViewById(R.id.textView6).setVisibility(View.VISIBLE);

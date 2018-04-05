@@ -14,18 +14,12 @@
         android:id="@+id/toolbar"
         layout="@xml/toolbar" />
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/aviInfo"
-        style="@style/AVLoadingIndicatorView.Large"
-        android:layout_width="127dp"
-        android:layout_height="127dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTintMode="src_atop"
         android:visibility="visible"
-        app:indicatorColor="@color/md_grey_50"
-        app:indicatorName="BallClipRotatePulseIndicator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -12,11 +12,14 @@ import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
 
 public class ListaOpereFirebase {
     private ArrayList<OperaFirebase> listaOpere = new ArrayList<>();
-    private static ListaOpereFirebase istanza = new ListaOpereFirebase();
+    private static ListaOpereFirebase istanza;
     private boolean isFirstTime = true;
     private ListaOpereFirebase(){}
 
     public static ListaOpereFirebase getIstance(){
+        Log.d("ISTANZA",""+istanza);
+        if(istanza == null)
+            istanza = new ListaOpereFirebase();
         return istanza;
     }
 
@@ -29,12 +32,12 @@ public class ListaOpereFirebase {
     }
 
     public void setPercentageRegioni(){
-        if(isFirstTime = true){
+        Log.d("FIRST TIME REG",""+isFirstTime);
+        if(isFirstTime == true){
+            isFirstTime = false;
             for(OperaFirebase mm: listaOpere){
                 HashMapRegioni.getIstance().addUnitRegione(mm.getRegione());
             }
         }
-        else
-            isFirstTime = false;
     }
 }

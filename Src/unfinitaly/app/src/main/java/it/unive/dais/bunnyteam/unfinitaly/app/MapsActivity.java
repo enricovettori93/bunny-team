@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.Activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -99,6 +100,7 @@ public class MapsActivity extends BaseActivity
     private ListaOpereFirebase mapMarkers = null;
     private View info;
     private FloatingActionButton list;
+    private Dialog dialog;
     SupportMapFragment mapFragment;
     Toolbar toolbar;
     /**
@@ -121,6 +123,9 @@ public class MapsActivity extends BaseActivity
         buildDrawer(toolbar);
         // API per i servizi di localizzazione
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        //Creo il dialog per il caricamento
+        dialog = new AlertDialog.Builder(this).setMessage("Caricamento mappa in corso...").setCancelable(false).create();
+        dialog.show();
         // inizializza la mappa asincronamente
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         //Istanzio la mappa
@@ -488,6 +493,7 @@ public class MapsActivity extends BaseActivity
         createPolygonMap();
         //Riapplico le impostazioni del drawer
         loadSharedPreferencesFilterDrawer();
+        dialog.dismiss();
     }
 
     /**

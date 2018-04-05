@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         };
 
         //Creo il dialog per il caricamento
-        dialog = new AlertDialog.Builder(this).setMessage("Accesso in corso...").create();
+        dialog = new AlertDialog.Builder(this).setMessage("Accesso in corso...").setCancelable(false).create();
     }
 
     @Override

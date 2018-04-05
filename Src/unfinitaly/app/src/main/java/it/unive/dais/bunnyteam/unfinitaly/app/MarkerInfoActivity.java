@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,10 +46,10 @@ import it.unive.dais.bunnyteam.unfinitaly.app.view.ProgressBarAnimation;
  * @author BunnyTeam, Università Ca' Foscari
  */
 public class MarkerInfoActivity extends BaseActivity {
-    OperaFirebase thisMapMarker;
-    OperaFirebase passedMapMarker;
+    OperaFirebase thisMapMarker, passedMapMarker;
     Button insert;
     EditText commento;
+    TextView countChar;
     Commento nuovo_commento;
     boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
@@ -63,7 +65,26 @@ public class MarkerInfoActivity extends BaseActivity {
         rc = (RoundCornerProgressBar) findViewById(R.id.roundcorner);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         insert = (Button) findViewById(R.id.buttonInserisciCommento);
+        countChar = (TextView) findViewById(R.id.textViewCountChar);
         commento = (EditText) findViewById(R.id.editTextCommento);
+        commento.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                countChar.setText(String.format("%s/500",commento.getText().toString().length()));
+                if(commento.getText().toString().length() > 500)
+                    Toast.makeText(getApplicationContext(),"Lunghezza massima raggiunta.",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         buildDrawer(toolbar);
         toolbar.setTitle("Informazioni opera");
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
@@ -118,6 +139,7 @@ public class MarkerInfoActivity extends BaseActivity {
             findViewById(R.id.importiQE).setVisibility(View.INVISIBLE);
             findViewById(R.id.roundcorner).setVisibility(View.INVISIBLE);
             findViewById(R.id.buttonInserisciCommento).setVisibility(View.INVISIBLE);
+            findViewById(R.id.textViewCountChar).setVisibility(View.INVISIBLE);
             findViewById(R.id.editTextCommento).setVisibility(View.INVISIBLE);
         }
         else{
@@ -179,6 +201,8 @@ public class MarkerInfoActivity extends BaseActivity {
             if(FirebaseUtilities.getIstance().isLogged()){
                 findViewById(R.id.buttonInserisciCommento).setVisibility(View.VISIBLE);
                 findViewById(R.id.editTextCommento).setVisibility(View.VISIBLE);
+                findViewById(R.id.textViewCountChar).setVisibility(View.VISIBLE);
+                countChar.setText(String.format("%s/500",commento.getText().toString().length()));
                 commento.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -194,7 +218,7 @@ public class MarkerInfoActivity extends BaseActivity {
                             Toast.makeText(getApplicationContext(),"Errore durante la connessione al database",Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            if(commento.getText().equals(""))
+                            if(commento.getText().toString().trim().isEmpty())
                                 Toast.makeText(getApplicationContext(),"Testo del commento vuoto.",Toast.LENGTH_SHORT).show();
                             else{
                                 Log.d("COMMENTO","ID FIREBASE"+thisMapMarker.getId_firebase());

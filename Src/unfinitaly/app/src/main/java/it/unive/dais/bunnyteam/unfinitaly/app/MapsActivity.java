@@ -440,7 +440,6 @@ public class MapsActivity extends BaseActivity
                 alert.show();
             }
         });
-        //HashMapRegioni.getIstance().debugPrintPercentage();
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         gMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
@@ -482,6 +481,7 @@ public class MapsActivity extends BaseActivity
         applyMapSettings();
         //Inserisco le % di opere nelle varie regioni
         ListaOpereFirebase.getIstance().setPercentageRegioni();
+        //HashMapRegioni.getIstance().debugPrintPercentage();
         updateCurrentPosition();
         createOverlay();
         activateHeatmap();

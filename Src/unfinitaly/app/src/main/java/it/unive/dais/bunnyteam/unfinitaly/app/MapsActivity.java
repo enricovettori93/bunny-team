@@ -112,8 +112,8 @@ public class MapsActivity extends BaseActivity
     private View info;
     private FloatingActionButton fab;
     private Dialog dialog;
-    SupportMapFragment mapFragment;
-    Toolbar toolbar;
+    private SupportMapFragment mapFragment;
+    private Toolbar toolbar;
     private boolean searchActive = true;
     /**
      * API per i servizi di localizzazione.
@@ -299,6 +299,10 @@ public class MapsActivity extends BaseActivity
         }
     }
 
+    /**
+     * Ritorna la posizione corrente
+     * @return
+     */
     public LatLng getCurrentPosition(){
         if(currentPosition == null) {
             return null;
@@ -308,14 +312,14 @@ public class MapsActivity extends BaseActivity
     }
 
     /**
-     * Viene chiamato quando si clicca sulla mappa
-     *
+     * Metodo che viene chiamato quando si clicca sulla mappa, non sopra i poligoni delle regioni
      * @param latLng la posizione del click.
      */
     @Override
     public void onMapClick(LatLng latLng) {
         if(findViewById(R.id.marker_window).getVisibility() == View.VISIBLE){
             findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
+            setIconListVisibility(true);
         }else{
             if (!firstMapTouch) {
                 Toast.makeText(getApplicationContext(), R.string.maps_onmapclick, Toast.LENGTH_SHORT).show();
@@ -680,6 +684,7 @@ public class MapsActivity extends BaseActivity
         else {
             if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
                 findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
+                setIconListVisibility(true);
             }
             else{
                 if (onBackPressed) {
@@ -701,26 +706,31 @@ public class MapsActivity extends BaseActivity
         }
     }
 
+    /**
+     * Metodo per ritornare il cluster manager
+     * @return
+     */
     public CustomClusterManager getClusterManager(){
-        Log.d("CLUSTER MANAGER","RETURN CLUSTER MANAGER");
         return mClusterManager;
     }
 
+    /**
+     * Metodo per ritornare la mappa di Google
+     * @return
+     */
     public GoogleMap getMap(){
         return gMap;
     }
 
     /*
-     * Setta al valore booleano visibility il pulsante che mostra la lista di opere
+     * Setta al valore booleano visibility il FAB
      */
     public void setIconListVisibility(boolean visibility) {
         FloatingActionButton icon = (FloatingActionButton) findViewById(R.id.floatingActionButtonList);
         if (visibility == true) {
             icon.setVisibility(View.VISIBLE);
-            gMap.getUiSettings().setZoomControlsEnabled(false);
         } else {
             icon.setVisibility(View.INVISIBLE);
-            gMap.getUiSettings().setZoomControlsEnabled(true);
         }
     }
 }

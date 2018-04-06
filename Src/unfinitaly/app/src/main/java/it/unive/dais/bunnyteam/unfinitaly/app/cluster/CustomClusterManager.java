@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import it.unive.dais.bunnyteam.unfinitaly.app.AccountActivity;
+import it.unive.dais.bunnyteam.unfinitaly.app.ActivityNewAccount;
 import it.unive.dais.bunnyteam.unfinitaly.app.opere.ListaOpereFirebase;
 import it.unive.dais.bunnyteam.unfinitaly.app.MapsActivity;
 import it.unive.dais.bunnyteam.unfinitaly.app.R;
@@ -58,22 +60,15 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 ((MapsActivity)context).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(mapMarker.getPosition(), 13), new GoogleMap.CancelableCallback() {
                     @Override
                     public void onFinish() {
-                        String title = mapMarker.getCategoria();
-                        String snippet = mapMarker.getTitle();
-                        if(title.length()>100){
-                            title = title.substring(0,99) + "...";
-                        }
-                        if(snippet.length()>100){
-                            snippet = snippet.substring(0,99) + "...";
-                        }
-                        ((TextView)((Activity)context).findViewById(R.id.titleMarker)).setText(title);
-                        ((TextView)((Activity)context).findViewById(R.id.snippetMarker)).setText(snippet);
-                        ((Activity)context).findViewById(R.id.marker_window).setVisibility(View.VISIBLE);
-
+                        showMarker();
                     }
 
                     @Override
                     public void onCancel() {
+                        showMarker();
+                    }
+
+                    private void showMarker(){
                         String title = mapMarker.getCategoria();
                         String snippet = mapMarker.getTitle();
                         if(title.length()>100){
@@ -84,31 +79,31 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                         }
                         ((TextView)((Activity)context).findViewById(R.id.titleMarker)).setText(title);
                         ((TextView)((Activity)context).findViewById(R.id.snippetMarker)).setText(snippet);
+                        ((Activity)context).findViewById(R.id.floatingActionButtonList).setVisibility(View.INVISIBLE);
                         ((Activity)context).findViewById(R.id.marker_window).setVisibility(View.VISIBLE);
                     }
                 });
-
-                        View info;
-                        info = ((Activity)context).findViewById(R.id.marker_window);
-                        info.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View view) {
-                                ((MapsActivity) context).showMarkerInfo(mapMarker);
-                            }
-                        });
-                        View navigate;
-                        navigate = ((Activity)context).findViewById(R.id.navigate);
-                        navigate.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View view) {
-                                ((MapsActivity)context).updateCurrentPosition();
-                                LatLng app = ((MapsActivity)context).getCurrentPosition();
-                                if (app != null)
-                                    ((MapsActivity)context).navigate(app,mapMarker.getPosition());
-                                else
-                                    Toast.makeText(context, R.string.msg_error_gps, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                View info;
+                info = ((Activity)context).findViewById(R.id.marker_window);
+                info.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        ((MapsActivity) context).showMarkerInfo(mapMarker);
+                    }
+                });
+                View navigate;
+                navigate = ((Activity)context).findViewById(R.id.navigate);
+                navigate.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        ((MapsActivity)context).updateCurrentPosition();
+                        LatLng app = ((MapsActivity)context).getCurrentPosition();
+                        if (app != null)
+                            ((MapsActivity)context).navigate(app,mapMarker.getPosition());
+                        else
+                            Toast.makeText(context, R.string.msg_error_gps, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 ((Activity)context).findViewById(R.id.position).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

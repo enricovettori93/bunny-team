@@ -150,4 +150,8 @@
     <string name="new_account_conferma">Registrati</string>
     <string name="new_account_cancel">Annulla</string>
     <!-- -->
+
+    <!-- -->
+    <string name="search_dialog_title">Ricerca una località</string>
+    <!-- -->
 </resources>

@@ -9,16 +9,20 @@ import android.app.Activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,10 +30,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +65,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.cluster.CustomClusterManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
@@ -99,10 +110,11 @@ public class MapsActivity extends BaseActivity
     private CustomClusterManager<OperaFirebase> mClusterManager;
     private ListaOpereFirebase mapMarkers = null;
     private View info;
-    private FloatingActionButton list;
+    private FloatingActionButton fab;
     private Dialog dialog;
     SupportMapFragment mapFragment;
     Toolbar toolbar;
+    private boolean searchActive = true;
     /**
      * API per i servizi di localizzazione.
      */
@@ -131,8 +143,6 @@ public class MapsActivity extends BaseActivity
         //Istanzio la mappa
         mapFragment.getMapAsync(this);
     }
-
-
     // ciclo di vita della app
     //
 
@@ -413,38 +423,10 @@ public class MapsActivity extends BaseActivity
         gMap.getUiSettings().setZoomGesturesEnabled(true);
         gMap.getUiSettings().setMyLocationButtonEnabled(true);
         gMap.getUiSettings().setCompassEnabled(true);
-        gMap.getUiSettings().setZoomControlsEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(false);
         gMap.getUiSettings().setMapToolbarEnabled(true);
 
-        list = (FloatingActionButton) findViewById(R.id.floatingActionButtonList);
-        list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final ArrayList<OperaFirebase> activemarkers;
-                String[] stringmarkers;
-                activemarkers = mClusterManager.getActiveMarkers();
-                stringmarkers = new String[activemarkers.size()];
-                for(int i=0;i<activemarkers.size();i++)
-                    stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
-                Log.d("SIZE LIST",""+activemarkers.size());
-                final AlertDialog alert = new AlertDialog.Builder(thisActivity)
-                        .setTitle("Elementi attivi")
-                        .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                showMarkerInfo((OperaFirebase)activemarkers.toArray()[id]);
-                            }
-                        })
-                        .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .create();
-                alert.show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonList);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posItaly, 5));
         gMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
@@ -494,6 +476,99 @@ public class MapsActivity extends BaseActivity
         //Riapplico le impostazioni del drawer
         loadSharedPreferencesFilterDrawer();
         dialog.dismiss();
+        setUpFab("search");
+    }
+
+    /**
+     * Prepara il tasto FAB se come ricerca o come lista di elementi
+     * @param type
+     */
+    public void setUpFab(String type){
+        switch (type){
+            case "search":
+                fab.setImageResource(R.drawable.ic_search_white_24dp);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
+                        LayoutInflater inflater = thisActivity.getLayoutInflater();
+                        View mView = inflater.inflate(R.layout.search_dialog,null);
+                        final EditText input = (EditText)mView.findViewById(R.id.editTextSearch);
+                        input.requestFocus();
+                        builder.setView(mView);
+                        builder.setPositiveButton("Ricerca", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String city = input.getText().toString().trim();
+                                if(!city.isEmpty()) {
+                                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                                    try {
+                                        //Prendo le coordinate dal nome
+                                        List<Address> addresses = geocoder.getFromLocationName(city,1);
+                                        Address address = addresses.get(0);
+                                        LatLng app = new LatLng(address.getLatitude(),address.getLongitude());
+                                        //Controllo che sia in italia
+                                        addresses = (ArrayList<Address>)geocoder.getFromLocation(app.latitude,app.longitude,1);
+                                        Log.d("COUNTRY",""+addresses.get(0).getCountryName());
+                                        //Muovo la camera se è in italia
+                                        if(addresses.get(0).getCountryName().equals("Italy"))
+                                            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(app,10));
+                                        else
+                                            Toast.makeText(getApplicationContext(),"Località non in Italia",Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        Toast.makeText(getApplicationContext(),"Errore durante la ricerca",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else
+                                    Toast.makeText(getApplicationContext(),"Inserire una città",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.setNeutralButton("Annulla", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Empty
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+                break;
+            case "list":
+                fab.setImageResource(getResources().getIdentifier("@android:drawable/ic_menu_sort_by_size",null,null));
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final ArrayList<OperaFirebase> activemarkers;
+                        String[] stringmarkers;
+                        activemarkers = mClusterManager.getActiveMarkers();
+                        stringmarkers = new String[activemarkers.size()];
+                        for(int i=0;i<activemarkers.size();i++)
+                            stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
+                        Log.d("SIZE LIST",""+activemarkers.size());
+                        final AlertDialog alert = new AlertDialog.Builder(thisActivity)
+                                .setTitle("Elementi attivi")
+                                .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int id) {
+                                        showMarkerInfo((OperaFirebase)activemarkers.toArray()[id]);
+                                    }
+                                })
+                                .setNegativeButton(R.string.msg_back, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                })
+                                .create();
+                        alert.show();
+                    }
+                });
+                break;
+            default:
+                //Non entro mai qui
+                fab.setImageResource(R.drawable.ic_search_white_24dp);
+                break;
+        }
     }
 
     /**

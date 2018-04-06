@@ -34,6 +34,7 @@ import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.regioni.PolygonManager;
@@ -198,8 +199,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                         mOverlay.setVisible(false);
                     }
                     resetfilter = true;
+                    ((MapsActivity)thisActivity).setUpFab("search");
                     ((MapsActivity)thisActivity).getClusterManager().resetFlags();
-                    ((MapsActivity)thisActivity).setIconListVisibility(false);
                     drawer.setSelection(-1);
                     editor.putString("percentualePin","false");
                     editor.putString("distribuzione","false");
@@ -448,7 +449,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         ((MapsActivity) thisActivity).getClusterManager().showRegions(selectedRegions);
                         ((MapsActivity)thisActivity).getClusterManager().setFlagRegion(true);
                         ((MapsActivity)thisActivity).animateOnItaly();
-                        ((MapsActivity)thisActivity).setIconListVisibility(true);
+                        ((MapsActivity)thisActivity).setUpFab("list");
                         dialog.dismiss();
                     }
                 }
@@ -505,7 +506,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         ((MapsActivity)thisActivity).getClusterManager().showCategory(selectedCategory);
                         ((MapsActivity)thisActivity).getClusterManager().setFlagTipo(true);
                         ((MapsActivity)thisActivity).animateOnItaly();
-                        ((MapsActivity)thisActivity).setIconListVisibility(true);
+                        ((MapsActivity)thisActivity).setUpFab("list");
                         dialog.dismiss();
                     }
                 }

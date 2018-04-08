@@ -29,13 +29,11 @@ import com.mikepenz.materialdrawer.Drawer;
  * @author BunnyTeam, Università Ca' Foscari
  */
 public class InfoActivity extends BaseActivity {
-    WebView webview;
-    FloatingActionButton fab;
-    Toolbar toolbar;
-    ImageView imV;
-    TextView mail;
-    TextView site;
-    TextView credits;
+    private WebView webview;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private ImageView imV;
+    private TextView mail, site, credits;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -49,10 +47,10 @@ public class InfoActivity extends BaseActivity {
         site = (TextView)findViewById(R.id.textViewsite);
         credits = (TextView)findViewById(R.id.textView9);
         try {
-            credits.setText(R.string.creditsdatadroid+getApplicationContext().getPackageManager()
+            credits.setText("Per visualizzare gli altri sviluppatori prima della versione 2, consultare il sito web.\n"+getResources().getString(R.string.creditsdatadroid)+getApplicationContext().getPackageManager()
                     .getPackageInfo(getApplicationContext().getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
-            credits.setText(R.string.creditsdatadroiderror);
+            credits.setText(getResources().getString(R.string.creditsdatadroiderror));
             Log.e("Version","Error injecting versione");
         };
         mail.setText(R.string.email);

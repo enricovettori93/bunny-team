@@ -23,12 +23,9 @@ public class PolygonManager {
     private PolygonManager(){}
     //Metodi di accesso
     public static PolygonManager getIstance(){
-        if (istance != null)
-            return istance;
-        else{
+        if (istance == null)
             istance = new PolygonManager();
-            return istance;
-        }
+        return istance;
     }
 
     /**

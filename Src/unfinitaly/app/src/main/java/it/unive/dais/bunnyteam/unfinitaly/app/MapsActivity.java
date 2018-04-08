@@ -114,7 +114,6 @@ public class MapsActivity extends BaseActivity
     private Dialog dialog;
     private SupportMapFragment mapFragment;
     private Toolbar toolbar;
-    private boolean searchActive = true;
     /**
      * API per i servizi di localizzazione.
      */
@@ -440,6 +439,7 @@ public class MapsActivity extends BaseActivity
                 il banner dell'opera*/
                 if (findViewById(R.id.marker_window).getVisibility() == View.VISIBLE) {
                     findViewById(R.id.marker_window).setVisibility(View.INVISIBLE);
+                    setIconListVisibility(true);
                 }
                 else{
                     String nomeRegione;

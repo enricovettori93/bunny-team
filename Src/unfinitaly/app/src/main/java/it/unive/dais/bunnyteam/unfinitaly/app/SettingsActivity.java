@@ -134,6 +134,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("SETTINGS","MENU ITEM "+item.toString());
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();

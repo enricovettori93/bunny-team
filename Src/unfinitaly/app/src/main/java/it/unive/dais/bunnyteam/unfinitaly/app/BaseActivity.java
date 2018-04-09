@@ -325,23 +325,23 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void loadSharedPreferencesFilterDrawer(){
         final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
-        String percentualePin = flags.getString("percentualePin",null);
-        String distribuzioneMappa = flags.getString("distribuzione",null);
-        String percentualeRegionePref = flags.getString("percentualeRegione",null);
+        String percentualePin = flags.getString("percentualePin","");
+        String distribuzioneMappa = flags.getString("distribuzione","");
+        String percentualeRegionePref = flags.getString("percentualeRegione","");
         Log.d("STATO PIN","COLORAZIONE PIN: "+percentualePin+" DISTRIBUZIONE: "+distribuzioneMappa+" PERCENTUALE REGIONE: "+percentualeRegionePref);
-        if(percentualePin.equals("true")){
+        if(percentualePin.equals("true") && !percentualePin.isEmpty()){
             Log.d("STATO PIN","SONO IN PERCENTUALE");
             ((MapsActivity)thisActivity).getClusterManager().setPercentageRenderer();
             percentuale.withChecked(true);
         }
-        if(distribuzioneMappa.equals("true")){
+        if(distribuzioneMappa.equals("true") && !distribuzioneMappa.isEmpty()){
             Log.d("STATO PIN","SONO IN DISTRIBUZIONE");
             PolygonManager.getIstance().setVisibilityPolygon(false);
             mOverlay.setVisible(true);
             distribuzione.withChecked(true);
             percentualeRegione.withChecked(false);
         }
-        if(percentualeRegionePref.equals("true")){
+        if(percentualeRegionePref.equals("true") && !percentualeRegionePref.isEmpty()){
             Log.d("STATO PIN","SONO IN PERCENTUALE REGIONE");
             PolygonManager.getIstance().setVisibilityPolygon(true);
             mOverlay.setVisible(false);

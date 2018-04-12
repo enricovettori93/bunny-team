@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
@@ -34,12 +33,9 @@ import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.regioni.PolygonManager;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
-import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 /**
  *
@@ -55,7 +51,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     TileOverlay mOverlay;
     HeatmapTileProvider mProvider;
     PrimaryDrawerItem user,informazioni,impostazioni,reset,regione,categoria,mappa;
-    //PrimaryDrawerItem testing;
     SwitchDrawerItem percentuale,distribuzione,percentualeRegione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +128,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         user = new PrimaryDrawerItem().withIdentifier(10).withName(R.string.menu_user).withIcon(R.drawable.ic_account_circle_black_24dp);
         informazioni = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_informazioni).withIcon(R.drawable.info);
         impostazioni = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_impostazioni).withIcon(R.drawable.settings);
-        //testing = new PrimaryDrawerItem().withIdentifier(99).withName("Test");
         user.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -167,14 +161,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
-        /*testing.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                Intent i = new Intent(getApplicationContext(), TestFirebase.class);
-                startActivity(i);
-                return false;
-            }
-        });*/
         if (this instanceof MapsActivity) {
             //CREO I PULSANTI
             reset = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_reset_filtri).withIcon(R.drawable.unset);

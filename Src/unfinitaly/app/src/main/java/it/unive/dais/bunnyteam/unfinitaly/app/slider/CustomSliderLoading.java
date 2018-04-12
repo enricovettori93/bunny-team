@@ -52,22 +52,6 @@ public class CustomSliderLoading extends CustomIntroFragment {
             tvCountLoad = (TextView) view.findViewById(R.id.tvCountLoad2);
             //progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
             loadinggif = (AVLoadingIndicatorView) view.findViewById(R.id.avi2);
-            /*if (MapMarkerList.getInstance().getMapMarkers().size() == 0) {
-                try {
-                    if (MapsItemIO.isCached(loadAct)) {
-                        Log.i("loading", "is on cache!");
-                        if (!(MapMarkerList.getInstance().loadFromCache(loadAct)))
-                            MapMarkerList.getInstance().loadFromCsv(loadAct, tv_status, tvCountLoad, progressBar,loadinggif);
-                        else {
-                            Log.i("loading", "starting app!");
-                            loadAct.startMapsActivity();
-                        }
-                    } else
-                        MapMarkerList.getInstance().loadFromCsv(loadAct, tv_status, tvCountLoad, progressBar, loadinggif);
-                } catch (InterruptedException | IOException | ExecutionException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }*/
         }
     }
 }

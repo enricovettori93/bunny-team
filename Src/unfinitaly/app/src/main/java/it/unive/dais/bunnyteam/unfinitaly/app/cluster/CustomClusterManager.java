@@ -39,8 +39,6 @@ import it.unive.dais.bunnyteam.unfinitaly.app.opere.OperaFirebase;
 public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<OperaFirebase> implements GoogleMap.OnCameraIdleListener{
 
     private ListaOpereFirebase mapMarkers = null;
-    //private ArrayList<MapMarker> mapMarkersRegion = null;
-    //private ArrayList<MapMarker> mapMarkersCategory = null;
     private ArrayList<OperaFirebase> mapMarkersActive = null;
     private Context context;
     private GoogleMap map;

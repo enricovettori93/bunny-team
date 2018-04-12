@@ -69,7 +69,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".AccountActivity" />
-        <activity android:name=".testing.TestFirebase"></activity>
         <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

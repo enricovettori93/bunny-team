@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
-import it.unive.dais.bunnyteam.unfinitaly.app.testing.TestFirebase;
 
 public class InitActivity extends AppCompatActivity {
     private AVLoadingIndicatorView loading;

@@ -1,9 +1,7 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Handler;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -22,21 +20,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.User;
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks{
@@ -233,7 +225,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "LOGOUT");
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(googleApiClient);
-        FirebaseUtilities.getIstance().logOut();
         //Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
     }
 
@@ -271,8 +262,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            User.getIstance().setName(firebaseUser.getDisplayName().toString());
-                            User.getIstance().setEmail(firebaseUser.getEmail().toString());
                             Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_SHORT).show();
                             continueAfterLogin();
                         }

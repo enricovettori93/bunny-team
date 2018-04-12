@@ -80,10 +80,6 @@ public class LoadingActivity extends AppIntro {
         if(first != null){
             //Non era il primo avvio
             Log.d("AVVIO","NON IL PRIMO");
-            /*if(FirebaseUtilities.getIstance().isLogged()){
-                User.getIstance().setName(FirebaseUtilities.getIstance().getNome());
-                User.getIstance().setEmail(FirebaseUtilities.getIstance().getEmail());
-            }*/
             startMapsActivity();
         }
         else{
@@ -99,7 +95,6 @@ public class LoadingActivity extends AppIntro {
             editor.putString("percentualePin","false");
             editor.commit();
             //Continuo col caricamento di tutto il resto
-            //csl = CustomSliderLoading.newInstance(R.layout.fragmentinfo1, this);
             addSlide(CustomIntroFragment.newInstance(R.layout.fragmentinfo1));
             ready = true;
             ((TextView)findViewById(com.github.paolorotolo.appintro.R.id.done)).setText("CONTINUA");

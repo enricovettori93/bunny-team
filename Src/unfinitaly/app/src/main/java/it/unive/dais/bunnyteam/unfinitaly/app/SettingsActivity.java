@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
@@ -116,13 +117,20 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings);
         addPreferencesFromResource(R.xml.preferences);
         updateAllSummaries();
-        /*AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
+        AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
+        delegate.getSupportActionBar();
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        delegate.setSupportActionBar(toolbar);*/
+        delegate.setSupportActionBar(toolbar);
+        toolbar.setTitle("Impostazioni");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     /**

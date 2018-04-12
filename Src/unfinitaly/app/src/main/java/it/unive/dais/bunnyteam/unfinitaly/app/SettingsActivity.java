@@ -15,7 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ActionMenuView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -33,7 +38,7 @@ import it.unive.dais.bunnyteam.unfinitaly.lib.util.UnexpectedException;
  *
  * @author Alvise Spanò, Università Ca' Foscari
  */
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, AppCompatCallback {
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, AppCompatCallback{
     /**
      * Costante di tipo stringa che indica la chiave dello stile della mappa nell'XML delle preferenze.
      */
@@ -77,39 +82,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     }
 
     /**
-     * Getter della soglia di zoom.
-     * La soglia di zoom è la distanza di zoom alla quale viene nascosto il pulsante HERE.
-     *
-     * @param ctx oggetto Context (tipicamente {@code this} se chiamato da dentro una Activity)
-     * @return ritorna il fattore della soglia di zoom attuale.
-     */
-    public static float getZoomThreshold(Context ctx) {
-        return getZoomThreshold(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-    }
-
-    /**
-     * Getter della soglia di zoom.
-     * La soglia di zoom è la distanza di zoom alla quale viene nascosto il pulsante HERE.
-     *
-     * @param ctx oggetto Context (tipicamente {@code this} se chiamato da dentro una Activity)
-     * @param sp  oggetto SharedPreferences da cui vengono estratte le impostazioni.
-     * @return ritorna il fattore della soglia di zoom attuale.
-     */
-    public static float getZoomThreshold(Context ctx, SharedPreferences sp) {
-        int n = Integer.parseInt(sp.getString(KEY_ZOOM_THRESHOLD, "0"));
-        switch (n) {
-            case 0:
-                return (float) ctx.getResources().getInteger(R.integer.zoomFactor_low);
-            case 1:
-                return (float) ctx.getResources().getInteger(R.integer.zoomFactor_mid);
-            case 2:
-                return (float) ctx.getResources().getInteger(R.integer.zoomFactor_high);
-            default:
-                throw new UnexpectedException(String.format("undefined zoom threshold value: %d", n));
-        }
-    }
-
-    /**
      * Questo metodo viene chiamato quando questa activity parte.
      *
      * @param savedInstanceState stato dell'activity salvato precedentemente (opzionale).
@@ -121,16 +93,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.preferences);
         updateAllSummaries();
         AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         delegate.onCreate(savedInstanceState);
         delegate.getSupportActionBar();
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         toolbar.setTitle("Impostazioni");
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     /**

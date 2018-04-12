@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.github.paolorotolo.appintro.AppIntro;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.view.CustomIntroFragment;
-import it.unive.dais.bunnyteam.unfinitaly.app.slider.CustomSliderLoading;
 
 /**
  *
@@ -29,7 +28,6 @@ public class LoadingActivity extends AppIntro {
     private TextView tv_status;
     private TextView tvCountLoad;
     private ProgressBar progressBar;
-    CustomSliderLoading csl;
     Fragment curFragment;
     private View v;
     int status = 0;

@@ -1,4 +1,4 @@
-package it.unive.dais.bunnyteam.unfinitaly.app;
+package it.unive.dais.bunnyteam.unfinitaly.app.view;
 
 import android.preference.DialogPreference;
 import android.content.Context;

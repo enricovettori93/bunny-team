@@ -9,6 +9,5 @@
         android:entryValues="@array/mapStyleValues" />
     <it.unive.dais.bunnyteam.unfinitaly.app.view.CustomDialogPreference
         android:title="@string/menu_reset"
-        android:dialogMessage="@string/menu_reset_confirm"
-        android:negativeButtonText="Annulla"/>
+        android:dialogMessage="@string/menu_reset_confirm"/>
 </PreferenceScreen>

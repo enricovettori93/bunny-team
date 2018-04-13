@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatTextView;
 
 
-
+@Deprecated
 public class TextViewApp extends AppCompatTextView {
     public TextViewApp(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

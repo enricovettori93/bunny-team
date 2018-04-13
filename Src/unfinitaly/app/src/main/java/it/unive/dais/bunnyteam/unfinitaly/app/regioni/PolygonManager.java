@@ -7,8 +7,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
-
 /**
  * Created by Enrico on 14/03/2018.
  */

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import it.unive.dais.bunnyteam.unfinitaly.app.entities.HashMapRegioni;
+import it.unive.dais.bunnyteam.unfinitaly.app.regioni.HashMapRegioni;
 
 /**
  * Created by Enrico on 13/03/2018.

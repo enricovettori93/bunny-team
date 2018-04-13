@@ -1,6 +1,5 @@
-package it.unive.dais.bunnyteam.unfinitaly.app.entities;
+package it.unive.dais.bunnyteam.unfinitaly.app.regioni;
 
-import android.graphics.Color;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -39,13 +38,11 @@ public class HashMapRegioni {
     }
 
     public static HashMapRegioni getIstance(){
-        if(singleton != null)
-            return singleton;
-        else{
+        if(singleton == null){
             percentualeRegioni = new HashMap<>();
             singleton = new HashMapRegioni();
-            return singleton;
         }
+        return singleton;
     }
 
     public void addUnitRegione(String regione){
@@ -55,7 +52,7 @@ public class HashMapRegioni {
 
     public double getPercentualeRegione(String regione){
         try {
-            return (100*percentualeRegioni.get(regione))/totale;
+            return (100*(double)percentualeRegioni.get(regione))/(double)totale;
         }catch(Exception e){
             Log.e("ERRORE",""+e);
             return 0;

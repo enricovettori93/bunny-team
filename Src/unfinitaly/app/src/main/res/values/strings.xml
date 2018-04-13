@@ -94,8 +94,8 @@
     <!-- -->
 
     <!--FragmentInfo 4 -->
-    <string name="fi4_menu">Rintracciare l\'opera</string>
-    <string name="fi4_description">Puoi usare i pulsanti a destra e a sinistra del titolo dell\'opera rispettivamente per trovare l'opera sulla mappa e per impostare il navigatore.</string>
+    <string name="fi4_menu">Commentare l\'opera</string>
+    <string name="fi4_description">Puoi creare un nuovo account o accedere con il tuo account Google per scrivere commenti su ogni opera.</string>
     <!-- -->
 
     <!--FragmentInfo 5 -->

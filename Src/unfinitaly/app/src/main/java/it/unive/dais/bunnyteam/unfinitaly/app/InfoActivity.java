@@ -93,7 +93,7 @@ public class InfoActivity extends BaseActivity {
         });
     }
 
-    public void showWebView() {
+    private void showWebView() {
         webview.setVisibility(View.VISIBLE);
         imV.setVisibility(View.INVISIBLE);
         mail.setVisibility(View.INVISIBLE);
@@ -102,7 +102,7 @@ public class InfoActivity extends BaseActivity {
 
     }
 
-    public void unshowWebView() {
+    private void unshowWebView() {
         webview.setVisibility(View.INVISIBLE);
         imV.setVisibility(View.VISIBLE);
         mail.setVisibility(View.VISIBLE);

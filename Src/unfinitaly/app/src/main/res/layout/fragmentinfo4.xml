@@ -45,17 +45,16 @@
         android:id="@+id/imageView"
         android:layout_width="220dp"
         android:layout_height="297dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
 
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/help_marker" />
+        app:srcCompat="@drawable/help_account" />
 
 </android.support.constraint.ConstraintLayout>

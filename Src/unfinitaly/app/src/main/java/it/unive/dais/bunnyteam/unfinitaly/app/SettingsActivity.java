@@ -34,7 +34,6 @@ import it.unive.dais.bunnyteam.unfinitaly.lib.util.UnexpectedException;
  * Contiene metodi e utilità per la manipolazione rapida e sicura delle preferenze.
  * Per aggiungere impostazioni all'app, è necessario aggiungere qui ulteriore codice, riproducendo pattern e convenzioni simili
  * a quelle implementate.
- * Si noti che molti getter sono statici e presentano 2 metodi in overload: il primo
  *
  * @author Alvise Spanò, Università Ca' Foscari
  */
@@ -94,10 +93,19 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         updateAllSummaries();
         AppCompatDelegate delegate = AppCompatDelegate.create(this, this);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        //Creo e sistemo la toolbar
         delegate.onCreate(savedInstanceState);
         delegate.getSupportActionBar();
         delegate.setSupportActionBar(toolbar);
         toolbar.setTitle("Impostazioni");
+        delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**

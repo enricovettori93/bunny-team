@@ -720,11 +720,11 @@ public class MapsActivity extends BaseActivity
      * Setta al valore booleano visibility il FAB
      */
     public void setIconListVisibility(boolean visibility) {
-        FloatingActionButton icon = (FloatingActionButton) findViewById(R.id.floatingActionButtonList);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonList);
         if (visibility == true) {
-            icon.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
         } else {
-            icon.setVisibility(View.INVISIBLE);
+            fab.setVisibility(View.INVISIBLE);
         }
     }
 }

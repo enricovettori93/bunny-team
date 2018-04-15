@@ -507,9 +507,9 @@ public class MapsActivity extends BaseActivity
                                         LatLng app = new LatLng(address.getLatitude(),address.getLongitude());
                                         //Controllo che sia in italia
                                         addresses = (ArrayList<Address>)geocoder.getFromLocation(app.latitude,app.longitude,1);
-                                        Log.d("COUNTRY",""+addresses.get(0).getCountryName());
+                                        Log.d("COUNTRY",""+addresses.get(0).getCountryCode());
                                         //Muovo la camera se è in italia
-                                        if(addresses.get(0).getCountryName().equals("Italy"))
+                                        if(addresses.get(0).getCountryCode().equals("IT"))
                                             gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(app,10));
                                         else
                                             Toast.makeText(getApplicationContext(),"Località non in Italia",Toast.LENGTH_SHORT).show();

@@ -68,9 +68,7 @@ public class MarkerInfoActivity extends BaseActivity {
         commento = (EditText) findViewById(R.id.editTextCommento);
         commento.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -80,9 +78,7 @@ public class MarkerInfoActivity extends BaseActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
         buildDrawer(toolbar);
         toolbar.setTitle("Informazioni opera");

@@ -46,10 +46,10 @@ public class ActivityNewAccount extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!nome.getText().toString().trim().isEmpty() && !email.getText().toString().trim().isEmpty() && !psw.getText().toString().trim().isEmpty() && !repeatpsw.getText().toString().trim().isEmpty()){
-                    if(!psw.getText().toString().equals(repeatpsw.getText().toString()))
+                    if(!psw.getText().toString().trim().equals(repeatpsw.getText().toString().trim()))
                         Toast.makeText(getApplicationContext(),"Le password sono diverse",Toast.LENGTH_SHORT).show();
                     else
-                        if(psw.getText().toString().length() < 6)
+                        if(psw.getText().toString().trim().length() < 6)
                             Toast.makeText(getApplicationContext(),"Password corta, almeno 6 caratteri",Toast.LENGTH_SHORT).show();
                     else
                         if(!isEmailValid(email.getText().toString().trim()))
@@ -94,7 +94,7 @@ public class ActivityNewAccount extends AppCompatActivity {
     private void register(){
         FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(email.getText().toString(),psw.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email.getText().toString().trim(),psw.getText().toString().trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
@@ -125,7 +125,7 @@ public class ActivityNewAccount extends AppCompatActivity {
     private void insertName(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                .setDisplayName(nome.getText().toString())
+                .setDisplayName(nome.getText().toString().trim())
                 .build();
         user.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

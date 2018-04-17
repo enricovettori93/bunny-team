@@ -15,11 +15,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
@@ -41,17 +45,20 @@ public class ActivityNewAccount extends AppCompatActivity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !psw.getText().toString().isEmpty() && !repeatpsw.getText().toString().isEmpty()){
+                if(!nome.getText().toString().trim().isEmpty() && !email.getText().toString().trim().isEmpty() && !psw.getText().toString().trim().isEmpty() && !repeatpsw.getText().toString().trim().isEmpty()){
                     if(!psw.getText().toString().equals(repeatpsw.getText().toString()))
                         Toast.makeText(getApplicationContext(),"Le password sono diverse",Toast.LENGTH_SHORT).show();
                     else
                         if(psw.getText().toString().length() < 6)
                             Toast.makeText(getApplicationContext(),"Password corta, almeno 6 caratteri",Toast.LENGTH_SHORT).show();
+                    else
+                        if(!isEmailValid(email.getText().toString().trim()))
+                            Toast.makeText(getApplicationContext(),"Formato email non valido",Toast.LENGTH_SHORT).show();
                         else
                             register();
                 }
                 else
-                    alertMissingData();
+                    Toast.makeText(getApplicationContext(),"Dati mancanti",Toast.LENGTH_SHORT).show();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +69,16 @@ public class ActivityNewAccount extends AppCompatActivity {
         });
     }
 
-    private void alertMissingData(){
-        Toast.makeText(getApplicationContext(),"Dati mancanti",Toast.LENGTH_SHORT).show();
+    /**
+     * Controlla se il parametro corrisponde a una email scritta in modo corretto
+     * @param email
+     * @return
+     */
+    private static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     private void cancel(){
@@ -73,6 +88,9 @@ public class ActivityNewAccount extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**
+     * Registra l'account su firebase e gestisce eventuali eccezioni
+     */
     private void register(){
         FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
@@ -90,9 +108,11 @@ public class ActivityNewAccount extends AppCompatActivity {
                     try{
                         throw task.getException();
                     } catch(FirebaseAuthWeakPasswordException e) {
-                        Toast.makeText(getApplicationContext(),"Password debole",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Password troppo corta",Toast.LENGTH_SHORT).show();
                     } catch(FirebaseAuthUserCollisionException e) {
-                        Toast.makeText(getApplicationContext(),"Email già usata",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Email già usata", Toast.LENGTH_SHORT).show();
+                    }catch(FirebaseAuthEmailException e){
+                        Toast.makeText(getApplicationContext(),"Email malformata",Toast.LENGTH_SHORT).show();
                     } catch(Exception e) {
                         Log.d("REGISTRAZIONE","FALLITA " + task.getResult().toString());
                     }

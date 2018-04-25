@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,6 +109,8 @@ public class MapsActivity extends BaseActivity
     private Dialog dialog;
     private SupportMapFragment mapFragment;
     private Toolbar toolbar;
+    private EditText input;
+    private InputMethodManager imm;
     /**
      * API per i servizi di localizzazione.
      */
@@ -491,8 +494,7 @@ public class MapsActivity extends BaseActivity
                         AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
                         LayoutInflater inflater = thisActivity.getLayoutInflater();
                         View mView = inflater.inflate(R.layout.search_dialog,null);
-                        final EditText input = (EditText)mView.findViewById(R.id.editTextSearch);
-                        input.requestFocus();
+                        input = (EditText)mView.findViewById(R.id.editTextSearch);
                         builder.setView(mView);
                         builder.setPositiveButton("Ricerca", new DialogInterface.OnClickListener() {
                             @Override
@@ -501,18 +503,29 @@ public class MapsActivity extends BaseActivity
                                 if(!city.isEmpty()) {
                                     Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                                     try {
+                                        //Nascondo la tastiera se è ancora aperta
+                                        View v =  getCurrentFocus();
+                                        if(v != null){
+                                            imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                                        }
                                         //Prendo le coordinate dal nome
                                         List<Address> addresses = geocoder.getFromLocationName(city,1);
-                                        Address address = addresses.get(0);
-                                        LatLng app = new LatLng(address.getLatitude(),address.getLongitude());
-                                        //Controllo che sia in italia
-                                        addresses = (ArrayList<Address>)geocoder.getFromLocation(app.latitude,app.longitude,1);
-                                        Log.d("COUNTRY",""+addresses.get(0).getCountryCode());
-                                        //Muovo la camera se è in italia
-                                        if(addresses.get(0).getCountryCode().equals("IT"))
-                                            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(app,10));
-                                        else
-                                            Toast.makeText(getApplicationContext(),"Località non in Italia",Toast.LENGTH_SHORT).show();
+                                        if(addresses.isEmpty()){
+                                            Toast.makeText(getApplicationContext(),"Località non trovata",Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Address address = addresses.get(0);
+                                            LatLng app = new LatLng(address.getLatitude(),address.getLongitude());
+                                            //Controllo che sia in italia
+                                            addresses = (ArrayList<Address>)geocoder.getFromLocation(app.latitude,app.longitude,1);
+                                            Log.d("COUNTRY",""+addresses.get(0).getCountryCode());
+                                            //Muovo la camera se è in italia
+                                            if(addresses.get(0).getCountryCode().equals("IT"))
+                                                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(app,10));
+                                            else
+                                                Toast.makeText(getApplicationContext(),"Località non in Italia",Toast.LENGTH_SHORT).show();
+                                        }
                                     } catch (IOException e) {
                                         Toast.makeText(getApplicationContext(),"Errore durante la ricerca",Toast.LENGTH_SHORT).show();
                                     }
@@ -524,10 +537,18 @@ public class MapsActivity extends BaseActivity
                         builder.setNeutralButton("Annulla", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //Empty
+                                View v =  getCurrentFocus();
+                                if(v != null){
+                                    imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                                }
                             }
                         });
                         builder.show();
+                        //Mostro la tastiera dopo aver fatto il build del dialog
+                        input.requestFocus();
+                        imm = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     }
                 });
                 break;
@@ -596,6 +617,7 @@ public class MapsActivity extends BaseActivity
      */
     protected void applyMapSettings() {
         if (gMap != null) {
+            gMap.getUiSettings().setZoomControlsEnabled(false);
             gMap.setMapType(SettingsActivity.getMapStyle(this));
         }
     }

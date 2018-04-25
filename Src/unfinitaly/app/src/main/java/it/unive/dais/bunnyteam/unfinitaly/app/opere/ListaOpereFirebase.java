@@ -17,7 +17,6 @@ public class ListaOpereFirebase {
     private ListaOpereFirebase(){}
 
     public static ListaOpereFirebase getIstance(){
-        Log.d("ISTANZA",""+istanza);
         if(istanza == null)
             istanza = new ListaOpereFirebase();
         return istanza;
@@ -33,7 +32,7 @@ public class ListaOpereFirebase {
 
     public void setPercentageRegioni(){
         Log.d("FIRST TIME REG",""+isFirstTime);
-        if(isFirstTime == true){
+        if(isFirstTime){
             isFirstTime = false;
             for(OperaFirebase mm: listaOpere){
                 HashMapRegioni.getIstance().addUnitRegione(mm.getRegione());

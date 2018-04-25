@@ -186,7 +186,7 @@ public class MarkerInfoActivity extends BaseActivity {
             ((TextView)findViewById(R.id.tv_fallimento)).setText(thisMapMarker.getCausa());
             ((TextView)findViewById(R.id.ImportiSAL)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_sal())));
             ((TextView)findViewById(R.id.importiQE)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe_approvato())));
-            ((TextView)findViewById(R.id.tv_percentuale)).setText(thisMapMarker.getPercentage().replace(".",",")+"%");
+            ((TextView)findViewById(R.id.tv_percentuale)).setText(String.format("%.2f",Double.parseDouble(thisMapMarker.getPercentage())).replace(".",",")+" %");
             final ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
             rc.setMax(100);
             mProgressAnimation.setProgress((int)Double.parseDouble(thisMapMarker.getPercentage()));

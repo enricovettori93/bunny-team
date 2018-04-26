@@ -265,6 +265,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(getApplicationContext(),R.string.login_success,Toast.LENGTH_SHORT).show();
                             continueAfterLogin();
                         }
+                        else{
+                            showDialogLoading(false);
+                            Toast.makeText(getApplicationContext(),"Errore durante il login",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

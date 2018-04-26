@@ -67,22 +67,31 @@ public class AccountActivity extends BaseActivity {
                 startActivity(i);
             }
         });
-        Log.d("AA",""+FirebaseAuth.getInstance().getCurrentUser().getProviderId().toString());
+        Log.d("PROVIDER",""+FirebaseAuth.getInstance().getCurrentUser().getProviders().get(0));
         //if(FirebaseAuth.getInstance().getCurrentUser().getProviderId());
         reset_psw = (Button)findViewById(R.id.buttonResetPsw);
-        reset_psw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseUtilities.getIstance().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        if(FirebaseAuth.getInstance().getCurrentUser().getProviders().size() > 0){
+            if(FirebaseAuth.getInstance().getCurrentUser().getProviders().get(0).equals("google.com"))
+                reset_psw.setVisibility(View.INVISIBLE);
+            else{
+                reset_psw.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"Email di reset inviata.",Toast.LENGTH_SHORT).show();
-                        }
+                    public void onClick(View view) {
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseUtilities.getIstance().getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getApplicationContext(),"Email di reset inviata",Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(),"Errore di invio email, riprova più tardi",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 });
             }
-        });
+        }
     }
 
     @Override

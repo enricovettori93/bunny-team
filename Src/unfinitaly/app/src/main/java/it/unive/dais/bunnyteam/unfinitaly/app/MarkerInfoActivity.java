@@ -1,6 +1,8 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
@@ -49,7 +51,7 @@ public class MarkerInfoActivity extends BaseActivity {
     private OperaFirebase thisMapMarker, passedMapMarker;
     private Button insert;
     private EditText commento;
-    private TextView countChar;
+    private TextView countChar,cup;
     private Commento nuovo_commento;
     boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
@@ -74,7 +76,7 @@ public class MarkerInfoActivity extends BaseActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 countChar.setText(String.format("%s/500",commento.getText().toString().length()));
                 if(commento.getText().toString().length() > 500)
-                    Toast.makeText(getApplicationContext(),"Lunghezza massima raggiunta.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Lunghezza massima raggiunta",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -182,11 +184,22 @@ public class MarkerInfoActivity extends BaseActivity {
             ((TextView)findViewById(R.id.tv_sottosettore)).setText(thisMapMarker.getSottosettore());
             ((TextView)findViewById(R.id.tv_cup)).setText(thisMapMarker.getCup());
             ((TextView)findViewById(R.id.tv_tipo_cup)).setText(thisMapMarker.getTipologia_cup());
-            ((TextView)findViewById(R.id.tv_descrizione)).setText(thisMapMarker.getTitle()+" ID_FB: "+thisMapMarker.getId_firebase());
+            ((TextView)findViewById(R.id.tv_descrizione)).setText("Riferimento num.: " + thisMapMarker.getId_firebase() + "\n" + thisMapMarker.getTitle());
             ((TextView)findViewById(R.id.tv_fallimento)).setText(thisMapMarker.getCausa());
             ((TextView)findViewById(R.id.ImportiSAL)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_sal())));
             ((TextView)findViewById(R.id.importiQE)).setText(String.format("%.2f €",Double.parseDouble(thisMapMarker.getImporto_ultimo_qe_approvato())));
             ((TextView)findViewById(R.id.tv_percentuale)).setText(String.format("%.2f",Double.parseDouble(thisMapMarker.getPercentage())).replace(".",",")+" %");
+            /*cup = (TextView)findViewById(R.id.tv_cup);
+            //Sarebbe stata 1 idea carina aprire opencup al click del cup, ma non ha API disponibili sto sito, mannaggia
+            cup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String url = "http://opencup.gov.it/elenco-progetti/dettaglio-progetto?p_p_id="+thisMapMarker.getCup();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+            });*/
             final ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(rc, 1500);
             rc.setMax(100);
             mProgressAnimation.setProgress((int)Double.parseDouble(thisMapMarker.getPercentage()));
@@ -247,7 +260,7 @@ public class MarkerInfoActivity extends BaseActivity {
             }
         }
         else{
-            Toast.makeText(getApplicationContext(),"Errore durante la lettura nel DB",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Errore durante la lettura dei dati",Toast.LENGTH_SHORT).show();
         }
     }
 

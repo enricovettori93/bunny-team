@@ -76,7 +76,7 @@ public class OpereAdapter extends RecyclerView.Adapter<OpereAdapter.MyViewHolder
                     public void onClick(View view) {
                         android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(context)
                                 .setTitle("Cancellare il commento?")
-                                .setMessage("Azione irreversibile.")
+                                .setMessage("Attenzione, l'azione è irreversibile.")
                                 .setPositiveButton("Procedi", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -8,7 +8,11 @@ import android.util.AttributeSet;
 
 public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener
 {
-    Context context;
+    /*
+    Classe che estende la classe di base DialogPreference, implementa il metodo onClick per sapere quando
+    l'utente ha cliccato il tasto per cancellare i dati dell'applicazione o per annullare l'operazione
+     */
+    private Context context;
     public CustomDialogPreference(Context oContext, AttributeSet attrs)
     {
         super(oContext, attrs);

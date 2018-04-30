@@ -42,8 +42,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Button newAccount, loginNoGoogle, resetPsw;
     private boolean onBackPressed = false;
     private Intent i;
-    private String intentcontent;
-    private String action;
+    private String intentcontent,action;
     private EditText editTextEmail, editTextPassword;
     private AlertDialog dialog;
 
@@ -128,12 +127,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View view) {
                 if(editTextEmail.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Campo email vuoto.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.empty_email,Toast.LENGTH_SHORT).show();
                     editTextEmail.setFocusable(true);
                 }
                 else
                     if(!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches())
-                        Toast.makeText(getApplicationContext(),"Indirizzo email non valido.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.email_bad_format,Toast.LENGTH_SHORT).show();
                     else
                         resettaPassword();
             }
@@ -167,12 +166,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Invio email riuscito, controlla la casella per resettare la password",Toast.LENGTH_SHORT).show();
-                    Log.d("LOGIN","INVIO EMAIL RESET RIUSCITO");
+                    Toast.makeText(getApplicationContext(),R.string.reset_password_ok,Toast.LENGTH_SHORT).show();
                 }
                  else{
-                    Toast.makeText(getApplicationContext(),"Invio email non riuscito",Toast.LENGTH_SHORT).show();
-                    Log.d("LOGIN","INVIO EMAIL RESET FALLITO");
+                    Toast.makeText(getApplicationContext(),R.string.reset_password_error,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -203,10 +200,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
         else{
             if(password.isEmpty() || email.isEmpty())
-                Toast.makeText(getApplicationContext(),"Inserire i campi richiesti",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.empty_fields,Toast.LENGTH_SHORT).show();
             else
                 if(password.length() < 6)
-                    Toast.makeText(getApplicationContext(),"Password troppo corta",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.password_short,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -225,7 +222,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "LOGOUT");
         firebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(googleApiClient);
-        //Toast.makeText(getApplicationContext(), R.string.logout_success, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -266,8 +262,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             continueAfterLogin();
                         }
                         else{
+                            /*
+                            * Se si entra in quest'else è probabile che l'utente abbia fatto prima la registrazione manuale e poi
+                            * provi a loggare con Google, in tal caso il database ritorna il token, però non riesce e loggare, quindi sloggo manualmente l'account
+                             */
                             showDialogLoading(false);
-                            Toast.makeText(getApplicationContext(),"Errore durante il login",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),R.string.login_failed,Toast.LENGTH_SHORT).show();
+                            signOutFunction();
                         }
                     }
                 });
@@ -310,7 +311,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void onBackPressed(){
-        Log.d(TAG,"ACT BEFORE: "+intentcontent);
         if(intentcontent != null && intentcontent.equals("Loading")){
             Log.d(TAG,"LOADING ACTIVITY");
             //Sono stato chiamato da loading activity
@@ -340,9 +340,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.d(TAG,"CONNESSO");
         if(action != null){
-            Log.d(TAG,"SLOGGO");
             signOutFunction();
         }
     }

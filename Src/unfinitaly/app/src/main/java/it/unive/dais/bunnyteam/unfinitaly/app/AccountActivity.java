@@ -68,7 +68,6 @@ public class AccountActivity extends BaseActivity {
             }
         });
         Log.d("PROVIDER",""+FirebaseAuth.getInstance().getCurrentUser().getProviders().get(0));
-        //if(FirebaseAuth.getInstance().getCurrentUser().getProviderId());
         reset_psw = (Button)findViewById(R.id.buttonResetPsw);
         if(FirebaseAuth.getInstance().getCurrentUser().getProviders().size() > 0){
             if(FirebaseAuth.getInstance().getCurrentUser().getProviders().get(0).equals("google.com"))

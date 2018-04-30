@@ -53,7 +53,7 @@ public class MarkerInfoActivity extends BaseActivity {
     private EditText commento;
     private TextView countChar,cup;
     private Commento nuovo_commento;
-    boolean statoLetturaFirebase;
+    private boolean statoLetturaFirebase;
     private DatabaseReference mDatabase;
     private RoundCornerProgressBar rc;
     private RecyclerView recyclerView;
@@ -109,7 +109,7 @@ public class MarkerInfoActivity extends BaseActivity {
 
     /**
      * Setta la visibilità delle textview in base allo stato del caricamento
-     * @param loading: indica lo stato del caricamento
+     * @param loading: indica lo stato del caricamento -> true = caricamento in corso, false = caricamento completato
      */
     public void stillLoading(boolean loading){
         if(loading){

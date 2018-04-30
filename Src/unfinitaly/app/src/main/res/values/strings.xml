@@ -11,8 +11,8 @@
     <string name="conn_suspended">Connessione sospesa</string>
 
     <string name="menu_reset">Cancella i dati dell\'applicazione</string>
-    <string name="menu_reset_confirm">Se autorizzi l\'operazione tutti i dati salvati nella memoria locale verranno cancellati. Dovrai riaprire manualmente
-        l\'applicazione.\nUtilizza la funzionalità solo se riscontri anomalie durante l\'utilizzo dell\'applicazione.\n\nConfermare?</string>
+    <string name="menu_reset_confirm">Se autorizzi l\'operazione tutti i dati salvati nella memoria locale verranno cancellati (non cancellerai il tuo account o i commenti inseriti).\n
+        Dovrai riaprire manualmente l\'applicazione.\nUtilizza la funzionalità solo se riscontri anomalie durante l\'utilizzo dell\'applicazione.\n\nConfermare?</string>
 
     <string name="menu_mapStyle_title">Stile Mappa</string>
     <string name="menu_mapStyle_summary">Scegli il tipo di mappa di Google Maps</string>
@@ -48,7 +48,7 @@
 
     <!--Loading Activity -->
     <string name="loading_snackbarcontinue">CONTINUA</string>
-    <string name="loading_snackbarwait"></string>
+    <string name="loading_snackbarwait">Attendi, caricamento in corso..</string>
     <string name="loading_snackbarready">Caricamento completato!</string>
     <string name="loading_snackbarnotready">Caricamento non ancora finito. Attendi!</string>
     <!-- -->
@@ -90,12 +90,12 @@
     <!-- -->
 
     <!--FragmentInfo 3 -->
-    <string name="fi3_menu">Accesso al menù</string>
-    <string name="fi3_description">Effettua uno swipe dal lato sinistro verso il centro per accedere al menù! Dal menù puoi attivare i filtri e accedere alle informazioni.</string>
+    <string name="fi3_menu">Informazioni opera</string>
+    <string name="fi3_description">Se vuoi vedere le informazioni di un\'opera incompiuta, prima devi selezionarla dalla mappa, e in seguito cliccare sulla finestra in sovraimpressione.</string>
     <!-- -->
 
     <!--FragmentInfo 4 -->
-    <string name="fi4_menu">Commentare l\'opera</string>
+    <string name="fi4_menu">Commenta l\'opera</string>
     <string name="fi4_description">Puoi creare un nuovo account o accedere con il tuo account Google per scrivere commenti su ogni opera.</string>
     <!-- -->
 
@@ -118,8 +118,14 @@
     <string name="login_skip">Salta il login</string>
     <string name="login_forgot_psw">Reset password</string>
     <string name="login_success">Accesso effettuato con successo.</string>
-    <string name="login_failed">Errore durante il login.</string>
+    <string name="login_failed">Errore durante il login</string>
     <string name="logout_success">Sei uscito con successo.</string>
+    <string name="empty_fields">Inserire i campi richiesti</string>
+    <string name="empty_email">Campo email vuoto</string>
+    <string name="password_short">Password troppo corta</string>
+    <string name="reset_password_ok">Invio email riuscito, controlla la casella per resettare la password</string>
+    <string name="reset_password_error">Invio email non riuscito</string>
+    <string name="email_bad_format">Indirizzo email non valido</string>
     <!-- -->
 
     <!-- Account Activity -->
@@ -139,9 +145,9 @@
     <string name="menu_reset_filtri">Reset filtri</string>
     <string name="menu_regione">Filtro per regione</string>
     <string name="menu_categoria">Filtro per categoria</string>
-    <string name="menu_percentuale">Filtro per percentuale</string>
-    <string name="menu_distribuzione">Distribuzione</string>
-    <string name="menu_percentuale_regione">Percentuale regione</string>
+    <string name="menu_percentuale">Colora perc. opera</string>
+    <string name="menu_distribuzione">Filtro distribuzione</string>
+    <string name="menu_percentuale_regione">Colora perc. regione</string>
     <string name="menu_mappa">Mappa</string>
     <!-- -->
 

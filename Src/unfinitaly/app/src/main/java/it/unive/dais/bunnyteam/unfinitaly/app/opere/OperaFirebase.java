@@ -17,7 +17,6 @@ public class OperaFirebase implements ClusterItem, Serializable {
             dimensione_unita_misura,dimensione_valore,finanziamento_assegnato,finanziamento_di_prog,id,importo_oneri,importo_sal,importo_ultimo_qe,
             importo_ultimo_qe_approvato,indirizzo,lat,lng,natura_opera,oneri_necessari_per_ultimazione_lavori,percentage,progetto_cumulativo,regione,
             sottosettore,sponsorizzato,strutture_coinvolte,tipologia_cup,tipologia_opera_incompiuta,title,id_firebase;
-    //private HashMap<String, Commento> commenti = new HashMap<>();
 
     //Costruttori
     public OperaFirebase(){}
@@ -73,7 +72,6 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.tipologia_opera_incompiuta = tipologia_opera_incompiuta;
         this.title = title;
         this.id_firebase = "";
-        //this.commenti = commenti;
     }
 
     //Getter e setter
@@ -397,14 +395,6 @@ public class OperaFirebase implements ClusterItem, Serializable {
         this.id_firebase = id_firebase;
     }
 
-    /*public HashMap<String, Commento> getCommenti() {
-        return commenti;
-    }*/
-
-    /*public void setCommenti(HashMap<String, Commento> commenti) {
-        this.commenti = commenti;
-    }*/
-
     @Override
     public String toString() {
         return "OperaFirebase{" +
@@ -447,7 +437,6 @@ public class OperaFirebase implements ClusterItem, Serializable {
                 ", tipologia_cup='" + tipologia_cup + '\'' +
                 ", tipologia_opera_incompiuta='" + tipologia_opera_incompiuta + '\'' +
                 ", title='" + title + '\'' +
-                //", commenti: \n" + commenti.toString() +
                 '}';
     }
     @Override

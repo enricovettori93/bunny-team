@@ -46,12 +46,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Activity thisActivity;
     protected ArrayList<Integer> selectedRegionsItems = new ArrayList<>();
     protected ArrayList<Integer> selectedCategoriesItems = new ArrayList<>();
-    boolean resetfilter;
-    Uri imageprofile;
-    TileOverlay mOverlay;
-    HeatmapTileProvider mProvider;
-    PrimaryDrawerItem user,informazioni,impostazioni,reset,regione,categoria,mappa;
-    SwitchDrawerItem percentuale,distribuzione,percentualeRegione;
+    private boolean resetfilter;
+    private Uri imageprofile;
+    private TileOverlay mOverlay;
+    private HeatmapTileProvider mProvider;
+    protected PrimaryDrawerItem user,informazioni,impostazioni,reset,regione,categoria,mappa;
+    protected SwitchDrawerItem percentuale,distribuzione,percentualeRegione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +162,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
         if (this instanceof MapsActivity) {
-            //CREO I PULSANTI
+            //Creazione dei pulsanti
             reset = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_reset_filtri).withIcon(R.drawable.unset);
             regione = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_regione).withIcon(R.drawable.regione);
             categoria = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.menu_categoria).withIcon(R.drawable.categoria);
@@ -183,6 +183,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                         distribuzione.withChecked(false);
                         drawer.updateItem(distribuzione);
                         mOverlay.setVisible(false);
+                    }
+                    if(percentualeRegione.isChecked()){
+                        percentualeRegione.withChecked(false);
+                        drawer.updateItem(percentualeRegione);
+                        PolygonManager.getIstance().setVisibilityPolygon(false);
                     }
                     resetfilter = true;
                     ((MapsActivity)thisActivity).setUpFab("search");
@@ -316,19 +321,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         String percentualeRegionePref = flags.getString("percentualeRegione","");
         Log.d("STATO PIN","COLORAZIONE PIN: "+percentualePin+" DISTRIBUZIONE: "+distribuzioneMappa+" PERCENTUALE REGIONE: "+percentualeRegionePref);
         if(percentualePin.equals("true") && !percentualePin.isEmpty()){
-            Log.d("STATO PIN","SONO IN PERCENTUALE");
             ((MapsActivity)thisActivity).getClusterManager().setPercentageRenderer();
             percentuale.withChecked(true);
         }
         if(distribuzioneMappa.equals("true") && !distribuzioneMappa.isEmpty()){
-            Log.d("STATO PIN","SONO IN DISTRIBUZIONE");
             PolygonManager.getIstance().setVisibilityPolygon(false);
             mOverlay.setVisible(true);
             distribuzione.withChecked(true);
             percentualeRegione.withChecked(false);
         }
         if(percentualeRegionePref.equals("true") && !percentualeRegionePref.isEmpty()){
-            Log.d("STATO PIN","SONO IN PERCENTUALE REGIONE");
             PolygonManager.getIstance().setVisibilityPolygon(true);
             mOverlay.setVisible(false);
             distribuzione.withChecked(false);
@@ -425,7 +427,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(selectedRegionsItems.size()==0)
+                    if(selectedRegionsItems.size() == 0)
                         Toast.makeText(getApplicationContext(),R.string.selezionelista,Toast.LENGTH_SHORT).show();
                     else{
                         //DISABILITO I FILTRI COMBINATI
@@ -482,7 +484,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    if(selectedCategoriesItems.size()==0)
+                    if(selectedCategoriesItems.size() == 0)
                         Toast.makeText(getApplicationContext(),R.string.selezionelista,Toast.LENGTH_SHORT).show();
                     else{
                         //DISABILITO I FILTRI COMBINATI

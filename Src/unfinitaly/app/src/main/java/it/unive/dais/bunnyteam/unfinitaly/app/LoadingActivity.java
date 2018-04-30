@@ -25,8 +25,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.view.CustomIntroFragment;
  */
 public class LoadingActivity extends AppIntro {
     private WebView webview;
-    private TextView tv_status;
-    private TextView tvCountLoad;
+    private TextView tv_status,tvCountLoad;
     private ProgressBar progressBar;
     Fragment curFragment;
     private View v;

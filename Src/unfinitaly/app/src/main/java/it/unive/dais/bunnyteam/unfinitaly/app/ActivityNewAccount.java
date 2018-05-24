@@ -1,12 +1,14 @@
 package it.unive.dais.bunnyteam.unfinitaly.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 public class ActivityNewAccount extends AppCompatActivity {
     private Button registrati, cancel;
     private EditText nome,email,psw,repeatpsw;
+    private TextView textcheck;
+    private CheckBox checkBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,15 @@ public class ActivityNewAccount extends AppCompatActivity {
         email = (EditText)findViewById(R.id.editTextNuovoEmail);
         psw = (EditText)findViewById(R.id.editTextNuovoPsw);
         repeatpsw = (EditText)findViewById(R.id.editTextNuovoRipetiPsw);
+        checkBox = (CheckBox) findViewById(R.id.checkBoxRegister);
+        textcheck = (TextView) findViewById(R.id.textView25);
+        textcheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/"));
+                startActivity(i);
+            }
+        });
         //Associo i listener ai bottoni
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +68,10 @@ public class ActivityNewAccount extends AppCompatActivity {
                         if(!isEmailValid(email.getText().toString().trim()))
                             Toast.makeText(getApplicationContext(),"Formato email non valido",Toast.LENGTH_SHORT).show();
                         else
-                            register();
+                            if(checkBox.isChecked())
+                                register();
+                            else
+                                Toast.makeText(getApplicationContext(),"La casella di consenso non è stata spuntata",Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(getApplicationContext(),"Dati mancanti",Toast.LENGTH_SHORT).show();

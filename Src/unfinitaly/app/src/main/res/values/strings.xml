@@ -134,6 +134,7 @@
     <string name="account_logout">Logout</string>
     <string name="account_reset">Cambia password</string>
     <string name="account_toolbar">Il tuo account</string>
+    <string name="account_dati_personali">Trattamento dati personali</string>
     <!-- -->
 
     <!-- Side menu -->
@@ -157,6 +158,7 @@
     <string name="new_account_email">Inserisci la tua email</string>
     <string name="new_account_psw">Inserisci la password</string>
     <string name="new_acocunt_psw_repeat">Ripeti la password</string>
+    <string name="new_account_checkbox">Accetto le condizioni di utilizzo\nper il trattamento dei dati immessi</string>
     <string name="new_account_conferma">Registrati</string>
     <string name="new_account_cancel">Annulla</string>
     <!-- -->

@@ -21,7 +21,7 @@ import it.unive.dais.bunnyteam.unfinitaly.app.storage.FirebaseUtilities;
 
 public class AccountActivity extends BaseActivity {
     Toolbar toolbar;
-    private TextView nome, email;
+    private TextView nome, email, dati_pernosali;
     private Button logout, reset_psw;
     private Uri urlfoto;
     private CircleImageView immagineprofilo;
@@ -35,6 +35,14 @@ public class AccountActivity extends BaseActivity {
         toolbar.setTitle(R.string.account_toolbar);
         nome = (TextView)findViewById(R.id.textViewNome);
         email = (TextView)findViewById(R.id.textViewEmail);
+        dati_pernosali = (TextView)findViewById(R.id.textViewDatiPersonali);
+        dati_pernosali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/"));
+                startActivity(i);
+            }
+        });
         immagineprofilo = (CircleImageView) findViewById(R.id.imageAccount);
         if(FirebaseUtilities.getIstance().isLogged()){
             nome.setText(FirebaseUtilities.getIstance().getNome());

@@ -481,6 +481,17 @@ public class MapsActivity extends BaseActivity
     }
 
     /**
+     * Chiude la tastiera virtuale se aperta
+     */
+    public void closeKeyboard(){
+        View v =  getCurrentFocus();
+        if(v != null){
+            imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        }
+    }
+
+    /**
      * Prepara il tasto FAB se come ricerca o come lista di elementi
      * @param type
      */
@@ -496,6 +507,12 @@ public class MapsActivity extends BaseActivity
                         View mView = inflater.inflate(R.layout.search_dialog,null);
                         input = (EditText)mView.findViewById(R.id.editTextSearch);
                         builder.setView(mView);
+                        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialogInterface) {
+                                closeKeyboard();
+                            }
+                        });
                         builder.setPositiveButton("Ricerca", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -504,11 +521,7 @@ public class MapsActivity extends BaseActivity
                                     Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                                     try {
                                         //Nascondo la tastiera se è ancora aperta
-                                        View v =  getCurrentFocus();
-                                        if(v != null){
-                                            imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                        }
+                                        closeKeyboard();
                                         //Prendo le coordinate dal nome
                                         List<Address> addresses = geocoder.getFromLocationName(city,1);
                                         if(addresses.isEmpty()){
@@ -523,25 +536,25 @@ public class MapsActivity extends BaseActivity
                                             //Muovo la camera se è in italia
                                             if(addresses.get(0).getCountryCode().equals("IT"))
                                                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(app,10));
-                                            else
-                                                Toast.makeText(getApplicationContext(),"Località non in Italia",Toast.LENGTH_SHORT).show();
+                                            else {
+                                                closeKeyboard();
+                                                Toast.makeText(getApplicationContext(), "Località non in Italia", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                     } catch (IOException e) {
                                         Toast.makeText(getApplicationContext(),"Errore durante la ricerca",Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                                else
-                                    Toast.makeText(getApplicationContext(),"Inserire una città",Toast.LENGTH_SHORT).show();
+                                else {
+                                    closeKeyboard();
+                                    Toast.makeText(getApplicationContext(), "Inserire una città", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         builder.setNeutralButton("Annulla", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                View v =  getCurrentFocus();
-                                if(v != null){
-                                    imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                }
+                                closeKeyboard();
                             }
                         });
                         builder.show();
@@ -564,7 +577,7 @@ public class MapsActivity extends BaseActivity
                         for(int i=0;i<activemarkers.size();i++)
                             stringmarkers[i]= "Categoria: " +((OperaFirebase)activemarkers.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)activemarkers.toArray()[i]).getTipologia_cup();
                         Log.d("SIZE LIST",""+activemarkers.size());
-                        final AlertDialog alert = new AlertDialog.Builder(thisActivity)
+                        final AlertDialog alert = new AlertDialog.Builder(thisActivity, R.style.MyAlertDialogTheme)
                                 .setTitle("Elementi attivi")
                                 .setSingleChoiceItems(stringmarkers, 0, new DialogInterface.OnClickListener() {
                                     @Override

@@ -198,7 +198,7 @@ public class CustomClusterManager<T extends ClusterItem> extends ClusterManager<
                 for(int i=0;i<clusterlist.size();i++){
                     stringclusterlista[i]= "Categoria: " +((OperaFirebase)clusterlist.toArray()[i]).getCategoria()+"\nTipologia CUP: "+((OperaFirebase)clusterlist.toArray()[i]).getTipologia_cup();
                 }
-                AlertDialog dialog = new AlertDialog.Builder(context)
+                AlertDialog dialog = new AlertDialog.Builder(context,R.style.MyAlertDialogTheme)
                         .setTitle(R.string.clustertitle)
                         .setSingleChoiceItems(stringclusterlista, 0, new DialogInterface.OnClickListener() {
                             @Override

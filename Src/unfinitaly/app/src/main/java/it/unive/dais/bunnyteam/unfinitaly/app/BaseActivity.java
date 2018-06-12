@@ -404,7 +404,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 for(int i : selectedRegionsItems)
                     selectedReg[i] = true;
             }
-            final AlertDialog dialog = new AlertDialog.Builder(this)
+            final AlertDialog dialog = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
                     .setTitle("Scegli le regioni")
                     .setMultiChoiceItems(allRegionsWithNumbers, selectedReg , new DialogInterface.OnMultiChoiceClickListener() {
                         @Override
@@ -460,7 +460,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 for(int i : selectedCategoriesItems)
                     selectedCat[i] = true;
             }
-            final AlertDialog dialog = new AlertDialog.Builder(this)
+            final AlertDialog dialog = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
                     .setTitle("Scegli le categorie")
                     .setMultiChoiceItems(allCategoryWithNumbers, selectedCat, new DialogInterface.OnMultiChoiceClickListener() {
                         @Override

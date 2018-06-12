@@ -50,7 +50,7 @@ public class ActivityNewAccount extends AppCompatActivity {
         textcheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/"));
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/#privacy"));
                 startActivity(i);
             }
         });

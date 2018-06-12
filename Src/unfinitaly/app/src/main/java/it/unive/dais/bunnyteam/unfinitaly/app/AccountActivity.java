@@ -39,7 +39,7 @@ public class AccountActivity extends BaseActivity {
         dati_pernosali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/"));
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://unfinitaly.altervista.org/#privacy"));
                 startActivity(i);
             }
         });

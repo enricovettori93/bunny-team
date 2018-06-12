@@ -11,8 +11,7 @@
     <string name="conn_suspended">Connessione sospesa</string>
 
     <string name="menu_reset">Cancella i dati dell\'applicazione</string>
-    <string name="menu_reset_confirm">Se autorizzi l\'operazione tutti i dati salvati nella memoria locale verranno cancellati (non cancellerai il tuo account o i commenti inseriti).\n
-        Dovrai riaprire manualmente l\'applicazione.\nUtilizza la funzionalità solo se riscontri anomalie durante l\'utilizzo dell\'applicazione.\n\nConfermare?</string>
+    <string name="menu_reset_confirm">Se autorizzi l\'operazione tutti i dati salvati nella memoria locale verranno cancellati (non cancellerai il tuo account o i commenti inseriti).\nDovrai riaprire manualmente l\'applicazione.\nUtilizza la funzionalità solo se riscontri anomalie durante l\'utilizzo dell\'applicazione.\n\nConfermare?</string>
 
     <string name="menu_mapStyle_title">Stile Mappa</string>
     <string name="menu_mapStyle_summary">Scegli il tipo di mappa di Google Maps</string>

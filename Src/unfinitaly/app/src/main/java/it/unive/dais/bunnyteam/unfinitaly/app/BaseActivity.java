@@ -62,65 +62,104 @@ public abstract class BaseActivity extends AppCompatActivity {
         resetfilter = false;
         setSupportActionBar(toolbar);
         AccountHeader headerResult;
-        if(!FirebaseUtilities.getIstance().isLogged()){
-            //Utente non loggato
-            headerResult = new AccountHeaderBuilder()
-                    .withActivity(this)
-                    .withSelectionListEnabledForSingleProfile(false)
-                    .withHeaderBackground(R.drawable.background)
-                    .withProfileImagesVisible(false)
-                    .withCompactStyle(true)
-                    .addProfiles(
-                            new ProfileDrawerItem().withName(R.string.menu_account_nologin).withEmail(R.string.menu_email_nologin)
-                    )
-                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                        @Override
-                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                            startInfoActivity();
-                            return false;
-                        }
-                    })
-                    .build();
-        }
-        else{
-            //Utente loggato
-            headerResult = new AccountHeaderBuilder()
-                    .withActivity(this)
-                    .withSelectionListEnabledForSingleProfile(false)
-                    .withHeaderBackground(R.drawable.background)
-                    .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                        @Override
-                        public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                            startAccountActivity();
-                            return false;
-                        }
-                    })
-                    .build();
-
-            imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
-            Log.d("URI IMAGE:",""+imageprofile);
-            if(imageprofile != null){
-                //L'immagine profilo è presente
-                DrawerImageLoader.init(new AbstractDrawerImageLoader() {
-                    @Override
-                    public void set(ImageView imageView, Uri uri, Drawable placeholder) {
-                        Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
-                    }
-                    @Override
-                    public void cancel(ImageView imageView) {
-                        Glide.clear(imageView);
-                    }
-                });
-                headerResult.addProfiles(
-                        new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(imageprofile));
-
+        try{
+            if(!FirebaseUtilities.getIstance().isLogged()){
+                //Utente non loggato
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withHeaderBackground(R.drawable.background)
+                        .withProfileImagesVisible(false)
+                        .withCompactStyle(true)
+                        .addProfiles(
+                                new ProfileDrawerItem().withName(R.string.menu_account_nologin).withEmail(R.string.menu_email_nologin)
+                        )
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startInfoActivity();
+                                return false;
+                            }
+                        })
+                        .build();
             }
             else{
-                //L'immagine profilo non è presente
+                //Utente loggato
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withHeaderBackground(R.drawable.background)
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startAccountActivity();
+                                return false;
+                            }
+                        })
+                        .build();
+
+                imageprofile = FirebaseUtilities.getIstance().getFotoProfilo();
+                Log.d("URI IMAGE:",""+imageprofile);
+                if(imageprofile != null){
+                    //L'immagine profilo è presente
+                    DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+                        @Override
+                        public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                            Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+                        }
+                        @Override
+                        public void cancel(ImageView imageView) {
+                            Glide.clear(imageView);
+                        }
+                    });
+                    headerResult.addProfiles(
+                            new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(imageprofile));
+
+                }
+                else{
+                    //L'immagine profilo non è presente
+                    headerResult.addProfiles(
+                            new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp));
+                }
+            }
+        }catch(OutOfMemoryError error){
+            if(!FirebaseUtilities.getIstance().isLogged()){
+                //Utente non loggato
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withProfileImagesVisible(false)
+                        .withCompactStyle(true)
+                        .addProfiles(
+                                new ProfileDrawerItem().withName(R.string.menu_account_nologin).withEmail(R.string.menu_email_nologin)
+                        )
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startInfoActivity();
+                                return false;
+                            }
+                        })
+                        .build();
+            }
+            else{
+                //Utente loggato
+                headerResult = new AccountHeaderBuilder()
+                        .withActivity(this)
+                        .withSelectionListEnabledForSingleProfile(false)
+                        .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                            @Override
+                            public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                                startAccountActivity();
+                                return false;
+                            }
+                        })
+                        .build();
                 headerResult.addProfiles(
                         new ProfileDrawerItem().withName(FirebaseUtilities.getIstance().getNome()).withEmail(FirebaseUtilities.getIstance().getEmail()).withIcon(R.drawable.ic_account_circle_black_24dp));
             }
         }
+
         //Guardo le shared preferences
         final SharedPreferences flags = getApplication().getSharedPreferences("flags",MODE_PRIVATE);
         final SharedPreferences.Editor editor = getSharedPreferences("flags",MODE_PRIVATE).edit();
